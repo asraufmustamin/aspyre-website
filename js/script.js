@@ -271,7 +271,7 @@ function initOrderForm() {
 
             // Redirect delay
             setTimeout(() => {
-                window.open(`https://wa.me/6281234567890?text=${text}`, '_blank');
+                window.open(`https://wa.me/6285729715555?text=${text}`, '_blank');
                 form.reset();
                 submitBtn.innerHTML = originalContent;
                 submitBtn.disabled = false;
@@ -563,7 +563,7 @@ function initAdminModal() {
                     <p class="order-desc">"${order.tentangBisnis}"</p>
                 </div>
                 <div class="order-actions">
-                    <button class="btn-wa" onclick="window.open('https://wa.me/6281234567890?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')">Hubungi</button>
+                    <button class="btn-wa" onclick="window.open('https://wa.me/${order.userPhone}?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')">Hubungi</button>
                     <button class="btn-delete" data-id="${order.docId}" data-display-id="${order.id}">Hapus</button>
                 </div>
             `;
