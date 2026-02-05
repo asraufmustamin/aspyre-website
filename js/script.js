@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMagneticButtons();
     initMagneticButtons();
     initProjectModal();
-    initTrackingModal(); // New Tracking Modal
+    initTrackingSystem(); // Name updated
     loadCmsContent();
     initCmsMode();
 });
