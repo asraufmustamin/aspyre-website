@@ -384,6 +384,8 @@ function initAdminModal() {
         dashboardView.style.display = 'none';
         loginView.style.display = 'block';
         loginForm.reset();
+        // Fix: Remove wide mode class
+        document.querySelector('.admin-modal-content').classList.remove('dashboard-mode');
         disableCmsMode();
         if (unsubscribe) unsubscribe();
     });
@@ -410,7 +412,7 @@ function initAdminModal() {
             categoryFilters.forEach(f => f.classList.remove('active'));
             filter.classList.add('active');
             currentCategory = filter.dataset.cat;
-            loadOrders(currentCategory);
+            renderOrders(latestOrders); // Fix: Call renderOrders directly
         });
     });
 
@@ -530,26 +532,25 @@ function initAdminModal() {
             if (!deadlineStr) return { isUrgent: false, days: 999 };
             const dead = new Date(deadlineStr);
             const now = new Date();
-            // Reset hours to compare dates only
             dead.setHours(0, 0, 0, 0);
             now.setHours(0, 0, 0, 0);
 
             const diffTime = dead - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            // Urgent if 0-3 days remaining
+            // Urgent if <= 3 days (include negative for overdue)
             return {
-                isUrgent: diffDays >= 0 && diffDays <= 3,
+                isUrgent: diffDays <= 3,
                 days: diffDays
             };
         };
 
-        // Sort Orders: Urgent First, Then by Deadline (Ascending), Then by Timestamp (Desc)
+        // Sort Orders
         filtered.sort((a, b) => {
             const isActiveA = a.status !== 'selesai' && a.status !== 'batal';
             const isActiveB = b.status !== 'selesai' && b.status !== 'batal';
 
-            // Active items first
+            // Active first
             if (isActiveA && !isActiveB) return -1;
             if (!isActiveA && isActiveB) return 1;
 
@@ -557,14 +558,14 @@ function initAdminModal() {
                 const urgA = getUrgency(a.deadline);
                 const urgB = getUrgency(b.deadline);
 
-                // Priority: Urgent > Not Urgent
+                // Urgent first
                 if (urgA.isUrgent && !urgB.isUrgent) return -1;
                 if (!urgA.isUrgent && urgB.isUrgent) return 1;
 
-                // Then closest deadline first
-                return urgA.days - urgB.days;
+                // Deadlines (earliest first)
+                if (urgA.days !== urgB.days) return urgA.days - urgB.days;
             }
-            // Fallback to timestamp (newest first)
+            // Fallback timestamp
             return (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0);
         });
 
@@ -599,11 +600,11 @@ function initAdminModal() {
 
             // Sanitize Phone for WhatsApp
             let phone = order.userPhone || '';
-            phone = phone.replace(/\D/g, ''); // Remove non-digits
+            phone = phone.replace(/\D/g, '');
             if (phone.startsWith('0')) phone = '62' + phone.slice(1);
-            if (!phone) phone = '6281234567890'; // Use placeholder/admin if completely failed
+            if (!phone) phone = '6281234567890';
 
-            // Status Colors (Backgrounds for badges)
+            // Status Colors
             const statusStyles = {
                 'pending': 'background: rgba(255,193,7,0.2); color: #ffc107; border:1px solid rgba(255,193,7,0.3)',
                 'proses': 'background: rgba(52,152,219,0.2); color: #3498db; border:1px solid rgba(52,152,219,0.3)',
@@ -623,7 +624,7 @@ function initAdminModal() {
                     <span class="service-pill">${order.kategoriLayanan}</span>
                 </td>
                 <td>
-                    ${isUrgent ? '<span class="urgent-dot" title="Urgent: < 3 Hari"></span>' : ''}
+                    ${isUrgent ? '<span class="urgent-dot" title="Urgent / Overdue"></span>' : ''}
                     <span style="${isUrgent ? 'color:var(--danger); font-weight:600;' : ''}">${order.deadline}</span>
                     <div style="font-size:11px; opacity:0.5; margin-top:2px;">In: ${date}</div>
                 </td>
@@ -640,7 +641,7 @@ function initAdminModal() {
                         <button class="action-btn btn-view" onclick="window.viewOrderDetails('${order.id}')" title="Lihat Detail">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
-                        <button class="action-btn btn-wa" onclick="window.open('https://wa.me/${phone}?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')" title="WhatsApp">
+                        <button class="action-btn btn-wa" data-phone="${phone}" data-name="${order.namaBisnis}" data-id="${order.id}" title="Hubungi Client">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         </button>
                         <button class="action-btn btn-delete" data-id="${order.docId}" data-display-id="${order.id}" title="Hapus">
@@ -669,6 +670,25 @@ function initAdminModal() {
                     console.error("Error updates:", err);
                     alert("Gagal update status");
                 }
+            });
+        });
+
+        // WhatsApp Click Logic (Delegated)
+        container.querySelectorAll('.btn-wa').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Find button even if click on SVG
+                const button = e.target.closest('.btn-wa');
+                const phone = button.dataset.phone;
+                const name = button.dataset.name;
+                const orderId = button.dataset.id;
+
+                if (!phone || phone === 'undefined' || phone.length < 5) {
+                    alert('Nomor WhatsApp tidak valid.');
+                    return;
+                }
+
+                const text = `Halo ${name}, mengenai order ${orderId}, ada update status...`;
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
             });
         });
 
