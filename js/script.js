@@ -3,7 +3,7 @@
    ============================================ */
 // Import Firebase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -501,280 +501,296 @@ function initAdminModal() {
     }
 
     function renderOrders(orders) {
-        const listEl = document.getElementById('adminOrdersList');
+        // Function to render orders
+        function renderAdminOrders(orders) {
+            if (!ordersList) return;
+            ordersList.innerHTML = '';
 
-        let filtered = orders;
-        if (currentCategory !== 'all') {
-            filtered = orders.filter(o => {
-                return (o.pilarLayanan === currentCategory) || (o.category === currentCategory);
-            });
-        }
+            let filtered = orders;
+            if (currentCategory !== 'all') {
+                filtered = orders.filter(o => {
+                    return (o.pilarLayanan === currentCategory) || (o.category === currentCategory);
+                });
+            }
 
-        if (filtered.length === 0) {
-            listEl.innerHTML = `<div class="admin-empty-compact"><p>📭 Tidak ada order</p></div>`;
-            return;
-        }
+            if (filtered.length === 0) {
+                ordersList.innerHTML = '<p class="no-data">Belum ada orderan masuk.</p>';
+                return;
+            }
 
-        listEl.innerHTML = filtered.map((order) => {
-            const remaining = calculateRemainingTime(order.deadline || new Date().toISOString().split('T')[0]);
-            const isUrgent = remaining.hours >= 0 && remaining.hours < 24;
-            const priorityClass = getPriorityClass(remaining.hours);
-            const waNumber = order.whatsapp ? order.whatsapp.replace(/\D/g, '').replace(/^0/, '62') : '';
-            const waLink = waNumber ? `https://wa.me/${waNumber}` : '#';
+            filtered.forEach(order => {
+                const date = order.timestamp ? new Date(order.timestamp.seconds * 1000).toLocaleDateString('id-ID') : order.date;
 
-            return `
-                <div class="order-row ${isUrgent ? 'urgent' : ''}">
-                    <div class="order-priority ${priorityClass}"></div>
-                    <span class="order-id">${order.id || 'N/A'}</span>
-                    <span class="order-name">${order.namaBisnis || 'Tanpa Nama'}</span>
-                    <span class="order-time ${remaining.hours < 24 ? 'urgent' : ''}">${remaining.text}</span>
-                    <div class="order-actions">
-                        <button class="view" title="View" onclick="viewOrder('${order.id}')">👁️</button>
-                        <button class="delete" title="Delete" onclick="deleteOrder('${order.docId}', '${order.id}')">🗑️</button>
-                    </div>
+                // Status Color Mapping
+                const statusColors = {
+                    'pending': '#ffc107',
+                    'proses': '#3498db',
+                    'selesai': '#2ecc71',
+                    'batal': '#e74c3c'
+                };
+                const statusColor = statusColors[order.status] || '#ffc107';
+
+                const item = document.createElement('div');
+                item.className = 'order-card';
+                item.innerHTML = `
+                <div class="order-header">
+                    <h4>${order.namaBisnis} <small>(${order.id})</small></h4>
+                    <span class="order-date">${date}</span>
+                </div>
+                <!-- Status Dropdown -->
+                <div class="order-status-control" style="margin-bottom:12px;">
+                    <select class="status-select" data-id="${order.docId}" style="
+                        background: rgba(255,255,255,0.05); 
+                        border: 1px solid ${statusColor}; 
+                        color: ${statusColor};
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        cursor: pointer;
+                    ">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>🟡 Pending</option>
+                        <option value="proses" ${order.status === 'proses' ? 'selected' : ''}>🔵 Proses</option>
+                        <option value="selesai" ${order.status === 'selesai' ? 'selected' : ''}>🟢 Selesai</option>
+                        <option value="batal" ${order.status === 'batal' ? 'selected' : ''}>🔴 Batal</option>
+                    </select>
+                </div>
+                <div class="order-details">
+                    <p><strong>Layanan:</strong> ${order.pilarLayanan} - ${order.kategoriLayanan}</p>
+                    <p><strong>Kontak:</strong> ${order.userPhone || '-'}</p>
+                    <p><strong>Budget:</strong> ${order.budget}</p>
+                    <p class="order-desc">"${order.tentangBisnis}"</p>
+                </div>
+                <div class="order-actions">
+                    <button class="btn-wa" onclick="window.open('https://wa.me/6281234567890?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')">Hubungi</button>
+                    <button class="btn-delete" data-id="${order.docId}">Hapus</button>
                 </div>
             `;
-        }).join('');
-    }
-
-    window.viewOrder = function (id) {
-        const order = latestOrders.find(o => o.id === id);
-        if (order) {
-            const pilars = { 'creative': 'Creative Design', 'systems': 'Web & Systems', 'data': 'Data Services' };
-            const pilarTxt = pilars[order.pilarLayanan] || order.pilarLayanan || '-';
-            const kategoriTxt = order.kategoriLayanan || '-';
-            alert(`📋 Order: ${order.id}\n\n🏷️ Nama: ${order.namaBisnis}\n📝 Deskripsi: ${order.tentangBisnis}\n🎯 ${pilarTxt} - ${kategoriTxt}\n📅 Deadline: ${order.deadline}\n💰 Budget: ${order.budget || 'Belum ditentukan'}`);
-        }
-    };
-
-    window.deleteOrder = async function (docId, displayId) {
-        if (confirm(`Hapus order ${displayId}? Tindakan ini permanen di Database.`)) {
-            try {
-                await deleteDoc(doc(db, "orders", docId));
-                showToast(`Order ${displayId} dihapus.`);
-            } catch (e) {
-                console.error(e);
-                alert('Gagal menghapus: ' + e.message);
-            }
-        }
-    };
-
-    function calculateRemainingTime(deadline) {
-        const now = new Date();
-        const deadlineDate = new Date(deadline + 'T23:59:59');
-        const diff = deadlineDate - now;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const days = Math.floor(hours / 24);
-
-        if (hours < 0) return { hours, text: 'OVERDUE' };
-        if (hours < 24) return { hours, text: `${hours}jam` };
-        return { hours, text: `${days}hari` };
-    }
-
-    function getPriorityClass(hours) {
-        if (hours < 0 || hours < 24) return 'p-urgent';
-        if (hours < 72) return 'p-warning';
-        return 'p-safe';
-    }
-}
-
-/* ============================================
-   CMS Inline Editing System
-   ============================================ */
-let cmsModified = {};
-
-function initCmsMode() {
-    const indicator = document.getElementById('cmsIndicator');
-    const exitBtn = document.getElementById('exitCmsMode');
-
-    // Attach to ALL admin triggers (Desktop + Mobile)
-    document.querySelectorAll('.admin-trigger').forEach(btn => {
-        btn.addEventListener('click', enableCmsModeFunc);
-    });
-
-    if (exitBtn) {
-        exitBtn.addEventListener('click', disableCmsMode);
-    }
-
-    // Make all editable elements contenteditable
-    document.querySelectorAll('.editable').forEach(el => {
-        el.addEventListener('focus', function () {
-            if (document.body.classList.contains('cms-mode')) {
-                this.classList.add('editing');
-            }
-        });
-
-        el.addEventListener('blur', function () {
-            this.classList.remove('editing');
-            if (document.body.classList.contains('cms-mode')) {
-                const key = this.dataset.key;
-                if (key) {
-                    cmsModified[key] = this.textContent;
-                    this.classList.add('modified');
+                try {
+                    await deleteDoc(doc(db, "orders", docId));
+                    showToast(`Order ${displayId} dihapus.`);
+                } catch (e) {
+                    console.error(e);
+                    alert('Gagal menghapus: ' + e.message);
                 }
             }
+    };
+
+        function calculateRemainingTime(deadline) {
+            const now = new Date();
+            const deadlineDate = new Date(deadline + 'T23:59:59');
+            const diff = deadlineDate - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const days = Math.floor(hours / 24);
+
+            if (hours < 0) return { hours, text: 'OVERDUE' };
+            if (hours < 24) return { hours, text: `${hours}jam` };
+            return { hours, text: `${days}hari` };
+        }
+
+        function getPriorityClass(hours) {
+            if (hours < 0 || hours < 24) return 'p-urgent';
+            if (hours < 72) return 'p-warning';
+            return 'p-safe';
+        }
+    }
+
+    /* ============================================
+       CMS Inline Editing System
+       ============================================ */
+    let cmsModified = {};
+
+    function initCmsMode() {
+        const indicator = document.getElementById('cmsIndicator');
+        const exitBtn = document.getElementById('exitCmsMode');
+
+        // Attach to ALL admin triggers (Desktop + Mobile)
+        document.querySelectorAll('.admin-trigger').forEach(btn => {
+            btn.addEventListener('click', enableCmsModeFunc);
         });
 
-        el.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                this.blur();
+        if (exitBtn) {
+            exitBtn.addEventListener('click', disableCmsMode);
+        }
+
+        // Make all editable elements contenteditable
+        document.querySelectorAll('.editable').forEach(el => {
+            el.addEventListener('focus', function () {
+                if (document.body.classList.contains('cms-mode')) {
+                    this.classList.add('editing');
+                }
+            });
+
+            el.addEventListener('blur', function () {
+                this.classList.remove('editing');
+                if (document.body.classList.contains('cms-mode')) {
+                    const key = this.dataset.key;
+                    if (key) {
+                        cmsModified[key] = this.textContent;
+                        this.classList.add('modified');
+                    }
+                }
+            });
+
+            el.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.blur();
+                }
+            });
+        });
+    }
+
+    function enableCmsModeFunc() {
+        document.body.classList.add('cms-mode');
+        const indicator = document.getElementById('cmsIndicator');
+        const hoverZone = document.getElementById('cmsHoverZone');
+
+        // Setup hover detection for CMS indicator
+        if (indicator && hoverZone) {
+            // Show indicator when hovering near top
+            const showIndicator = () => indicator.classList.add('visible');
+            const hideIndicator = () => indicator.classList.remove('visible');
+
+            hoverZone.addEventListener('mouseenter', showIndicator);
+            indicator.addEventListener('mouseenter', showIndicator);
+            indicator.addEventListener('mouseleave', hideIndicator);
+
+            // Store listeners for cleanup
+            indicator._showFn = showIndicator;
+            indicator._hideFn = hideIndicator;
+        }
+
+        // Enable contenteditable
+        document.querySelectorAll('.editable').forEach(el => {
+            el.setAttribute('contenteditable', 'true');
+        });
+
+        // Ensure exit button listener is active
+        const exitBtn = document.getElementById('exitCmsMode');
+        if (exitBtn) {
+            exitBtn.removeEventListener('click', disableCmsMode); // Prevent duplicates
+            exitBtn.addEventListener('click', disableCmsMode);
+            // Force pointer events for the button
+            exitBtn.style.pointerEvents = 'auto';
+        }
+
+        showToast('CMS Mode aktif! Gerakkan mouse ke atas layar untuk menu.');
+    }
+
+    function disableCmsMode() {
+        document.body.classList.remove('cms-mode');
+        const indicator = document.getElementById('cmsIndicator');
+        const hoverZone = document.getElementById('cmsHoverZone');
+
+        if (indicator) {
+            indicator.classList.remove('visible');
+            // Remove event listeners if they exist
+            if (indicator._showFn && hoverZone) {
+                hoverZone.removeEventListener('mouseenter', indicator._showFn);
+                indicator.removeEventListener('mouseenter', indicator._showFn);
+                indicator.removeEventListener('mouseleave', indicator._hideFn);
+            }
+        }
+
+        // Disable contenteditable
+        document.querySelectorAll('.editable').forEach(el => {
+            el.setAttribute('contenteditable', 'false');
+            el.classList.remove('editing', 'modified');
+        });
+
+        // Check for unsaved changes
+        if (Object.keys(cmsModified).length > 0) {
+            if (confirm('Ada perubahan yang belum disimpan. Simpan sekarang?')) {
+                saveCmsContent();
+            }
+        }
+
+        cmsModified = {};
+        showToast('CMS Mode dinonaktifkan.');
+    }
+
+    /* ============================================
+       CMS Save/Load Functions
+       ============================================ */
+    function loadCmsContent() {
+        const cmsData = JSON.parse(localStorage.getItem('aspyre_cms') || '{}');
+
+        Object.keys(cmsData).forEach(key => {
+            const el = document.querySelector(`[data-key="${key}"]`);
+            if (el) {
+                el.textContent = cmsData[key];
             }
         });
-    });
-}
-
-function enableCmsModeFunc() {
-    document.body.classList.add('cms-mode');
-    const indicator = document.getElementById('cmsIndicator');
-    const hoverZone = document.getElementById('cmsHoverZone');
-
-    // Setup hover detection for CMS indicator
-    if (indicator && hoverZone) {
-        // Show indicator when hovering near top
-        const showIndicator = () => indicator.classList.add('visible');
-        const hideIndicator = () => indicator.classList.remove('visible');
-
-        hoverZone.addEventListener('mouseenter', showIndicator);
-        indicator.addEventListener('mouseenter', showIndicator);
-        indicator.addEventListener('mouseleave', hideIndicator);
-
-        // Store listeners for cleanup
-        indicator._showFn = showIndicator;
-        indicator._hideFn = hideIndicator;
     }
 
-    // Enable contenteditable
-    document.querySelectorAll('.editable').forEach(el => {
-        el.setAttribute('contenteditable', 'true');
-    });
+    function saveCmsContent() {
+        const cmsData = JSON.parse(localStorage.getItem('aspyre_cms') || '{}');
 
-    // Ensure exit button listener is active
-    const exitBtn = document.getElementById('exitCmsMode');
-    if (exitBtn) {
-        exitBtn.removeEventListener('click', disableCmsMode); // Prevent duplicates
-        exitBtn.addEventListener('click', disableCmsMode);
-        // Force pointer events for the button
-        exitBtn.style.pointerEvents = 'auto';
-    }
-
-    showToast('CMS Mode aktif! Gerakkan mouse ke atas layar untuk menu.');
-}
-
-function disableCmsMode() {
-    document.body.classList.remove('cms-mode');
-    const indicator = document.getElementById('cmsIndicator');
-    const hoverZone = document.getElementById('cmsHoverZone');
-
-    if (indicator) {
-        indicator.classList.remove('visible');
-        // Remove event listeners if they exist
-        if (indicator._showFn && hoverZone) {
-            hoverZone.removeEventListener('mouseenter', indicator._showFn);
-            indicator.removeEventListener('mouseenter', indicator._showFn);
-            indicator.removeEventListener('mouseleave', indicator._hideFn);
-        }
-    }
-
-    // Disable contenteditable
-    document.querySelectorAll('.editable').forEach(el => {
-        el.setAttribute('contenteditable', 'false');
-        el.classList.remove('editing', 'modified');
-    });
-
-    // Check for unsaved changes
-    if (Object.keys(cmsModified).length > 0) {
-        if (confirm('Ada perubahan yang belum disimpan. Simpan sekarang?')) {
-            saveCmsContent();
-        }
-    }
-
-    cmsModified = {};
-    showToast('CMS Mode dinonaktifkan.');
-}
-
-/* ============================================
-   CMS Save/Load Functions
-   ============================================ */
-function loadCmsContent() {
-    const cmsData = JSON.parse(localStorage.getItem('aspyre_cms') || '{}');
-
-    Object.keys(cmsData).forEach(key => {
-        const el = document.querySelector(`[data-key="${key}"]`);
-        if (el) {
-            el.textContent = cmsData[key];
-        }
-    });
-}
-
-function saveCmsContent() {
-    const cmsData = JSON.parse(localStorage.getItem('aspyre_cms') || '{}');
-
-    // Get all current editable content
-    document.querySelectorAll('.editable[data-key]').forEach(el => {
-        cmsData[el.dataset.key] = el.textContent;
-    });
-
-    localStorage.setItem('aspyre_cms', JSON.stringify(cmsData));
-
-    // Clear modified markers
-    document.querySelectorAll('.editable.modified').forEach(el => {
-        el.classList.remove('modified');
-    });
-
-    cmsModified = {};
-}
-
-/* ============================================
-   Language Toggle
-   ============================================ */
-function initLanguageToggle() {
-    const toggle = document.querySelector('.lang-toggle');
-    if (!toggle) return;
-
-    let currentLang = 'id';
-
-    toggle.addEventListener('click', () => {
-        currentLang = currentLang === 'id' ? 'en' : 'id';
-        const spans = toggle.querySelectorAll('span:not(.divider)');
-        spans.forEach(span => {
-            span.classList.remove('active');
-            if (span.textContent === currentLang.toUpperCase()) {
-                span.classList.add('active');
-            }
+        // Get all current editable content
+        document.querySelectorAll('.editable[data-key]').forEach(el => {
+            cmsData[el.dataset.key] = el.textContent;
         });
-        showToast(currentLang === 'en' ? 'Switched to English' : 'Beralih ke Bahasa Indonesia');
-    });
-}
 
-/* ============================================
-   Magnetic Buttons
-   ============================================ */
-function initMagneticButtons() {
-    const buttons = document.querySelectorAll('.magnetic-btn');
+        localStorage.setItem('aspyre_cms', JSON.stringify(cmsData));
 
-    buttons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            btn.style.setProperty('--x', x + '%');
-            btn.style.setProperty('--y', y + '%');
+        // Clear modified markers
+        document.querySelectorAll('.editable.modified').forEach(el => {
+            el.classList.remove('modified');
         });
-    });
-}
 
-/* ============================================
-   Toast Notification
-   ============================================ */
-function showToast(message) {
-    const existing = document.querySelector('.toast');
-    if (existing) existing.remove();
+        cmsModified = {};
+    }
 
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    toast.style.cssText = `
+    /* ============================================
+       Language Toggle
+       ============================================ */
+    function initLanguageToggle() {
+        const toggle = document.querySelector('.lang-toggle');
+        if (!toggle) return;
+
+        let currentLang = 'id';
+
+        toggle.addEventListener('click', () => {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            const spans = toggle.querySelectorAll('span:not(.divider)');
+            spans.forEach(span => {
+                span.classList.remove('active');
+                if (span.textContent === currentLang.toUpperCase()) {
+                    span.classList.add('active');
+                }
+            });
+            showToast(currentLang === 'en' ? 'Switched to English' : 'Beralih ke Bahasa Indonesia');
+        });
+    }
+
+    /* ============================================
+       Magnetic Buttons
+       ============================================ */
+    function initMagneticButtons() {
+        const buttons = document.querySelectorAll('.magnetic-btn');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                btn.style.setProperty('--x', x + '%');
+                btn.style.setProperty('--y', y + '%');
+            });
+        });
+    }
+
+    /* ============================================
+       Toast Notification
+       ============================================ */
+    function showToast(message) {
+        const existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        toast.style.cssText = `
         position: fixed;
         bottom: 24px;
         left: 50%;
@@ -790,243 +806,243 @@ function showToast(message) {
         border: 1px solid rgba(232, 90, 79, 0.3);
     `;
 
-    document.body.appendChild(toast);
+        document.body.appendChild(toast);
 
-    setTimeout(() => {
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        toast.style.opacity = '1';
-    }, 10);
+        setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+            toast.style.opacity = '1';
+        }, 10);
 
-    setTimeout(() => {
-        toast.style.transform = 'translateX(-50%) translateY(100px)';
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-/* ============================================
-   Navbar Scroll Effect
-   ============================================ */
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.main-nav');
-    if (!nav) return;
-    nav.style.boxShadow = window.scrollY > 100 ? '0 4px 20px rgba(0, 0, 0, 0.2)' : 'none';
-});
-
-/* ============================================
-   Counter Animation
-   ============================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    const proofItems = document.querySelectorAll('.proof-item');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const number = entry.target.querySelector('.proof-number');
-                if (number) {
-                    const target = parseInt(number.textContent);
-                    if (!isNaN(target)) {
-                        animateNumber(number, target);
-                    }
-                }
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    proofItems.forEach(item => observer.observe(item));
-});
-
-function animateNumber(element, target) {
-    const duration = 1500;
-    const startTime = performance.now();
-
-    function update(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = 1 - Math.pow(1 - progress, 3);
-        element.textContent = Math.floor(target * easeProgress);
-        if (progress < 1) requestAnimationFrame(update);
-        else element.textContent = target;
+        setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(100px)';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 
-    requestAnimationFrame(update);
-}
+    /* ============================================
+       Navbar Scroll Effect
+       ============================================ */
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.main-nav');
+        if (!nav) return;
+        nav.style.boxShadow = window.scrollY > 100 ? '0 4px 20px rgba(0, 0, 0, 0.2)' : 'none';
+    });
 
-/* ============================================
-   Portfolio Albums System - Interactive Gallery
-   ============================================ */
-function initPortfolioAlbums() {
-    // Dummy Albums Data - Can be extended via CMS
-    const albumsData = [
-        {
-            id: 'desa-cenrana',
-            title: 'Website Desa Cenrana',
-            category: 'Web Platform',
-            description: 'Platform digital terintegrasi untuk Desa Cenrana. Memungkinkan warga menyampaikan aspirasi, melihat agenda desa, mengakses layanan UMKM lokal, dan mendapatkan informasi desa secara real-time.',
-            tech: ['Next.js', 'Supabase', 'Vercel', 'TailwindCSS'],
-            link: 'https://desacenrana.vercel.app',
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Cenrana+Home',
-                'https://via.placeholder.com/400x300/232328/6b9080?text=Aspirasi+Page',
-                'https://via.placeholder.com/400x300/2d2d35/f4a261?text=UMKM+Lapak'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Halaman Utama' },
-                { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Aspirasi', caption: 'Form Aspirasi Warga' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=UMKM', caption: 'Katalog UMKM Lokal' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Agenda', caption: 'Agenda Desa' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Admin', caption: 'Dashboard Admin' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Mobile', caption: 'Tampilan Mobile' }
-            ]
-        },
-        {
-            id: 'brand-identity',
-            title: 'Brand Identity Collection',
-            category: 'Branding',
-            description: 'Koleksi desain identitas brand untuk berbagai klien. Meliputi logo, banner promosi, profil sosial media, dan materi pemasaran digital yang unik dan memorable.',
-            tech: ['Logo Design', 'Brand Guidelines', 'Social Media Kit', 'Print Ready'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/f4a261?text=Logo+Design',
-                'https://via.placeholder.com/400x300/232328/e85a4f?text=Brand+Kit',
-                'https://via.placeholder.com/400x300/2d2d35/6b9080?text=Social+Media'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Logo+1', caption: 'Logo Kedai Kopi' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Logo+2', caption: 'Logo Startup Tech' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Banner', caption: 'Banner Promosi' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Social', caption: 'Instagram Feed' },
-                { src: 'https://via.placeholder.com/600x400/232328/f4a261?text=Cards', caption: 'Business Cards' }
-            ]
-        },
-        {
-            id: 'data-services',
-            title: 'Data Management',
-            category: 'Data Services',
-            description: 'Layanan manajemen data profesional termasuk entri data massal, digitalisasi dokumen, pembuatan laporan, dan pembersihan data dengan akurasi tinggi.',
-            tech: ['Excel', 'Google Sheets', 'Data Visualization', 'Automation'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Data+Entry',
-                'https://via.placeholder.com/400x300/232328/a4c3b2?text=Reports',
-                'https://via.placeholder.com/400x300/2d2d35/e85a4f?text=Charts'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Spreadsheet', caption: 'Data Entry Project' },
-                { src: 'https://via.placeholder.com/600x400/232328/a4c3b2?text=Dashboard', caption: 'Dashboard Report' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/e85a4f?text=Charts', caption: 'Data Visualization' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Cleaning', caption: 'Data Cleaning Result' }
-            ]
-        },
-        {
-            id: 'ecommerce',
-            title: 'E-Commerce Solutions',
-            category: 'Web Store',
-            description: 'Solusi toko online lengkap dengan katalog produk interaktif, integrasi WhatsApp order, dan sistem manajemen pesanan yang mudah digunakan.',
-            tech: ['Product Catalog', 'WhatsApp API', 'Payment Gateway', 'Responsive'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Store+Home',
-                'https://via.placeholder.com/400x300/232328/f4a261?text=Products',
-                'https://via.placeholder.com/400x300/2d2d35/6b9080?text=Cart'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Store Homepage' },
-                { src: 'https://via.placeholder.com/600x400/232328/f4a261?text=Catalog', caption: 'Product Catalog' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Details', caption: 'Product Details' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Cart', caption: 'Shopping Cart' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Checkout', caption: 'WhatsApp Checkout' }
-            ]
-        },
-        {
-            id: 'social-media',
-            title: 'Social Media Kit',
-            category: 'Digital Marketing',
-            description: 'Paket lengkap konten sosial media untuk branding dan marketing digital. Termasuk template Instagram, story, dan highlight covers.',
-            tech: ['Instagram Feed', 'Story Templates', 'Carousel', 'Highlight Covers'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/a4c3b2?text=IG+Feed',
-                'https://via.placeholder.com/400x300/232328/e85a4f?text=Story',
-                'https://via.placeholder.com/400x300/2d2d35/f4a261?text=Carousel'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Feed+Grid', caption: 'Instagram Feed Grid' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Story+1', caption: 'Story Template' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=Carousel', caption: 'Carousel Post' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Highlights', caption: 'Highlight Covers' }
-            ]
-        },
-        {
-            id: 'uiux-design',
-            title: 'UI/UX Design',
-            category: 'App Design',
-            description: 'Desain antarmuka aplikasi mobile dan web dengan fokus pada user experience yang intuitif dan visual yang premium.',
-            tech: ['Figma', 'Wireframing', 'Prototyping', 'User Research'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Dashboard',
-                'https://via.placeholder.com/400x300/232328/a4c3b2?text=Mobile+App',
-                'https://via.placeholder.com/400x300/2d2d35/e85a4f?text=Wireframe'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Dashboard', caption: 'Dashboard Design' },
-                { src: 'https://via.placeholder.com/600x400/232328/a4c3b2?text=Mobile', caption: 'Mobile App Screens' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/e85a4f?text=Wireframe', caption: 'Wireframe Concept' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Prototype', caption: 'Interactive Prototype' },
-                { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Components', caption: 'UI Components' }
-            ]
-        }
-    ];
+    /* ============================================
+       Counter Animation
+       ============================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+        const proofItems = document.querySelectorAll('.proof-item');
 
-    // Load saved albums from localStorage (CMS)
-    let albums = JSON.parse(localStorage.getItem('aspyre_albums')) || albumsData;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const number = entry.target.querySelector('.proof-number');
+                    if (number) {
+                        const target = parseInt(number.textContent);
+                        if (!isNaN(target)) {
+                            animateNumber(number, target);
+                        }
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
 
-    // DOM Elements
-    const albumsContainer = document.getElementById('portfolioAlbums');
-    const albumsWrapper = document.querySelector('.portfolio-albums-wrapper');
-    const modal = document.getElementById('album-modal');
-    const lightbox = document.getElementById('image-lightbox');
-    const scrollNav = document.querySelector('.album-scroll-nav');
-    const scrollDots = document.getElementById('scrollDots');
-    const addAlbumBtn = document.getElementById('addAlbumBtn');
+        proofItems.forEach(item => observer.observe(item));
+    });
 
-    // Edit Modal Elements
-    const editModal = document.getElementById('album-edit-modal');
-    const editForm = document.getElementById('albumEditForm');
+    function animateNumber(element, target) {
+        const duration = 1500;
+        const startTime = performance.now();
 
-    if (!albumsContainer) return;
-
-    // Current state
-    let currentAlbumItems = [];
-    let currentImageIndex = 0;
-    let currentEditAlbum = null;
-    let currentEditTags = [];
-    let currentEditPreviews = [];
-    let currentEditGallery = [];
-
-    // Auto-scroll state
-    let autoScrollInterval = null;
-
-    // Render Albums
-    function renderAlbums() {
-        albumsContainer.innerHTML = '';
-
-        // Check if scrollable (more than 6 albums for 3x2 grid)
-        if (albums.length > 6) {
-            albumsContainer.classList.add('scrollable');
-        } else {
-            albumsContainer.classList.remove('scrollable');
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            element.textContent = Math.floor(target * easeProgress);
+            if (progress < 1) requestAnimationFrame(update);
+            else element.textContent = target;
         }
 
-        albums.forEach((album, index) => {
-            const card = document.createElement('div');
-            card.className = 'album-card animate-on-scroll';
-            card.dataset.albumId = album.id;
-            card.style.animationDelay = `${index * 0.08}s`;
+        requestAnimationFrame(update);
+    }
 
-            card.innerHTML = `
+    /* ============================================
+       Portfolio Albums System - Interactive Gallery
+       ============================================ */
+    function initPortfolioAlbums() {
+        // Dummy Albums Data - Can be extended via CMS
+        const albumsData = [
+            {
+                id: 'desa-cenrana',
+                title: 'Website Desa Cenrana',
+                category: 'Web Platform',
+                description: 'Platform digital terintegrasi untuk Desa Cenrana. Memungkinkan warga menyampaikan aspirasi, melihat agenda desa, mengakses layanan UMKM lokal, dan mendapatkan informasi desa secara real-time.',
+                tech: ['Next.js', 'Supabase', 'Vercel', 'TailwindCSS'],
+                link: 'https://desacenrana.vercel.app',
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Cenrana+Home',
+                    'https://via.placeholder.com/400x300/232328/6b9080?text=Aspirasi+Page',
+                    'https://via.placeholder.com/400x300/2d2d35/f4a261?text=UMKM+Lapak'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Halaman Utama' },
+                    { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Aspirasi', caption: 'Form Aspirasi Warga' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=UMKM', caption: 'Katalog UMKM Lokal' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Agenda', caption: 'Agenda Desa' },
+                    { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Admin', caption: 'Dashboard Admin' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Mobile', caption: 'Tampilan Mobile' }
+                ]
+            },
+            {
+                id: 'brand-identity',
+                title: 'Brand Identity Collection',
+                category: 'Branding',
+                description: 'Koleksi desain identitas brand untuk berbagai klien. Meliputi logo, banner promosi, profil sosial media, dan materi pemasaran digital yang unik dan memorable.',
+                tech: ['Logo Design', 'Brand Guidelines', 'Social Media Kit', 'Print Ready'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/f4a261?text=Logo+Design',
+                    'https://via.placeholder.com/400x300/232328/e85a4f?text=Brand+Kit',
+                    'https://via.placeholder.com/400x300/2d2d35/6b9080?text=Social+Media'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Logo+1', caption: 'Logo Kedai Kopi' },
+                    { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Logo+2', caption: 'Logo Startup Tech' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Banner', caption: 'Banner Promosi' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Social', caption: 'Instagram Feed' },
+                    { src: 'https://via.placeholder.com/600x400/232328/f4a261?text=Cards', caption: 'Business Cards' }
+                ]
+            },
+            {
+                id: 'data-services',
+                title: 'Data Management',
+                category: 'Data Services',
+                description: 'Layanan manajemen data profesional termasuk entri data massal, digitalisasi dokumen, pembuatan laporan, dan pembersihan data dengan akurasi tinggi.',
+                tech: ['Excel', 'Google Sheets', 'Data Visualization', 'Automation'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Data+Entry',
+                    'https://via.placeholder.com/400x300/232328/a4c3b2?text=Reports',
+                    'https://via.placeholder.com/400x300/2d2d35/e85a4f?text=Charts'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Spreadsheet', caption: 'Data Entry Project' },
+                    { src: 'https://via.placeholder.com/600x400/232328/a4c3b2?text=Dashboard', caption: 'Dashboard Report' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/e85a4f?text=Charts', caption: 'Data Visualization' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Cleaning', caption: 'Data Cleaning Result' }
+                ]
+            },
+            {
+                id: 'ecommerce',
+                title: 'E-Commerce Solutions',
+                category: 'Web Store',
+                description: 'Solusi toko online lengkap dengan katalog produk interaktif, integrasi WhatsApp order, dan sistem manajemen pesanan yang mudah digunakan.',
+                tech: ['Product Catalog', 'WhatsApp API', 'Payment Gateway', 'Responsive'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Store+Home',
+                    'https://via.placeholder.com/400x300/232328/f4a261?text=Products',
+                    'https://via.placeholder.com/400x300/2d2d35/6b9080?text=Cart'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Store Homepage' },
+                    { src: 'https://via.placeholder.com/600x400/232328/f4a261?text=Catalog', caption: 'Product Catalog' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Details', caption: 'Product Details' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Cart', caption: 'Shopping Cart' },
+                    { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Checkout', caption: 'WhatsApp Checkout' }
+                ]
+            },
+            {
+                id: 'social-media',
+                title: 'Social Media Kit',
+                category: 'Digital Marketing',
+                description: 'Paket lengkap konten sosial media untuk branding dan marketing digital. Termasuk template Instagram, story, dan highlight covers.',
+                tech: ['Instagram Feed', 'Story Templates', 'Carousel', 'Highlight Covers'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/a4c3b2?text=IG+Feed',
+                    'https://via.placeholder.com/400x300/232328/e85a4f?text=Story',
+                    'https://via.placeholder.com/400x300/2d2d35/f4a261?text=Carousel'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Feed+Grid', caption: 'Instagram Feed Grid' },
+                    { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Story+1', caption: 'Story Template' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=Carousel', caption: 'Carousel Post' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Highlights', caption: 'Highlight Covers' }
+                ]
+            },
+            {
+                id: 'uiux-design',
+                title: 'UI/UX Design',
+                category: 'App Design',
+                description: 'Desain antarmuka aplikasi mobile dan web dengan fokus pada user experience yang intuitif dan visual yang premium.',
+                tech: ['Figma', 'Wireframing', 'Prototyping', 'User Research'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Dashboard',
+                    'https://via.placeholder.com/400x300/232328/a4c3b2?text=Mobile+App',
+                    'https://via.placeholder.com/400x300/2d2d35/e85a4f?text=Wireframe'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Dashboard', caption: 'Dashboard Design' },
+                    { src: 'https://via.placeholder.com/600x400/232328/a4c3b2?text=Mobile', caption: 'Mobile App Screens' },
+                    { src: 'https://via.placeholder.com/600x400/2d2d35/e85a4f?text=Wireframe', caption: 'Wireframe Concept' },
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Prototype', caption: 'Interactive Prototype' },
+                    { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Components', caption: 'UI Components' }
+                ]
+            }
+        ];
+
+        // Load saved albums from localStorage (CMS)
+        let albums = JSON.parse(localStorage.getItem('aspyre_albums')) || albumsData;
+
+        // DOM Elements
+        const albumsContainer = document.getElementById('portfolioAlbums');
+        const albumsWrapper = document.querySelector('.portfolio-albums-wrapper');
+        const modal = document.getElementById('album-modal');
+        const lightbox = document.getElementById('image-lightbox');
+        const scrollNav = document.querySelector('.album-scroll-nav');
+        const scrollDots = document.getElementById('scrollDots');
+        const addAlbumBtn = document.getElementById('addAlbumBtn');
+
+        // Edit Modal Elements
+        const editModal = document.getElementById('album-edit-modal');
+        const editForm = document.getElementById('albumEditForm');
+
+        if (!albumsContainer) return;
+
+        // Current state
+        let currentAlbumItems = [];
+        let currentImageIndex = 0;
+        let currentEditAlbum = null;
+        let currentEditTags = [];
+        let currentEditPreviews = [];
+        let currentEditGallery = [];
+
+        // Auto-scroll state
+        let autoScrollInterval = null;
+
+        // Render Albums
+        function renderAlbums() {
+            albumsContainer.innerHTML = '';
+
+            // Check if scrollable (more than 6 albums for 3x2 grid)
+            if (albums.length > 6) {
+                albumsContainer.classList.add('scrollable');
+            } else {
+                albumsContainer.classList.remove('scrollable');
+            }
+
+            albums.forEach((album, index) => {
+                const card = document.createElement('div');
+                card.className = 'album-card animate-on-scroll';
+                card.dataset.albumId = album.id;
+                card.style.animationDelay = `${index * 0.08}s`;
+
+                card.innerHTML = `
                 <button class="album-edit-btn" data-edit-id="${album.id}" title="Edit Album">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -1063,218 +1079,218 @@ function initPortfolioAlbums() {
                 </div>
             `;
 
-            // Edit button click (stop propagation)
-            const editBtn = card.querySelector('.album-edit-btn');
-            editBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openEditModal(album);
+                // Edit button click (stop propagation)
+                const editBtn = card.querySelector('.album-edit-btn');
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openEditModal(album);
+                });
+
+                // Card click - open album modal
+                card.addEventListener('click', () => openAlbumModal(album));
+
+                // Add spotlight effect listener
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+
+                albumsContainer.appendChild(card);
             });
 
-            // Card click - open album modal
-            card.addEventListener('click', () => openAlbumModal(album));
+            // Handle scroll navigation visibility
+            updateScrollNav();
 
-            // Add spotlight effect listener
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
+            // Re-init scroll animations for new elements
+            initScrollAnimationsForAlbums();
+
+            // Init auto-scroll
+            initAutoScroll();
+        }
+
+        // Initialize scroll animations for album cards
+        function initScrollAnimationsForAlbums() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.album-card.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Auto-scroll when cursor at edges using requestAnimationFrame for smoothness
+        function initAutoScroll() {
+            if (!albumsWrapper || !albumsContainer.classList.contains('scrollable')) return;
+
+            let scrollSpeed = 0;
+            let isScrolling = false;
+            let animationFrameId = null;
+
+            const edgeZone = 120; // Wider detection zone
+            const maxSpeed = 10;   // Faster max speed
+
+            // Scroll loop function
+            const scrollLoop = () => {
+                if (Math.abs(scrollSpeed) > 0.1) {
+                    albumsContainer.scrollLeft += scrollSpeed;
+
+                    // Boundary checks
+                    if (albumsContainer.scrollLeft <= 0 && scrollSpeed < 0) {
+                        scrollSpeed = 0;
+                    } else if (albumsContainer.scrollLeft >= albumsContainer.scrollWidth - albumsContainer.clientWidth && scrollSpeed > 0) {
+                        scrollSpeed = 0;
+                    }
+
+                    animationFrameId = requestAnimationFrame(scrollLoop);
+                } else {
+                    isScrolling = false;
+                    albumsWrapper.classList.remove('can-scroll-left', 'can-scroll-right');
+                }
+            };
+
+            // Mouse move handler
+            function handleMouseMove(e) {
+                const rect = albumsWrapper.getBoundingClientRect();
                 const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
+                const width = rect.width;
 
-            albumsContainer.appendChild(card);
-        });
-
-        // Handle scroll navigation visibility
-        updateScrollNav();
-
-        // Re-init scroll animations for new elements
-        initScrollAnimationsForAlbums();
-
-        // Init auto-scroll
-        initAutoScroll();
-    }
-
-    // Initialize scroll animations for album cards
-    function initScrollAnimationsForAlbums() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.album-card.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-    }
-
-    // Auto-scroll when cursor at edges using requestAnimationFrame for smoothness
-    function initAutoScroll() {
-        if (!albumsWrapper || !albumsContainer.classList.contains('scrollable')) return;
-
-        let scrollSpeed = 0;
-        let isScrolling = false;
-        let animationFrameId = null;
-
-        const edgeZone = 120; // Wider detection zone
-        const maxSpeed = 10;   // Faster max speed
-
-        // Scroll loop function
-        const scrollLoop = () => {
-            if (Math.abs(scrollSpeed) > 0.1) {
-                albumsContainer.scrollLeft += scrollSpeed;
-
-                // Boundary checks
-                if (albumsContainer.scrollLeft <= 0 && scrollSpeed < 0) {
+                // Calculate speed based on distance from edge
+                if (x < edgeZone) {
+                    // Left edge
+                    const intensity = 1 - (x / edgeZone);
+                    scrollSpeed = -maxSpeed * intensity * intensity;
+                    albumsWrapper.classList.add('can-scroll-left');
+                    albumsWrapper.classList.remove('can-scroll-right');
+                } else if (x > width - edgeZone) {
+                    // Right edge
+                    const intensity = 1 - ((width - x) / edgeZone);
+                    scrollSpeed = maxSpeed * intensity * intensity;
+                    albumsWrapper.classList.add('can-scroll-right');
+                    albumsWrapper.classList.remove('can-scroll-left');
+                } else {
                     scrollSpeed = 0;
-                } else if (albumsContainer.scrollLeft >= albumsContainer.scrollWidth - albumsContainer.clientWidth && scrollSpeed > 0) {
-                    scrollSpeed = 0;
+                    albumsWrapper.classList.remove('can-scroll-left', 'can-scroll-right');
                 }
 
-                animationFrameId = requestAnimationFrame(scrollLoop);
-            } else {
-                isScrolling = false;
-                albumsWrapper.classList.remove('can-scroll-left', 'can-scroll-right');
+                if (Math.abs(scrollSpeed) > 0.1 && !isScrolling) {
+                    isScrolling = true;
+                    scrollLoop();
+                }
             }
-        };
 
-        // Mouse move handler
-        function handleMouseMove(e) {
-            const rect = albumsWrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const width = rect.width;
-
-            // Calculate speed based on distance from edge
-            if (x < edgeZone) {
-                // Left edge
-                const intensity = 1 - (x / edgeZone);
-                scrollSpeed = -maxSpeed * intensity * intensity;
-                albumsWrapper.classList.add('can-scroll-left');
-                albumsWrapper.classList.remove('can-scroll-right');
-            } else if (x > width - edgeZone) {
-                // Right edge
-                const intensity = 1 - ((width - x) / edgeZone);
-                scrollSpeed = maxSpeed * intensity * intensity;
-                albumsWrapper.classList.add('can-scroll-right');
-                albumsWrapper.classList.remove('can-scroll-left');
-            } else {
+            // Mouse leave handler
+            function handleMouseLeave() {
                 scrollSpeed = 0;
                 albumsWrapper.classList.remove('can-scroll-left', 'can-scroll-right');
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                isScrolling = false;
             }
 
-            if (Math.abs(scrollSpeed) > 0.1 && !isScrolling) {
-                isScrolling = true;
-                scrollLoop();
-            }
+            // Remove old listeners if any (using named functions helps if we stored them, but here we just add new ones)
+            // Ideally we should clean up, but for now we'll just add new ones. 
+            // To prevent duplicate listeners on re-render, we can clone the node or remove all listeners if we tracked them.
+            // A simple way is to use the 'onmousemove' property, but that overrides others.
+            // Better: use a flag or check if listeners are attached. 
+            // For this iteration, I'll rely on renderAlbums clearing the innerHTML which doesn't affect the wrapper listeners.
+            // WAIT: albumsWrapper is outside renderAlbums. So every renderAlbums call adds NEW listeners to albumsWrapper!
+            // This causes the "unstable" behavior (multiple loops running).
+
+            // FIX: Remove previous listeners using a stored reference on the element
+            if (albumsWrapper._moveHandler) albumsWrapper.removeEventListener('mousemove', albumsWrapper._moveHandler);
+            if (albumsWrapper._leaveHandler) albumsWrapper.removeEventListener('mouseleave', albumsWrapper._leaveHandler);
+
+            albumsWrapper._moveHandler = handleMouseMove;
+            albumsWrapper._leaveHandler = handleMouseLeave;
+
+            albumsWrapper.addEventListener('mousemove', handleMouseMove);
+            albumsWrapper.addEventListener('mouseleave', handleMouseLeave);
         }
 
-        // Mouse leave handler
-        function handleMouseLeave() {
-            scrollSpeed = 0;
-            albumsWrapper.classList.remove('can-scroll-left', 'can-scroll-right');
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            isScrolling = false;
-        }
+        // Update scroll navigation
+        function updateScrollNav() {
+            if (albums.length > 4) {
+                albumsContainer.classList.add('scrollable');
+                scrollNav?.classList.add('visible');
 
-        // Remove old listeners if any (using named functions helps if we stored them, but here we just add new ones)
-        // Ideally we should clean up, but for now we'll just add new ones. 
-        // To prevent duplicate listeners on re-render, we can clone the node or remove all listeners if we tracked them.
-        // A simple way is to use the 'onmousemove' property, but that overrides others.
-        // Better: use a flag or check if listeners are attached. 
-        // For this iteration, I'll rely on renderAlbums clearing the innerHTML which doesn't affect the wrapper listeners.
-        // WAIT: albumsWrapper is outside renderAlbums. So every renderAlbums call adds NEW listeners to albumsWrapper!
-        // This causes the "unstable" behavior (multiple loops running).
+                // Create dots
+                if (scrollDots) {
+                    const pageCount = Math.ceil(albums.length / 4);
+                    scrollDots.innerHTML = Array(pageCount).fill(0).map((_, i) =>
+                        `<div class="scroll-dot ${i === 0 ? 'active' : ''}" data-page="${i}"></div>`
+                    ).join('');
 
-        // FIX: Remove previous listeners using a stored reference on the element
-        if (albumsWrapper._moveHandler) albumsWrapper.removeEventListener('mousemove', albumsWrapper._moveHandler);
-        if (albumsWrapper._leaveHandler) albumsWrapper.removeEventListener('mouseleave', albumsWrapper._leaveHandler);
-
-        albumsWrapper._moveHandler = handleMouseMove;
-        albumsWrapper._leaveHandler = handleMouseLeave;
-
-        albumsWrapper.addEventListener('mousemove', handleMouseMove);
-        albumsWrapper.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    // Update scroll navigation
-    function updateScrollNav() {
-        if (albums.length > 4) {
-            albumsContainer.classList.add('scrollable');
-            scrollNav?.classList.add('visible');
-
-            // Create dots
-            if (scrollDots) {
-                const pageCount = Math.ceil(albums.length / 4);
-                scrollDots.innerHTML = Array(pageCount).fill(0).map((_, i) =>
-                    `<div class="scroll-dot ${i === 0 ? 'active' : ''}" data-page="${i}"></div>`
-                ).join('');
-
-                // Dot click handlers
-                scrollDots.querySelectorAll('.scroll-dot').forEach(dot => {
-                    dot.addEventListener('click', () => {
-                        const page = parseInt(dot.dataset.page);
-                        scrollToPage(page);
+                    // Dot click handlers
+                    scrollDots.querySelectorAll('.scroll-dot').forEach(dot => {
+                        dot.addEventListener('click', () => {
+                            const page = parseInt(dot.dataset.page);
+                            scrollToPage(page);
+                        });
                     });
-                });
+                }
+            } else {
+                albumsContainer.classList.remove('scrollable');
+                scrollNav?.classList.remove('visible');
             }
-        } else {
-            albumsContainer.classList.remove('scrollable');
-            scrollNav?.classList.remove('visible');
         }
-    }
 
-    // Scroll to page
-    function scrollToPage(page) {
-        const cardWidth = albumsContainer.querySelector('.album-card')?.offsetWidth || 400;
-        const gap = 28;
-        const scrollAmount = page * (cardWidth * 2 + gap * 2);
-        albumsContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        // Scroll to page
+        function scrollToPage(page) {
+            const cardWidth = albumsContainer.querySelector('.album-card')?.offsetWidth || 400;
+            const gap = 28;
+            const scrollAmount = page * (cardWidth * 2 + gap * 2);
+            albumsContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
 
-        // Update dots
-        scrollDots?.querySelectorAll('.scroll-dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === page);
+            // Update dots
+            scrollDots?.querySelectorAll('.scroll-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === page);
+            });
+        }
+
+        // Scroll navigation buttons
+        document.querySelector('.scroll-prev')?.addEventListener('click', () => {
+            albumsContainer.scrollBy({ left: -400, behavior: 'smooth' });
         });
-    }
 
-    // Scroll navigation buttons
-    document.querySelector('.scroll-prev')?.addEventListener('click', () => {
-        albumsContainer.scrollBy({ left: -400, behavior: 'smooth' });
-    });
+        document.querySelector('.scroll-next')?.addEventListener('click', () => {
+            albumsContainer.scrollBy({ left: 400, behavior: 'smooth' });
+        });
 
-    document.querySelector('.scroll-next')?.addEventListener('click', () => {
-        albumsContainer.scrollBy({ left: 400, behavior: 'smooth' });
-    });
+        // Open Album Modal
+        function openAlbumModal(album) {
+            if (!modal) return;
 
-    // Open Album Modal
-    function openAlbumModal(album) {
-        if (!modal) return;
+            currentAlbumItems = album.items;
 
-        currentAlbumItems = album.items;
+            // Populate modal
+            modal.querySelector('.album-modal-tag').textContent = album.category;
+            modal.querySelector('.album-modal-title').textContent = album.title;
+            modal.querySelector('.album-modal-desc').textContent = album.description;
 
-        // Populate modal
-        modal.querySelector('.album-modal-tag').textContent = album.category;
-        modal.querySelector('.album-modal-title').textContent = album.title;
-        modal.querySelector('.album-modal-desc').textContent = album.description;
+            // Tech stack
+            const techStack = modal.querySelector('.album-tech-stack');
+            techStack.innerHTML = album.tech.map(t => `<span>${t}</span>`).join('');
 
-        // Tech stack
-        const techStack = modal.querySelector('.album-tech-stack');
-        techStack.innerHTML = album.tech.map(t => `<span>${t}</span>`).join('');
+            // Visit link
+            const visitLink = document.getElementById('albumVisitLink');
+            if (album.link) {
+                visitLink.href = album.link;
+                visitLink.style.display = 'inline-flex';
+            } else {
+                visitLink.style.display = 'none';
+            }
 
-        // Visit link
-        const visitLink = document.getElementById('albumVisitLink');
-        if (album.link) {
-            visitLink.href = album.link;
-            visitLink.style.display = 'inline-flex';
-        } else {
-            visitLink.style.display = 'none';
-        }
-
-        // Gallery
-        const gallery = document.getElementById('albumGalleryGrid');
-        gallery.innerHTML = album.items.map((item, index) => `
+            // Gallery
+            const gallery = document.getElementById('albumGalleryGrid');
+            gallery.innerHTML = album.items.map((item, index) => `
             <div class="gallery-item" data-index="${index}">
                 <img src="${item.src}" alt="${item.caption}" loading="lazy">
                 <div class="gallery-zoom-icon">
@@ -1289,435 +1305,524 @@ function initPortfolioAlbums() {
             </div>
         `).join('');
 
-        // Gallery item click - open lightbox
-        gallery.querySelectorAll('.gallery-item').forEach(item => {
-            item.addEventListener('click', () => {
-                openLightbox(parseInt(item.dataset.index));
+            // Gallery item click - open lightbox
+            gallery.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    openLightbox(parseInt(item.dataset.index));
+                });
             });
+
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Album Modal
+        function closeAlbumModal() {
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Modal close handlers
+        modal?.querySelector('.album-modal-close')?.addEventListener('click', closeAlbumModal);
+        modal?.querySelector('.album-modal-backdrop')?.addEventListener('click', closeAlbumModal);
+
+        // Open Lightbox
+        function openLightbox(index) {
+            if (!lightbox) return;
+
+            currentImageIndex = index;
+            updateLightboxImage();
+            lightbox.classList.add('active');
+        }
+
+        // Update Lightbox Image
+        function updateLightboxImage() {
+            if (!lightbox || !currentAlbumItems[currentImageIndex]) return;
+
+            const item = currentAlbumItems[currentImageIndex];
+            const img = document.getElementById('lightboxImage');
+            const caption = document.getElementById('lightboxCaption');
+            const counter = document.getElementById('lightboxCounter');
+
+            img.src = item.src;
+            img.alt = item.caption;
+            caption.textContent = item.caption;
+            counter.textContent = `${currentImageIndex + 1} / ${currentAlbumItems.length}`;
+        }
+
+        // Lightbox Navigation
+        function lightboxPrev() {
+            currentImageIndex = (currentImageIndex - 1 + currentAlbumItems.length) % currentAlbumItems.length;
+            updateLightboxImage();
+        }
+
+        function lightboxNext() {
+            currentImageIndex = (currentImageIndex + 1) % currentAlbumItems.length;
+            updateLightboxImage();
+        }
+
+        // Close Lightbox
+        function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.remove('active');
+        }
+
+        // Lightbox event listeners
+        lightbox?.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+        lightbox?.querySelector('.lightbox-prev')?.addEventListener('click', lightboxPrev);
+        lightbox?.querySelector('.lightbox-next')?.addEventListener('click', lightboxNext);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox?.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') lightboxPrev();
+                if (e.key === 'ArrowRight') lightboxNext();
+            } else if (modal?.classList.contains('active')) {
+                if (e.key === 'Escape') closeAlbumModal();
+            } else if (editModal?.classList.contains('active')) {
+                if (e.key === 'Escape') closeEditModal();
+            }
         });
 
-        // Show modal
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+        // ==========================================
+        // CMS: Album Edit Modal Functions
+        // ==========================================
 
-    // Close Album Modal
-    function closeAlbumModal() {
-        if (!modal) return;
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+        // Open Edit Modal
+        function openEditModal(album) {
+            if (!editModal) return;
 
-    // Modal close handlers
-    modal?.querySelector('.album-modal-close')?.addEventListener('click', closeAlbumModal);
-    modal?.querySelector('.album-modal-backdrop')?.addEventListener('click', closeAlbumModal);
+            currentEditAlbum = album;
+            currentEditTags = [...album.tech];
+            currentEditPreviews = [...album.previews];
+            currentEditGallery = album.items.map(item => ({ ...item }));
 
-    // Open Lightbox
-    function openLightbox(index) {
-        if (!lightbox) return;
+            // Fill form fields
+            document.getElementById('editModalTitle').textContent = album.id.startsWith('album-') ? 'Tambah Album Baru' : 'Edit Album';
+            document.getElementById('editAlbumId').value = album.id;
+            document.getElementById('editAlbumTitle').value = album.title;
+            document.getElementById('editAlbumCategory').value = album.category;
+            document.getElementById('editAlbumDesc').value = album.description;
+            document.getElementById('editAlbumLink').value = album.link || '';
 
-        currentImageIndex = index;
-        updateLightboxImage();
-        lightbox.classList.add('active');
-    }
+            // Render tags
+            renderEditTags();
 
-    // Update Lightbox Image
-    function updateLightboxImage() {
-        if (!lightbox || !currentAlbumItems[currentImageIndex]) return;
+            // Render images
+            renderPreviewImages();
+            renderGalleryImages();
 
-        const item = currentAlbumItems[currentImageIndex];
-        const img = document.getElementById('lightboxImage');
-        const caption = document.getElementById('lightboxCaption');
-        const counter = document.getElementById('lightboxCounter');
-
-        img.src = item.src;
-        img.alt = item.caption;
-        caption.textContent = item.caption;
-        counter.textContent = `${currentImageIndex + 1} / ${currentAlbumItems.length}`;
-    }
-
-    // Lightbox Navigation
-    function lightboxPrev() {
-        currentImageIndex = (currentImageIndex - 1 + currentAlbumItems.length) % currentAlbumItems.length;
-        updateLightboxImage();
-    }
-
-    function lightboxNext() {
-        currentImageIndex = (currentImageIndex + 1) % currentAlbumItems.length;
-        updateLightboxImage();
-    }
-
-    // Close Lightbox
-    function closeLightbox() {
-        if (!lightbox) return;
-        lightbox.classList.remove('active');
-    }
-
-    // Lightbox event listeners
-    lightbox?.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-    lightbox?.querySelector('.lightbox-prev')?.addEventListener('click', lightboxPrev);
-    lightbox?.querySelector('.lightbox-next')?.addEventListener('click', lightboxNext);
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (lightbox?.classList.contains('active')) {
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') lightboxPrev();
-            if (e.key === 'ArrowRight') lightboxNext();
-        } else if (modal?.classList.contains('active')) {
-            if (e.key === 'Escape') closeAlbumModal();
-        } else if (editModal?.classList.contains('active')) {
-            if (e.key === 'Escape') closeEditModal();
+            // Show modal
+            editModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-    });
 
-    // ==========================================
-    // CMS: Album Edit Modal Functions
-    // ==========================================
+        // Close Edit Modal
+        function closeEditModal() {
+            if (!editModal) return;
+            editModal.classList.remove('active');
+            document.body.style.overflow = '';
+            currentEditAlbum = null;
+        }
 
-    // Open Edit Modal
-    function openEditModal(album) {
-        if (!editModal) return;
+        // Render Edit Tags
+        function renderEditTags() {
+            const wrapper = document.getElementById('tagsWrapper');
+            const tagInput = document.getElementById('tagInput');
 
-        currentEditAlbum = album;
-        currentEditTags = [...album.tech];
-        currentEditPreviews = [...album.previews];
-        currentEditGallery = album.items.map(item => ({ ...item }));
+            // Clear existing tags
+            wrapper.querySelectorAll('.tag-item').forEach(el => el.remove());
 
-        // Fill form fields
-        document.getElementById('editModalTitle').textContent = album.id.startsWith('album-') ? 'Tambah Album Baru' : 'Edit Album';
-        document.getElementById('editAlbumId').value = album.id;
-        document.getElementById('editAlbumTitle').value = album.title;
-        document.getElementById('editAlbumCategory').value = album.category;
-        document.getElementById('editAlbumDesc').value = album.description;
-        document.getElementById('editAlbumLink').value = album.link || '';
-
-        // Render tags
-        renderEditTags();
-
-        // Render images
-        renderPreviewImages();
-        renderGalleryImages();
-
-        // Show modal
-        editModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    // Close Edit Modal
-    function closeEditModal() {
-        if (!editModal) return;
-        editModal.classList.remove('active');
-        document.body.style.overflow = '';
-        currentEditAlbum = null;
-    }
-
-    // Render Edit Tags
-    function renderEditTags() {
-        const wrapper = document.getElementById('tagsWrapper');
-        const tagInput = document.getElementById('tagInput');
-
-        // Clear existing tags
-        wrapper.querySelectorAll('.tag-item').forEach(el => el.remove());
-
-        // Add tags before input
-        currentEditTags.forEach((tag, index) => {
-            const tagEl = document.createElement('span');
-            tagEl.className = 'tag-item';
-            tagEl.innerHTML = `
+            // Add tags before input
+            currentEditTags.forEach((tag, index) => {
+                const tagEl = document.createElement('span');
+                tagEl.className = 'tag-item';
+                tagEl.innerHTML = `
                 ${tag}
                 <button type="button" class="remove-tag" data-index="${index}">&times;</button>
             `;
-            wrapper.insertBefore(tagEl, tagInput);
-        });
-
-        // Event listeners for remove buttons
-        wrapper.querySelectorAll('.remove-tag').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const idx = parseInt(e.target.dataset.index);
-                currentEditTags.splice(idx, 1);
-                renderEditTags();
+                wrapper.insertBefore(tagEl, tagInput);
             });
-        });
-    }
 
-    // Tag input handler
-    document.getElementById('tagInput')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const value = e.target.value.trim();
-            if (value && !currentEditTags.includes(value)) {
-                currentEditTags.push(value);
-                renderEditTags();
-            }
-            e.target.value = '';
+            // Event listeners for remove buttons
+            wrapper.querySelectorAll('.remove-tag').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.index);
+                    currentEditTags.splice(idx, 1);
+                    renderEditTags();
+                });
+            });
         }
-    });
 
-    // Render Preview Images
-    function renderPreviewImages() {
-        const grid = document.getElementById('previewImagesGrid');
-        if (!grid) return;
+        // Tag input handler
+        document.getElementById('tagInput')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const value = e.target.value.trim();
+                if (value && !currentEditTags.includes(value)) {
+                    currentEditTags.push(value);
+                    renderEditTags();
+                }
+                e.target.value = '';
+            }
+        });
 
-        grid.innerHTML = currentEditPreviews.map((src, index) => `
+        // Render Preview Images
+        function renderPreviewImages() {
+            const grid = document.getElementById('previewImagesGrid');
+            if (!grid) return;
+
+            grid.innerHTML = currentEditPreviews.map((src, index) => `
             <div class="edit-image-item">
                 <img src="${src}" alt="Preview ${index + 1}">
                 <button type="button" class="remove-image" data-type="preview" data-index="${index}">&times;</button>
             </div>
         `).join('');
 
-        // Event listeners for remove buttons
-        grid.querySelectorAll('.remove-image').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const idx = parseInt(e.target.dataset.index);
-                currentEditPreviews.splice(idx, 1);
-                renderPreviewImages();
+            // Event listeners for remove buttons
+            grid.querySelectorAll('.remove-image').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.index);
+                    currentEditPreviews.splice(idx, 1);
+                    renderPreviewImages();
+                });
             });
-        });
-    }
+        }
 
-    // Render Gallery Images
-    function renderGalleryImages() {
-        const grid = document.getElementById('galleryImagesGrid');
-        if (!grid) return;
+        // Render Gallery Images
+        function renderGalleryImages() {
+            const grid = document.getElementById('galleryImagesGrid');
+            if (!grid) return;
 
-        grid.innerHTML = currentEditGallery.map((item, index) => `
+            grid.innerHTML = currentEditGallery.map((item, index) => `
             <div class="edit-image-item">
                 <img src="${item.src}" alt="${item.caption}">
                 <button type="button" class="remove-image" data-type="gallery" data-index="${index}">&times;</button>
             </div>
         `).join('');
 
-        // Event listeners for remove buttons
-        grid.querySelectorAll('.remove-image').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const idx = parseInt(e.target.dataset.index);
-                currentEditGallery.splice(idx, 1);
-                renderGalleryImages();
+            // Event listeners for remove buttons
+            grid.querySelectorAll('.remove-image').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.index);
+                    currentEditGallery.splice(idx, 1);
+                    renderGalleryImages();
+                });
             });
+        }
+
+        // File input handlers
+        document.getElementById('previewFileInput')?.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files, 'preview');
         });
-    }
 
-    // File input handlers
-    document.getElementById('previewFileInput')?.addEventListener('change', (e) => {
-        handleFileSelect(e.target.files, 'preview');
-    });
+        document.getElementById('galleryFileInput')?.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files, 'gallery');
+        });
 
-    document.getElementById('galleryFileInput')?.addEventListener('change', (e) => {
-        handleFileSelect(e.target.files, 'gallery');
-    });
+        // Handle file selection, compress, and convert to base64
+        function handleFileSelect(files, type) {
+            if (!files || !files.length) return;
 
-    // Handle file selection, compress, and convert to base64
-    function handleFileSelect(files, type) {
-        if (!files || !files.length) return;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    // Compress image using canvas
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const MAX_SIZE = 800; // Max width or height
+                        let width = img.width;
+                        let height = img.height;
 
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                // Compress image using canvas
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const MAX_SIZE = 800; // Max width or height
-                    let width = img.width;
-                    let height = img.height;
-
-                    // Resize if too large
-                    if (width > MAX_SIZE || height > MAX_SIZE) {
-                        if (width > height) {
-                            height = Math.round(height * (MAX_SIZE / width));
-                            width = MAX_SIZE;
-                        } else {
-                            width = Math.round(width * (MAX_SIZE / height));
-                            height = MAX_SIZE;
+                        // Resize if too large
+                        if (width > MAX_SIZE || height > MAX_SIZE) {
+                            if (width > height) {
+                                height = Math.round(height * (MAX_SIZE / width));
+                                width = MAX_SIZE;
+                            } else {
+                                width = Math.round(width * (MAX_SIZE / height));
+                                height = MAX_SIZE;
+                            }
                         }
-                    }
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
 
-                    // Convert to compressed JPEG (quality 0.7)
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        // Convert to compressed JPEG (quality 0.7)
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
 
-                    if (type === 'preview') {
-                        currentEditPreviews.push(compressedDataUrl);
-                        renderPreviewImages();
-                    } else {
-                        const caption = file.name.replace(/\.[^.]+$/, '').replace(/-|_/g, ' ');
-                        currentEditGallery.push({ src: compressedDataUrl, caption: caption });
-                        renderGalleryImages();
-                    }
+                        if (type === 'preview') {
+                            currentEditPreviews.push(compressedDataUrl);
+                            renderPreviewImages();
+                        } else {
+                            const caption = file.name.replace(/\.[^.]+$/, '').replace(/-|_/g, ' ');
+                            currentEditGallery.push({ src: compressedDataUrl, caption: caption });
+                            renderGalleryImages();
+                        }
+                    };
+                    img.src = e.target.result;
                 };
-                img.src = e.target.result;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Save Album Button
+        // Save Album Button
+        document.getElementById('saveAlbumBtn')?.addEventListener('click', () => {
+            if (!currentEditAlbum) return;
+
+            const albumId = document.getElementById('editAlbumId').value;
+            let albumIndex = albums.findIndex(a => a.id === albumId);
+
+            const newAlbumData = {
+                id: albumId,
+                title: document.getElementById('editAlbumTitle').value || 'Untitled',
+                category: document.getElementById('editAlbumCategory').value || 'Uncategorized',
+                description: document.getElementById('editAlbumDesc').value || '',
+                link: document.getElementById('editAlbumLink').value || null,
+                tech: [...currentEditTags],
+                previews: currentEditPreviews.length > 0 ? [...currentEditPreviews] : [
+                    'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=No+Image'
+                ],
+                items: currentEditGallery.length > 0 ? [...currentEditGallery] : [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=No+Image', caption: 'No Image' }
+                ]
             };
-            reader.readAsDataURL(file);
-        });
-    }
 
-    // Save Album Button
-    // Save Album Button
-    document.getElementById('saveAlbumBtn')?.addEventListener('click', () => {
-        if (!currentEditAlbum) return;
-
-        const albumId = document.getElementById('editAlbumId').value;
-        let albumIndex = albums.findIndex(a => a.id === albumId);
-
-        const newAlbumData = {
-            id: albumId,
-            title: document.getElementById('editAlbumTitle').value || 'Untitled',
-            category: document.getElementById('editAlbumCategory').value || 'Uncategorized',
-            description: document.getElementById('editAlbumDesc').value || '',
-            link: document.getElementById('editAlbumLink').value || null,
-            tech: [...currentEditTags],
-            previews: currentEditPreviews.length > 0 ? [...currentEditPreviews] : [
-                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=No+Image'
-            ],
-            items: currentEditGallery.length > 0 ? [...currentEditGallery] : [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=No+Image', caption: 'No Image' }
-            ]
-        };
-
-        if (albumIndex !== -1) {
-            // Update existing
-            albums[albumIndex] = newAlbumData;
-        } else {
-            // Create new
-            albums.push(newAlbumData);
-        }
-
-        saveAlbums();
-        renderAlbums();
-        closeEditModal();
-        showToast('Album berhasil disimpan!');
-    });
-
-    // Delete Album Button
-    document.getElementById('deleteAlbumBtn')?.addEventListener('click', () => {
-        if (!currentEditAlbum) return;
-
-        if (confirm(`Hapus album "${currentEditAlbum.title}"? Tindakan ini tidak bisa dibatalkan.`)) {
-            const albumIndex = albums.findIndex(a => a.id === currentEditAlbum.id);
             if (albumIndex !== -1) {
-                albums.splice(albumIndex, 1);
-                saveAlbums();
-                renderAlbums();
-                closeEditModal();
-                showToast('Album berhasil dihapus!');
-            }
-        }
-    });
-
-    // Close edit modal button
-    document.getElementById('editModalClose')?.addEventListener('click', closeEditModal);
-    editModal?.addEventListener('click', (e) => {
-        if (e.target === editModal) closeEditModal();
-    });
-
-    // CMS: Add Album Button - Opens edit modal for new album
-    addAlbumBtn?.addEventListener('click', () => {
-        const newAlbum = {
-            id: `album-${Date.now()}`,
-            title: 'Album Baru',
-            category: 'Kategori',
-            description: 'Deskripsi album baru...',
-            tech: ['Tag 1'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=New+Album'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=New+Image', caption: 'Gambar Baru' }
-            ]
-        };
-
-        albums.push(newAlbum);
-        saveAlbums();
-        renderAlbums();
-
-        // Open edit modal for the new album
-        openEditModal(newAlbum);
-        showToast('Album baru ditambahkan! Silakan lengkapi data.');
-    });
-
-    // Save albums to localStorage with error handling
-    function saveAlbums() {
-        try {
-            localStorage.setItem('aspyre_albums', JSON.stringify(albums));
-            return true;
-        } catch (e) {
-            console.error('Error saving albums:', e);
-            if (e.name === 'QuotaExceededError' || e.message.includes('quota')) {
-                showToast('❌ Penyimpanan penuh! Kurangi jumlah/ukuran gambar.');
+                // Update existing
+                albums[albumIndex] = newAlbumData;
             } else {
-                showToast('❌ Gagal menyimpan: ' + e.message);
+                // Create new
+                albums.push(newAlbumData);
             }
-            return false;
-        }
-    }
 
-    // Initial render
-    renderAlbums();
-}
-
-// Update DOMContentLoaded to use new function
-document.addEventListener('DOMContentLoaded', () => {
-    // Remove old initProjectModal call and add new one
-    // This is handled by the initialization at the top of the file
-});
-
-// Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
-
-// Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPortfolioAlbums);
-} else {
-    initPortfolioAlbums();
-}
-
-/* ============================================
-   Tracking Modal Logic
-   ============================================ */
-function initTrackingModal() {
-    const modal = document.getElementById('trackingModal');
-    const openBtn = document.getElementById('navTrackBtn');
-    const closeBtn = document.querySelector('.tracking-close');
-    const trackInput = document.getElementById('trackInput');
-    const trackActionBtn = document.getElementById('trackBtn');
-
-    if (!modal || !openBtn) return;
-
-    // Open Modal
-    openBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        if (trackInput) trackInput.focus();
-    });
-
-    // Close Modal
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-    // Close on Outside Click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    // Placeholder Logic for "Lacak" Action
-    if (trackActionBtn) {
-        trackActionBtn.addEventListener('click', () => {
-            const id = trackInput.value.trim();
-            if (!id) return;
-
-            // Temporary Fake Result (Real Logic Next)
-            const resultDiv = document.getElementById('trackingResult');
-            resultDiv.innerHTML = `<p style="color:var(--sage)">Mencari ID: ${id}...</p>`;
-            // Next step: Implement Firestore Query here
+            saveAlbums();
+            renderAlbums();
+            closeEditModal();
+            showToast('Album berhasil disimpan!');
         });
+
+        // Delete Album Button
+        document.getElementById('deleteAlbumBtn')?.addEventListener('click', () => {
+            if (!currentEditAlbum) return;
+
+            if (confirm(`Hapus album "${currentEditAlbum.title}"? Tindakan ini tidak bisa dibatalkan.`)) {
+                const albumIndex = albums.findIndex(a => a.id === currentEditAlbum.id);
+                if (albumIndex !== -1) {
+                    albums.splice(albumIndex, 1);
+                    saveAlbums();
+                    renderAlbums();
+                    closeEditModal();
+                    showToast('Album berhasil dihapus!');
+                }
+            }
+        });
+
+        // Close edit modal button
+        document.getElementById('editModalClose')?.addEventListener('click', closeEditModal);
+        editModal?.addEventListener('click', (e) => {
+            if (e.target === editModal) closeEditModal();
+        });
+
+        // CMS: Add Album Button - Opens edit modal for new album
+        addAlbumBtn?.addEventListener('click', () => {
+            const newAlbum = {
+                id: `album-${Date.now()}`,
+                title: 'Album Baru',
+                category: 'Kategori',
+                description: 'Deskripsi album baru...',
+                tech: ['Tag 1'],
+                link: null,
+                previews: [
+                    'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=New+Album'
+                ],
+                items: [
+                    { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=New+Image', caption: 'Gambar Baru' }
+                ]
+            };
+
+            albums.push(newAlbum);
+            saveAlbums();
+            renderAlbums();
+
+            // Open edit modal for the new album
+            openEditModal(newAlbum);
+            showToast('Album baru ditambahkan! Silakan lengkapi data.');
+        });
+
+        // Save albums to localStorage with error handling
+        function saveAlbums() {
+            try {
+                localStorage.setItem('aspyre_albums', JSON.stringify(albums));
+                return true;
+            } catch (e) {
+                console.error('Error saving albums:', e);
+                if (e.name === 'QuotaExceededError' || e.message.includes('quota')) {
+                    showToast('❌ Penyimpanan penuh! Kurangi jumlah/ukuran gambar.');
+                } else {
+                    showToast('❌ Gagal menyimpan: ' + e.message);
+                }
+                return false;
+            }
+        }
+
+        // Initial render
+        renderAlbums();
     }
-}
+
+    // Update DOMContentLoaded to use new function
+    document.addEventListener('DOMContentLoaded', () => {
+        // Remove old initProjectModal call and add new one
+        // This is handled by the initialization at the top of the file
+    });
+
+    // Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
+
+    // Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPortfolioAlbums);
+    } else {
+        initPortfolioAlbums();
+    }
+
+    /* ============================================
+       Tracking Modal Logic
+       ============================================ */
+    function initTrackingModal() {
+        const modal = document.getElementById('trackingModal');
+        const openBtn = document.getElementById('navTrackBtn');
+        const mobileOpenBtn = document.getElementById('mobileTrackBtn');
+        const closeBtn = document.querySelector('.tracking-close');
+        const trackInput = document.getElementById('trackInput');
+        const trackActionBtn = document.getElementById('trackBtn');
+
+        if (!modal) return;
+
+        // Helper to open modal
+        function openModal(e) {
+            if (e) e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+   Tracking Modal Logic
+                ============================================ */
+            function initTrackingModal() {
+                const modal = document.getElementById('trackingModal');
+                const openBtn = document.getElementById('navTrackBtn');
+                const mobileOpenBtn = document.getElementById('mobileTrackBtn');
+                const closeBtn = document.querySelector('.tracking-close');
+                const trackInput = document.getElementById('trackInput');
+                const trackActionBtn = document.getElementById('trackBtn');
+                const resultDiv = document.getElementById('trackingResult');
+
+                if (!modal) return;
+
+                // Helper to open modal
+                function openModal(e) {
+                    if (e) e.preventDefault();
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    if (trackInput) trackInput.focus();
+
+                    // Clear previous result
+                    if (resultDiv) resultDiv.innerHTML = '';
+                    if (trackInput) trackInput.value = '';
+
+                    // Close mobile menu if open
+                    const mobileMenu = document.querySelector('.mobile-menu');
+                    const mobileToggle = document.querySelector('.mobile-toggle');
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        mobileToggle.classList.remove('active');
+                        const spans = mobileToggle.querySelectorAll('span');
+                        spans[0].style.transform = '';
+                        spans[1].style.transform = '';
+                    }
+                }
+
+                // Triggers
+                if (openBtn) openBtn.addEventListener('click', openModal);
+                if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', openModal);
+
+                // Close Modal
+                function closeModal() {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                if (closeBtn) closeBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+                // Track Action
+                if (trackActionBtn && trackInput) {
+                    const handleTrack = async () => {
+                        const id = trackInput.value.trim();
+                        if (!id) return;
+
+                        resultDiv.innerHTML = '<p style="color:var(--text-muted)">Sedang mencari...</p>';
+
+                        try {
+                            // Query Firestore
+                            // NOTE: We use global 'db' and 'collection' from imports
+                            // We need to query where 'id' == input
+                            const q = query(collection(db, "orders"), where("id", "==", id));
+                            const querySnapshot = await getDocs(q);
+
+                            if (querySnapshot.empty) {
+                                resultDiv.innerHTML = `
+                        <div class="tracking-status" style="text-align:center; color: #e74c3c;">
+                            ❌ Order ID <strong>${id}</strong> tidak ditemukan.
+                        </div>
+                    `;
+                                return;
+                            }
+
+                            querySnapshot.forEach((doc) => {
+                                const data = doc.data();
+                                const statusLabels = {
+                                    'pending': 'Menunggu Verifikasi',
+                                    'proses': 'Sedang Dikerjakan',
+                                    'selesai': 'Selesai & Dikirim',
+                                    'batal': 'Dibatalkan'
+                                };
+                                const statusClass = data.status || 'pending';
+                                const statusLabel = statusLabels[statusClass] || 'Pending';
+
+                                // Simplified Progress Calculation
+                                let progress = 10;
+                                if (statusClass === 'proses') progress = 50;
+                                if (statusClass === 'selesai') progress = 100;
+                                if (statusClass === 'batal') progress = 0;
+
+                                resultDiv.innerHTML = `
+                        <div class="tracking-status">
+                            <span class="status-badge ${statusClass}">${statusLabel}</span>
+                            <div class="status-title">${data.namaBisnis}</div>
+                            <div class="status-meta">Layanan: ${data.pilarLayanan}</div>
+                            
+                            <!-- Simple Progress Bar -->
+                            <div style="margin-top:16px; width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                                <div style="width:${progress}%; height:100%; background:var(--gradient-primary); transition:width 1s ease;"></div>
+                            </div>
+                            <p style="text-align:right; font-size:12px; margin-top:8px; color:var(--sage);">${progress}% Progress</p>
+                        </div>
+                    `;
+                            });
+
+                        } catch (error) {
+                            console.error("Error tracking:", error);
+                            resultDiv.innerHTML = '<p style="color:#e74c3c">Terjadi kesalahan koneksi.</p>';
+                        }
+                    };
+
+                    trackActionBtn.addEventListener('click', handleTrack);
+                    trackInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') handleTrack();
+                    });
+                }
+            }
