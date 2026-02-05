@@ -1728,6 +1728,7 @@ function initTrackingModal() {
     const closeBtn = document.querySelector('.tracking-close');
     const trackInput = document.getElementById('trackInput');
     const trackActionBtn = document.getElementById('trackBtn');
+    const resultDiv = document.getElementById('trackingResult');
 
     if (!modal) return;
 
@@ -1736,96 +1737,76 @@ function initTrackingModal() {
         if (e) e.preventDefault();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-   Tracking Modal Logic
-            ============================================ */
-        function initTrackingModal() {
-            const modal = document.getElementById('trackingModal');
-            const openBtn = document.getElementById('navTrackBtn');
-            const mobileOpenBtn = document.getElementById('mobileTrackBtn');
-            const closeBtn = document.querySelector('.tracking-close');
-            const trackInput = document.getElementById('trackInput');
-            const trackActionBtn = document.getElementById('trackBtn');
-            const resultDiv = document.getElementById('trackingResult');
+        if (trackInput) trackInput.focus();
 
-            if (!modal) return;
+        // Clear previous result
+        if (resultDiv) resultDiv.innerHTML = '';
+        if (trackInput) trackInput.value = '';
 
-            // Helper to open modal
-            function openModal(e) {
-                if (e) e.preventDefault();
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                if (trackInput) trackInput.focus();
+        // Close mobile menu if open
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            mobileToggle.classList.remove('active');
+            const spans = mobileToggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.transform = '';
+        }
+    }
 
-                // Clear previous result
-                if (resultDiv) resultDiv.innerHTML = '';
-                if (trackInput) trackInput.value = '';
+    // Triggers
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', openModal);
 
-                // Close mobile menu if open
-                const mobileMenu = document.querySelector('.mobile-menu');
-                const mobileToggle = document.querySelector('.mobile-toggle');
-                if (mobileMenu && mobileMenu.classList.contains('active')) {
-                    mobileMenu.classList.remove('active');
-                    mobileToggle.classList.remove('active');
-                    const spans = mobileToggle.querySelectorAll('span');
-                    spans[0].style.transform = '';
-                    spans[1].style.transform = '';
-                }
-            }
+    // Close Modal
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            // Triggers
-            if (openBtn) openBtn.addEventListener('click', openModal);
-            if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', openModal);
+    // Track Action
+    if (trackActionBtn && trackInput) {
+        const handleTrack = async () => {
+            const id = trackInput.value.trim();
+            if (!id) return;
 
-            // Close Modal
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            resultDiv.innerHTML = '<p style="color:var(--text-muted)">Sedang mencari...</p>';
 
-            // Track Action
-            if (trackActionBtn && trackInput) {
-                const handleTrack = async () => {
-                    const id = trackInput.value.trim();
-                    if (!id) return;
+            try {
+                // Query Firestore
+                const q = query(collection(db, "orders"), where("id", "==", id));
+                const querySnapshot = await getDocs(q);
 
-                    resultDiv.innerHTML = '<p style="color:var(--text-muted)">Sedang mencari...</p>';
-
-                    try {
-                        // Query Firestore
-                        // NOTE: We use global 'db' and 'collection' from imports
-                        // We need to query where 'id' == input
-                        const q = query(collection(db, "orders"), where("id", "==", id));
-                        const querySnapshot = await getDocs(q);
-
-                        if (querySnapshot.empty) {
-                            resultDiv.innerHTML = `
+                if (querySnapshot.empty) {
+                    resultDiv.innerHTML = `
                         <div class="tracking-status" style="text-align:center; color: #e74c3c;">
                             ❌ Order ID <strong>${id}</strong> tidak ditemukan.
                         </div>
                     `;
-                            return;
-                        }
+                    return;
+                }
 
-                        querySnapshot.forEach((doc) => {
-                            const data = doc.data();
-                            const statusLabels = {
-                                'pending': 'Menunggu Verifikasi',
-                                'proses': 'Sedang Dikerjakan',
-                                'selesai': 'Selesai & Dikirim',
-                                'batal': 'Dibatalkan'
-                            };
-                            const statusClass = data.status || 'pending';
-                            const statusLabel = statusLabels[statusClass] || 'Pending';
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const statusLabels = {
+                        'pending': 'Menunggu Verifikasi',
+                        'proses': 'Sedang Dikerjakan',
+                        'selesai': 'Selesai & Dikirim',
+                        'batal': 'Dibatalkan'
+                    };
+                    const statusClass = data.status || 'pending';
+                    const statusLabel = statusLabels[statusClass] || 'Pending';
 
-                            // Simplified Progress Calculation
-                            let progress = 10;
-                            if (statusClass === 'proses') progress = 50;
-                            if (statusClass === 'selesai') progress = 100;
-                            if (statusClass === 'batal') progress = 0;
+                    // Simplified Progress Calculation
+                    let progress = 10;
+                    if (statusClass === 'proses') progress = 50;
+                    if (statusClass === 'selesai') progress = 100;
+                    if (statusClass === 'batal') progress = 0;
 
-                            resultDiv.innerHTML = `
+                    resultDiv.innerHTML = `
                         <div class="tracking-status">
                             <span class="status-badge ${statusClass}">${statusLabel}</span>
                             <div class="status-title">${data.namaBisnis}</div>
@@ -1838,17 +1819,17 @@ function initTrackingModal() {
                             <p style="text-align:right; font-size:12px; margin-top:8px; color:var(--sage);">${progress}% Progress</p>
                         </div>
                     `;
-                        });
-
-                    } catch (error) {
-                        console.error("Error tracking:", error);
-                        resultDiv.innerHTML = '<p style="color:#e74c3c">Terjadi kesalahan koneksi.</p>';
-                    }
-                };
-
-                trackActionBtn.addEventListener('click', handleTrack);
-                trackInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') handleTrack();
                 });
+
+            } catch (error) {
+                console.error("Error tracking:", error);
+                resultDiv.innerHTML = '<p style="color:#e74c3c">Terjadi kesalahan koneksi.</p>';
             }
-        }
+        };
+
+        trackActionBtn.addEventListener('click', handleTrack);
+        trackInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleTrack();
+        });
+    }
+}
