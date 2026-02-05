@@ -6193,26 +6193,41 @@ section.highlight-section {
     }
 
     /* Mobile Animations & Glows */
+    /* Mobile Animations & Glows - UNIFORM & STRONG */
     @keyframes pulseGlowMobile {
 
         0%,
         100% {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(232, 90, 79, 0.2);
+            border-color: rgba(232, 90, 79, 0.3);
         }
 
         50% {
-            box-shadow: 0 8px 20px rgba(232, 90, 79, 0.25);
-            border-color: rgba(232, 90, 79, 0.4);
+            box-shadow: 0 0 25px rgba(232, 90, 79, 0.5);
+            border-color: rgba(232, 90, 79, 0.8);
         }
     }
 
+    /* Force "Lit Up" state on ALL cards and buttons in mobile */
     .layanan-card,
     .paket-card,
     .btn-primary,
-    .paket-cta.primary,
-    .form-submit {
-        animation: pulseGlowMobile 3s infinite ease-in-out;
+    .paket-cta,
+    .form-submit,
+    .mobile-cta {
+        animation: pulseGlowMobile 2s infinite ease-in-out !important;
+        border: 1px solid rgba(232, 90, 79, 0.3);
+        /* Ensure border is visible */
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Remove specific scaling on mobile for featured cards to keep them uniform */
+    .paket-card.featured,
+    .layanan-card:hover,
+    .paket-card:hover {
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.03) !important;
     }
 
     /* Admin Modal Mobile */
