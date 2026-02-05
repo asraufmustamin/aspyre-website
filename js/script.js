@@ -287,7 +287,7 @@ function saveOrder(order) {
    Admin Modal System
    ============================================ */
 function initAdminModal() {
-    const trigger = document.querySelector('.admin-trigger');
+    const triggers = document.querySelectorAll('.admin-trigger, .admin-panel-btn');
     const modal = document.getElementById('adminModal');
     const closeBtn = document.querySelector('.admin-modal-close');
     const loginForm = document.getElementById('adminLoginForm');
@@ -311,12 +311,17 @@ function initAdminModal() {
 
     let currentCategory = 'all';
 
-    // Open modal
-    trigger.addEventListener('click', () => {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        if (sessionStorage.getItem('aspyre_admin') === 'true') {
-            showDashboard();
+    // Open Modal
+    triggers.forEach(trigger => {
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                if (sessionStorage.getItem('aspyre_admin') === 'true') {
+                    showDashboard();
+                }
+            });
         }
     });
 

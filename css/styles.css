@@ -6240,25 +6240,23 @@ section.highlight-section {
     }
 
     /* Remove specific scaling on mobile for featured cards to keep them uniform */
-    /* Hero Proof Mobile Fix - TIGHTER */
+    /* Hero Proof Mobile Fix - LEFT ALIGNED */
     .hero-proof {
         flex-direction: row !important;
-        justify-content: center !important;
-        /* Center align */
+        justify-content: flex-start !important;
+        /* Left align as requested */
         width: 100%;
-        gap: 8px !important;
-        /* Tight spacing as requested */
+        gap: 16px !important;
         margin-top: 16px;
-        /* Ensure spacing below buttons */
     }
 
     .proof-item {
-        align-items: center;
-        text-align: center;
-        padding: 0 8px;
-        /* Small padding */
+        align-items: flex-start;
+        /* Left align text */
+        text-align: left;
+        padding: 0;
+        padding-right: 16px;
         border-right: 1px solid rgba(255, 255, 255, 0.1);
-        /* Divider visual if needed, or rely on gap */
     }
 
     .proof-item:last-child {
