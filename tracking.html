@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lacak Pesanan - ASPYRE.AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Simplified Nav for Tracking Page */
+        .tracking-nav {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tracking-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tracking-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tracking-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            margin-bottom: 16px;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .tracking-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .track-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .track-input:focus {
+            outline: none;
+            border-color: var(--coral);
+            box-shadow: 0 0 0 4px rgba(232, 90, 79, 0.1);
+        }
+
+        .track-action-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .track-action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-simple {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        /* Result Styles (Copied/Adapted) */
+        .tracking-status {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="tracking-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <div class="logo-symbol">
+                    <div class="symbol-inner">
+                        <span class="symbol-line line-1"></span>
+                        <span class="symbol-line line-2"></span>
+                        <span class="symbol-line line-3"></span>
+                    </div>
+                    <span class="symbol-dot"></span>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">ASPYRE</span>
+                    <span class="logo-suffix">.AI</span>
+                </div>
+            </a>
+            <a href="index.html" class="nav-link">Kembali ke Home</a>
+        </div>
+    </nav>
+
+    <div class="tracking-container">
+        <a href="index.html" class="back-link">← Kembali</a>
+
+        <div class="tracking-card">
+            <h1 class="tracking-title">Lacak Pesanan</h1>
+            <p class="tracking-subtitle">Masukkan Order ID Anda untuk melihat progress pengerjaan.</p>
+
+            <div class="input-group">
+                <input type="text" id="trackInput" class="track-input" placeholder="Contoh: ASP-240214-123"
+                    autocomplete="off">
+            </div>
+
+            <button id="trackBtn" class="track-action-btn">Cek Status</button>
+
+            <div id="trackingResult"></div>
+        </div>
+    </div>
+
+    <footer class="footer-simple">
+        &copy; 2024 ASPYRE.AI - Future of Digital Creative
+    </footer>
+
+    <!-- Firebase & Scripts -->
+    <script type="module" src="js/script.js"></script>
+
+</body>
+
+</html>

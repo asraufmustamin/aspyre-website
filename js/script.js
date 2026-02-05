@@ -1713,123 +1713,122 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPortfolioAlbums);
+    document.addEventListener('DOMContentLoaded', () => {
+        initPortfolioAlbums();
+        initTrackingSystem();
+    });
 } else {
     initPortfolioAlbums();
+    initTrackingSystem();
 }
 
 /* ============================================
-   Tracking Modal Logic
+   Tracking System (Dedicated Page)
    ============================================ */
-function initTrackingModal() {
-    const modal = document.getElementById('trackingModal');
-    const openBtn = document.getElementById('navTrackBtn');
-    const mobileOpenBtn = document.getElementById('mobileTrackBtn');
-    const closeBtn = document.querySelector('.tracking-close');
+function initTrackingSystem() {
     const trackInput = document.getElementById('trackInput');
     const trackActionBtn = document.getElementById('trackBtn');
     const resultDiv = document.getElementById('trackingResult');
 
-    if (!modal) return;
+    // Only run if elements exist (e.g. on tracking.html)
+    if (!trackInput || !trackActionBtn) return;
 
-    // Helper to open modal
-    function openModal(e) {
-        if (e) e.preventDefault();
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        if (trackInput) trackInput.focus();
+    // Helper to format currency
+    const formatIDR = (num) => {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(num);
+    };
 
-        // Clear previous result
-        if (resultDiv) resultDiv.innerHTML = '';
-        if (trackInput) trackInput.value = '';
-
-        // Close mobile menu if open
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            mobileToggle.classList.remove('active');
-            const spans = mobileToggle.querySelectorAll('span');
-            spans[0].style.transform = '';
-            spans[1].style.transform = '';
+    const handleTrack = async () => {
+        const id = trackInput.value.trim();
+        if (!id) {
+            resultDiv.innerHTML = '<p style="color:#e74c3c; text-align:center;">Mohon masukkan Order ID</p>';
+            return;
         }
-    }
 
-    // Triggers
-    if (openBtn) openBtn.addEventListener('click', openModal);
-    if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', openModal);
+        trackActionBtn.innerHTML = 'Mencari...';
+        trackActionBtn.disabled = true;
+        resultDiv.innerHTML = '';
 
-    // Close Modal
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        try {
+            // Query Firestore
+            const q = query(collection(db, "orders"), where("id", "==", id));
+            const querySnapshot = await getDocs(q);
 
-    // Track Action
-    if (trackActionBtn && trackInput) {
-        const handleTrack = async () => {
-            const id = trackInput.value.trim();
-            if (!id) return;
-
-            resultDiv.innerHTML = '<p style="color:var(--text-muted)">Sedang mencari...</p>';
-
-            try {
-                // Query Firestore
-                const q = query(collection(db, "orders"), where("id", "==", id));
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
-                    resultDiv.innerHTML = `
-                        <div class="tracking-status" style="text-align:center; color: #e74c3c;">
-                            ❌ Order ID <strong>${id}</strong> tidak ditemukan.
-                        </div>
-                    `;
-                    return;
-                }
-
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const statusLabels = {
-                        'pending': 'Menunggu Verifikasi',
-                        'proses': 'Sedang Dikerjakan',
-                        'selesai': 'Selesai & Dikirim',
-                        'batal': 'Dibatalkan'
-                    };
-                    const statusClass = data.status || 'pending';
-                    const statusLabel = statusLabels[statusClass] || 'Pending';
-
-                    // Simplified Progress Calculation
-                    let progress = 10;
-                    if (statusClass === 'proses') progress = 50;
-                    if (statusClass === 'selesai') progress = 100;
-                    if (statusClass === 'batal') progress = 0;
-
-                    resultDiv.innerHTML = `
-                        <div class="tracking-status">
-                            <span class="status-badge ${statusClass}">${statusLabel}</span>
-                            <div class="status-title">${data.namaBisnis}</div>
-                            <div class="status-meta">Layanan: ${data.pilarLayanan}</div>
-                            
-                            <!-- Simple Progress Bar -->
-                            <div style="margin-top:16px; width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                                <div style="width:${progress}%; height:100%; background:var(--gradient-primary); transition:width 1s ease;"></div>
-                            </div>
-                            <p style="text-align:right; font-size:12px; margin-top:8px; color:var(--sage);">${progress}% Progress</p>
-                        </div>
-                    `;
-                });
-
-            } catch (error) {
-                console.error("Error tracking:", error);
-                resultDiv.innerHTML = '<p style="color:#e74c3c">Terjadi kesalahan koneksi.</p>';
+            if (querySnapshot.empty) {
+                resultDiv.innerHTML = `
+                    <div class="tracking-status" style="text-align:center; color: #e74c3c; background: rgba(231, 76, 60, 0.1); padding: 20px; border-radius: 12px;">
+                        ❌ <strong>Order ID Tidak Ditemukan</strong><br>
+                        <span style="font-size:14px; opacity:0.8; display:block; margin-top:4px;">Periksa kembali ID Anda (Contoh: ASP-2402...)</span>
+                    </div>
+                `;
+                trackActionBtn.innerHTML = 'Cek Status';
+                trackActionBtn.disabled = false;
+                return;
             }
-        };
 
-        trackActionBtn.addEventListener('click', handleTrack);
-        trackInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleTrack();
-        });
-    }
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const statusLabels = {
+                    'pending': { text: 'Menunggu Verifikasi', icon: '⏳', color: 'var(--warning)' },
+                    'proses': { text: 'Sedang Dikerjakan', icon: '🔨', color: 'var(--info)' },
+                    'selesai': { text: 'Selesai & Dikirim', icon: '✅', color: 'var(--success)' },
+                    'batal': { text: 'Dibatalkan', icon: '❌', color: 'var(--danger)' }
+                };
+
+                const statusKey = data.status || 'pending';
+                const statusObj = statusLabels[statusKey] || statusLabels['pending'];
+
+                // Percentage
+                let progress = 10;
+                if (statusKey === 'proses') progress = 50;
+                if (statusKey === 'selesai') progress = 100;
+                if (statusKey === 'batal') progress = 0;
+
+                resultDiv.innerHTML = `
+                    <div class="tracking-status" style="animation: fadeIn 0.5s ease;">
+                        <div style="text-align:center; margin-bottom:24px;">
+                            <div style="font-size:48px; margin-bottom:16px;">${statusObj.icon}</div>
+                            <h3 style="color:${statusObj.color}; margin-bottom:8px;">${statusObj.text}</h3>
+                            <p style="color:var(--text-secondary);">${data.namaBisnis}</p>
+                        </div>
+                        
+                        <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; margin-bottom:24px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
+                                <span style="color:var(--text-muted);">Layanan</span>
+                                <span style="font-weight:600;">${data.pilarLayanan}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
+                                <span style="color:var(--text-muted);">Tanggal Order</span>
+                                <span>${data.date}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:14px;">
+                                <span style="color:var(--text-muted);">Estimasi</span>
+                                <span>${data.deadline}</span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div style="position:relative; margin-bottom:8px;">
+                            <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                                <div style="width:${progress}%; height:100%; background:var(--gradient-primary); border-radius:10px; transition:width 1s ease;"></div>
+                            </div>
+                        </div>
+                        <p style="text-align:right; font-size:12px; color:var(--sage);">${progress}% Completed</p>
+                    </div>
+                `;
+            });
+
+        } catch (error) {
+            console.error("Error tracking:", error);
+            resultDiv.innerHTML = '<p style="color:#e74c3c; text-align:center;">Terjadi kesalahan koneksi.</p>';
+        } finally {
+            trackActionBtn.innerHTML = 'Cek Status';
+            trackActionBtn.disabled = false;
+        }
+    };
+
+    trackActionBtn.addEventListener('click', handleTrack);
+    trackInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleTrack();
+    });
 }
