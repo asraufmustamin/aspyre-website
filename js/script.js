@@ -328,7 +328,7 @@ function initAdminModal() {
     const resetCmsBtn = document.getElementById('resetCmsBtn');
     const enableCmsBtn = document.getElementById('enableCmsMode');
 
-    if (!trigger || !modal) return;
+    if (!modal) return;
 
     const ADMIN_USER = 'aspyre.ai';
     const ADMIN_PASS = 'theaspyreai22';
