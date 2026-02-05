@@ -48,15 +48,36 @@ function initMobileMenu() {
         }
     });
 
-    links.forEach(link => {
-        link.addEventListener('click', () => {
+    // Use delegation for better reliability
+    menu.addEventListener('click', (e) => {
+        const link = e.target.closest('.mobile-link, .mobile-cta');
+        if (!link) return;
+
+        // Special handling for Admin Trigger
+        if (link.classList.contains('admin-trigger')) {
+            e.preventDefault();
             menu.classList.remove('active');
             toggle.classList.remove('active');
             document.body.style.overflow = '';
+
+            // Reset hamburger icon
             const spans = toggle.querySelectorAll('span');
             spans[0].style.transform = '';
             spans[1].style.transform = '';
-        });
+
+            // Trigger CMS mode directly
+            enableCmsModeFunc();
+            return;
+        }
+
+        // Standard link closing behavior
+        menu.classList.remove('active');
+        toggle.classList.remove('active');
+        document.body.style.overflow = '';
+
+        const spans = toggle.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.transform = '';
     });
 }
 

@@ -6215,7 +6215,12 @@ section.highlight-section {
     .pillar-card,
     .proses-step,
     .album-card,
-    /* Works for portfolio */
+    .feature,
+    /* Kontak/Mulai features */
+    .kenapa-item,
+    /* Kenapa Aspyre items */
+    .showcase-content,
+    /* Digital Hub */
     .btn-primary,
     .paket-cta,
     .form-submit,
@@ -6235,24 +6240,43 @@ section.highlight-section {
     }
 
     /* Remove specific scaling on mobile for featured cards to keep them uniform */
-    /* Hero Proof Mobile Fix */
+    /* Hero Proof Mobile Fix - TIGHTER */
     .hero-proof {
         flex-direction: row !important;
-        /* Force horizontal row */
-        justify-content: space-between;
+        justify-content: center !important;
+        /* Center align */
         width: 100%;
-        gap: 16px;
+        gap: 8px !important;
+        /* Tight spacing as requested */
+        margin-top: 16px;
+        /* Ensure spacing below buttons */
     }
 
     .proof-item {
         align-items: center;
-        /* Center text */
         text-align: center;
+        padding: 0 8px;
+        /* Small padding */
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        /* Divider visual if needed, or rely on gap */
+    }
+
+    .proof-item:last-child {
+        border-right: none;
+    }
+
+    .proof-divider {
+        display: none !important;
+        /* Hide original dividers to use tight spacing */
     }
 
     .proof-number {
-        font-size: 28px !important;
-        /* Adjusted size for mobile row */
+        font-size: 24px !important;
+        /* Slightly smaller for tight fit */
+    }
+
+    .proof-label {
+        font-size: 11px !important;
     }
 
     /* Admin Modal Mobile */
