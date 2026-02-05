@@ -798,6 +798,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="userPhone">Nomor WhatsApp (Wajib) *</label>
+                        <input type="tel" id="userPhone" name="userPhone" placeholder="0812xxxx" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="tentangBisnis">Tentang Project</label>
                         <textarea id="tentangBisnis" name="tentangBisnis" rows="3"
                             placeholder="Ceritakan singkat kebutuhan Anda..." required></textarea>
@@ -838,6 +843,11 @@
                         </div>
                     </div>
 
+                    <div class="form-disclaimer">
+                        <span>🔒</span>
+                        <p>Order diproses setelah verifikasi. DP 50% diperlukan untuk memulai pengerjaan.</p>
+                    </div>
+
                     <button type="submit" class="form-submit magnetic-btn">
                         <span>Kirim Order via WhatsApp</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -846,11 +856,29 @@
                         </svg>
                     </button>
 
-                    <p class="form-footer-note">Order ID akan digenerate otomatis</p>
+                    <p class="form-footer-note">Order ID unik akan dibuat otomatis untuk tracking</p>
                 </form>
             </div>
         </div>
     </section>
+
+    <!-- Tracking Modal -->
+    <div id="trackingModal" class="tracking-modal">
+        <div class="tracking-content">
+            <button class="tracking-close">×</button>
+            <div class="tracking-header">
+                <h3>Lacak Pesanan</h3>
+                <p>Masukkan Order ID Anda untuk melihat progress real-time.</p>
+            </div>
+            <div class="tracking-search">
+                <input type="text" id="trackInput" placeholder="Contoh: ASP-2602-X7Y">
+                <button id="trackBtn" class="magnetic-btn">Lacak</button>
+            </div>
+            <div id="trackingResult" class="tracking-result">
+                <!-- Result will appear here via JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- Digital Showcase -->
     <section id="digital-showcase" class="section-showcase">

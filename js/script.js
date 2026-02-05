@@ -35,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initDynamicCategories();
     initAdminModal();
     initMagneticButtons();
+    initMagneticButtons();
     initProjectModal();
+    initTrackingModal(); // New Tracking Modal
     loadCmsContent();
     initCmsMode();
 });
@@ -261,6 +263,7 @@ function initOrderForm() {
             const text = `Halo ASPYRE, saya ingin order project baru:%0A%0A` +
                 `📋 *PROJECT ORDER* (${orderId})%0A` +
                 `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
+                `📱 WhatsApp: ${data.userPhone}%0A` +
                 `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
                 `📝 Deskripsi: ${data.tentangBisnis}%0A` +
                 `📅 Deadline: ${data.deadline}%0A` +
@@ -1665,8 +1668,56 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
+
+// Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPortfolioAlbums);
 } else {
     initPortfolioAlbums();
+}
+
+/* ============================================
+   Tracking Modal Logic
+   ============================================ */
+function initTrackingModal() {
+    const modal = document.getElementById('trackingModal');
+    const openBtn = document.getElementById('navTrackBtn');
+    const closeBtn = document.querySelector('.tracking-close');
+    const trackInput = document.getElementById('trackInput');
+    const trackActionBtn = document.getElementById('trackBtn');
+
+    if (!modal || !openBtn) return;
+
+    // Open Modal
+    openBtn.addEventListener('click', () => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (trackInput) trackInput.focus();
+    });
+
+    // Close Modal
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    // Close on Outside Click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Placeholder Logic for "Lacak" Action
+    if (trackActionBtn) {
+        trackActionBtn.addEventListener('click', () => {
+            const id = trackInput.value.trim();
+            if (!id) return;
+
+            // Temporary Fake Result (Real Logic Next)
+            const resultDiv = document.getElementById('trackingResult');
+            resultDiv.innerHTML = `<p style="color:var(--sage)">Mencari ID: ${id}...</p>`;
+            // Next step: Implement Firestore Query here
+        });
+    }
 }
