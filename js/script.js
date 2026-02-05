@@ -465,6 +465,8 @@ function initAdminModal() {
     function showDashboard() {
         loginView.style.display = 'none';
         dashboardView.style.display = 'block';
+        // Widen modal for dashboard
+        document.querySelector('.admin-modal-content').classList.add('dashboard-mode');
         setupRealtimeListener();
     }
 
@@ -490,8 +492,12 @@ function initAdminModal() {
 
         const urgent = orders.filter(o => {
             if (!o.deadline) return false;
-            const remaining = calculateRemainingTime(o.deadline);
-            return remaining.hours >= 0 && remaining.hours < 24;
+            // Simple check: is deadline within 3 days?
+            const dead = new Date(o.deadline);
+            const now = new Date();
+            const diffTime = dead - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays >= 0 && diffDays <= 3;
         }).length;
         document.getElementById('statUrgent').textContent = urgent;
 
@@ -515,91 +521,195 @@ function initAdminModal() {
         }
 
         if (filtered.length === 0) {
-            ordersList.innerHTML = '<p class="no-data">Belum ada orderan masuk.</p>';
+            ordersList.innerHTML = '<p class="no-data" style="text-align:center; padding:40px; color:rgba(255,255,255,0.4);">Belum ada orderan masuk.</p>';
             return;
         }
+
+        // Create Table Structure
+        const tableWrapper = document.createElement('div');
+        tableWrapper.className = 'admin-table-wrapper';
+
+        const table = document.createElement('table');
+        table.className = 'admin-table';
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Client / Order ID</th>
+                    <th>Layanan</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+        `;
+        tableWrapper.appendChild(table);
+        ordersList.appendChild(tableWrapper);
+
+        const tbody = table.querySelector('tbody');
 
         filtered.forEach(order => {
             const date = order.timestamp ? new Date(order.timestamp.seconds * 1000).toLocaleDateString('id-ID') : order.date;
 
-            // Status Color Mapping
-            const statusColors = {
-                'pending': '#ffc107',
-                'proses': '#3498db',
-                'selesai': '#2ecc71',
-                'batal': '#e74c3c'
-            };
-            const statusClass = order.status || 'pending';
-            const statusColor = statusColors[statusClass] || '#ffc107';
+            // Urgency Check
+            let isUrgent = false;
+            if (order.deadline) {
+                const dead = new Date(order.deadline);
+                const now = new Date();
+                const diff = (dead - now) / (1000 * 60 * 60 * 24);
+                if (diff <= 3 && diff >= 0 && order.status !== 'selesai' && order.status !== 'batal') isUrgent = true;
+            }
 
-            const item = document.createElement('div');
-            item.className = 'order-card';
-            item.innerHTML = `
-                <div class="order-header">
-                    <h4>${order.namaBisnis} <small>(${order.id})</small></h4>
-                    <span class="order-date">${date}</span>
-                </div>
-                <!-- Status Dropdown -->
-                <div class="order-status-control" style="margin-bottom:12px;">
-                    <select class="status-select" data-id="${order.docId}" style="
-                        background: rgba(255,255,255,0.05); 
-                        border: 1px solid ${statusColor}; 
-                        color: ${statusColor};
-                        padding: 4px 8px;
-                        border-radius: 4px;
-                        font-size: 12px;
-                        cursor: pointer;
-                    ">
-                        <option value="pending" ${statusClass === 'pending' ? 'selected' : ''}>🟡 Pending</option>
-                        <option value="proses" ${statusClass === 'proses' ? 'selected' : ''}>🔵 Proses</option>
-                        <option value="selesai" ${statusClass === 'selesai' ? 'selected' : ''}>🟢 Selesai</option>
-                        <option value="batal" ${statusClass === 'batal' ? 'selected' : ''}>🔴 Batal</option>
+            // Status Colors (Backgrounds for badges)
+            const statusStyles = {
+                'pending': 'background: rgba(255,193,7,0.2); color: #ffc107; border:1px solid rgba(255,193,7,0.3)',
+                'proses': 'background: rgba(52,152,219,0.2); color: #3498db; border:1px solid rgba(52,152,219,0.3)',
+                'selesai': 'background: rgba(46,204,113,0.2); color: #2ecc71; border:1px solid rgba(46,204,113,0.3)',
+                'batal': 'background: rgba(231,76,60,0.2); color: #e74c3c; border:1px solid rgba(231,76,60,0.3)'
+            };
+            const statusStyle = statusStyles[order.status || 'pending'];
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <div class="client-name">${order.namaBisnis}</div>
+                    <span class="order-id-compact">${order.id}</span>
+                </td>
+                <td>
+                    <div style="font-size:13px; margin-bottom:4px;">${order.pilarLayanan}</div>
+                    <span class="service-pill">${order.kategoriLayanan}</span>
+                </td>
+                <td>
+                    ${isUrgent ? '<span class="urgent-dot" title="Urgent: < 3 Hari"></span>' : ''}
+                    <span style="${isUrgent ? 'color:var(--danger); font-weight:600;' : ''}">${order.deadline}</span>
+                    <div style="font-size:11px; opacity:0.5; margin-top:2px;">In: ${date}</div>
+                </td>
+                <td>
+                    <select class="status-select-compact" data-id="${order.docId}" style="${statusStyle}">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="proses" ${order.status === 'proses' ? 'selected' : ''}>Proses</option>
+                        <option value="selesai" ${order.status === 'selesai' ? 'selected' : ''}>Selesai</option>
+                        <option value="batal" ${order.status === 'batal' ? 'selected' : ''}>Batal</option>
                     </select>
-                </div>
-                <div class="order-details">
-                    <p><strong>Layanan:</strong> ${order.pilarLayanan} - ${order.kategoriLayanan}</p>
-                    <p><strong>Kontak:</strong> ${order.userPhone || '-'}</p>
-                    <p><strong>Budget:</strong> ${order.budget}</p>
-                    <p class="order-desc">"${order.tentangBisnis}"</p>
-                </div>
-                <div class="order-actions">
-                    <button class="btn-wa" onclick="window.open('https://wa.me/${order.userPhone}?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')">Hubungi</button>
-                    <button class="btn-delete" data-id="${order.docId}" data-display-id="${order.id}">Hapus</button>
-                </div>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn btn-view" onclick="window.viewOrderDetails('${order.id}')" title="Lihat Detail">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                        <button class="action-btn btn-wa" onclick="window.open('https://wa.me/${order.userPhone}?text=Halo ${order.namaBisnis}, mengenai order ${order.id}...', '_blank')" title="WhatsApp">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </button>
+                        <button class="action-btn btn-delete" data-id="${order.docId}" data-display-id="${order.id}" title="Hapus">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </div>
+                </td>
             `;
-            ordersList.appendChild(item);
+            tbody.appendChild(tr);
         });
 
-        // Add Event Listeners for Status Change
-        ordersList.querySelectorAll('.status-select').forEach(select => {
+        // Event Listeners (Status & Delete) - Re-attach
+        attachOrderListeners(ordersList);
+    }
+
+    function attachOrderListeners(container) {
+        // Status Change
+        container.querySelectorAll('.status-select-compact').forEach(select => {
             select.addEventListener('change', async (e) => {
                 const docId = e.target.dataset.id;
                 const newStatus = e.target.value;
                 try {
                     await updateDoc(doc(db, "orders", docId), { status: newStatus });
+                    // No need to re-render, realtime listener will catch it
                 } catch (err) {
-                    console.error("Error updating status:", err);
+                    console.error("Error updates:", err);
                     alert("Gagal update status");
                 }
             });
         });
 
-        // Add Event Listeners for Delete
-        ordersList.querySelectorAll('.btn-delete').forEach(btn => {
+        // Delete
+        container.querySelectorAll('.btn-delete').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 const docId = e.target.dataset.id;
                 const displayId = e.target.dataset.displayId;
-                if (confirm(`Hapus order ${displayId}?`)) {
+                if (confirm(`Hapus order ${displayId} permanen?`)) {
                     try {
                         await deleteDoc(doc(db, "orders", docId));
                     } catch (err) {
-                        console.error("Error deleting:", err);
-                        alert("Gagal menghapus order");
+                        console.error("Error delete:", err);
+                        alert("Gagal hapus");
                     }
                 }
             });
         });
     }
+
+    // Expose View Function globally
+    window.viewOrderDetails = (orderId) => {
+        const order = latestOrders.find(o => o.id === orderId);
+        if (!order) return;
+
+        // Create or get modal
+        let modal = document.getElementById('orderDetailModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'orderDetailModal';
+            modal.className = 'detail-modal';
+            document.body.appendChild(modal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+        }
+
+        modal.innerHTML = `
+            <div class="detail-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+                    <div>
+                        <h3 style="margin:0; font-size:20px;">${order.namaBisnis}</h3>
+                        <span style="font-family:'Courier New'; opacity:0.6; font-size:14px;">${order.id}</span>
+                    </div>
+                    <button onclick="document.getElementById('orderDetailModal').classList.remove('active')" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:24px;">
+                    <div>
+                        <label style="display:block; font-size:12px; opacity:0.6; margin-bottom:4px">Layanan</label>
+                        <div style="font-weight:500;">${order.pilarLayanan}</div>
+                        <div style="font-size:14px; opacity:0.8;">${order.kategoriLayanan}</div>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:12px; opacity:0.6; margin-bottom:4px">Deadline</label>
+                        <div style="font-weight:500; color:var(--coral);">${order.deadline}</div>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:12px; opacity:0.6; margin-bottom:4px">Budget</label>
+                        <div>${order.budget}</div>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:12px; opacity:0.6; margin-bottom:4px">Kontak</label>
+                        <div>${order.userPhone}</div>
+                    </div>
+                </div>
+
+                <div>
+                     <label style="display:block; font-size:12px; opacity:0.6; margin-bottom:8px">Deskripsi Project</label>
+                     <div style="background:rgba(255,255,255,0.05); padding:16px; border-radius:8px; font-size:14px; line-height:1.6; max-height:200px; overflow-y:auto;">
+                        ${order.tentangBisnis}
+                     </div>
+                </div>
+                
+                <div style="margin-top:24px; text-align:right;">
+                    <button onclick="document.getElementById('orderDetailModal').classList.remove('active')" class="admin-btn">Tutup</button>
+                </div>
+            </div>
+        `;
+
+        // Show
+        setTimeout(() => modal.classList.add('active'), 10);
+    };
 
     function calculateRemainingTime(deadline) {
         const now = new Date();
