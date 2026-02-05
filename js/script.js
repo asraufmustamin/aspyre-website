@@ -3,7 +3,7 @@
    ============================================ */
 // Import Firebase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, timestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -238,7 +238,7 @@ function initOrderForm() {
             ...data,
             createdAt: new Date().toISOString(),
             date: new Date().toLocaleDateString('id-ID'),
-            timestamp: timestamp(), // Firebase Server Timestamp
+            timestamp: serverTimestamp(), // Firebase Server Timestamp
             status: 'pending'
         };
 
