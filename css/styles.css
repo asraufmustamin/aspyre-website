@@ -6114,12 +6114,17 @@ section.highlight-section {
     .proses-timeline {
         flex-direction: column;
         gap: 32px;
+        align-items: center;
+        /* Fix alignment - Center the steps and connectors */
     }
 
     .proses-connector {
         width: 3px;
         height: 40px;
         flex: 0 0 40px;
+        align-self: center;
+        /* Ensure line is centered */
+        margin: 0;
     }
 
     .proses-connector::after {
@@ -6161,26 +6166,61 @@ section.highlight-section {
         display: none !important;
     }
 
-    /* Portfolio Section Mobile Refinement */
-    .portfolio-albums {
-        grid-template-columns: 1fr !important;
-        grid-auto-flow: row !important;
-        overflow-x: visible !important;
-        /* Disable horizontal scroll on mobile vertical stack */
-        gap: 32px;
-        padding-bottom: 0;
+    /* Portfolio Section Mobile Refinement - Horizontal Slider (Geser) */
+    .portfolio-albums,
+    .portfolio-albums.scrollable {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, 85vw) !important;
+        grid-auto-flow: column !important;
+        grid-auto-columns: 85vw !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding-bottom: 24px;
+        padding-right: 24px;
+        /* End padding */
         margin-bottom: 0;
+        justify-content: start;
+        /* Align to start */
     }
 
-    .portfolio-albums.scrollable {
-        /* Disable the complex scroll behavior on mobile for simpler vertical view */
-        display: grid;
-        grid-template-columns: 1fr !important;
-        grid-auto-columns: auto !important;
-        grid-auto-flow: row !important;
-        overflow-x: visible;
-        padding-bottom: 0;
-        margin-bottom: 0;
+    .album-card {
+        min-height: 280px;
+        max-height: none;
+        width: 85vw;
+        aspect-ratio: 4/3;
+        scroll-snap-align: center;
+    }
+
+    /* Mobile Animations & Glows */
+    @keyframes pulseGlowMobile {
+
+        0%,
+        100% {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        50% {
+            box-shadow: 0 8px 20px rgba(232, 90, 79, 0.25);
+            border-color: rgba(232, 90, 79, 0.4);
+        }
+    }
+
+    .layanan-card,
+    .paket-card,
+    .btn-primary,
+    .paket-cta.primary,
+    .form-submit {
+        animation: pulseGlowMobile 3s infinite ease-in-out;
+    }
+
+    /* Admin Modal Mobile */
+    .admin-modal-content {
+        width: 95%;
+        margin: 10px auto;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     .album-card {

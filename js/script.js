@@ -513,6 +513,11 @@ function initCmsMode() {
     const indicator = document.getElementById('cmsIndicator');
     const exitBtn = document.getElementById('exitCmsMode');
 
+    // Attach to ALL admin triggers (Desktop + Mobile)
+    document.querySelectorAll('.admin-trigger').forEach(btn => {
+        btn.addEventListener('click', enableCmsModeFunc);
+    });
+
     if (exitBtn) {
         exitBtn.addEventListener('click', disableCmsMode);
     }
