@@ -72,7 +72,9 @@ function initMobileMenu() {
 
         // Special handling for Admin Panel Button
         if (link.classList.contains('admin-panel-btn')) {
-            // Close menu visually
+            e.preventDefault();
+
+            // 1. Close Menu Visually
             menu.classList.remove('active');
             toggle.classList.remove('active');
 
@@ -81,8 +83,14 @@ function initMobileMenu() {
             spans[0].style.transform = '';
             spans[1].style.transform = '';
 
-            // DO NOT reset overflow here, as modal needs it 'hidden'
-            // initAdminModal will handle opening the modal
+            // 2. Open Admin Modal DIRECTLY
+            const adminModal = document.getElementById('adminModal');
+            if (adminModal) {
+                adminModal.classList.add('active');
+                // Ensure overflow is hidden for modal
+                document.body.style.overflow = 'hidden';
+            }
+
             return;
         }
 
