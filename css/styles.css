@@ -6324,3 +6324,196 @@ section.highlight-section {
         opacity: 0.2;
     }
 }
+
+/* ============================================
+   Admin Modal & Dashboard System (Fix)
+   ============================================ */
+.admin-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.85);
+    /* Dark overlay */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10000;
+    /* Above Mobile Menu (99) */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.admin-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.admin-modal-content {
+    background: #1a1a1a;
+    /* Fallback */
+    background: linear-gradient(145deg, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    /* Login width */
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 0;
+    animation: modalSlideUp 0.4s ease forwards;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.admin-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.admin-modal-header {
+    text-align: center;
+    padding: 40px 30px 20px;
+}
+
+.logo-symbol-modal {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.admin-modal-header h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+.admin-modal-header p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+#adminLoginForm {
+    padding: 0 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-modal input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--white);
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.admin-modal input:focus {
+    border-color: var(--coral);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.1);
+}
+
+.admin-error {
+    color: #ff4d4d;
+    font-size: 13px;
+    text-align: center;
+    background: rgba(255, 77, 77, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    display: none;
+}
+
+/* Dashboard Styles */
+.admin-view#adminDashboard .admin-modal-content {
+    max-width: 900px;
+    /* Wider for dashboard */
+}
+
+.admin-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.admin-tab {
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.admin-tab.active {
+    color: var(--coral);
+    border-bottom-color: var(--coral);
+}
+
+.admin-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 20px 20px;
+}
+
+.mini-stat {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.mini-stat.urgent {
+    background: rgba(232, 90, 79, 0.15);
+    border: 1px solid rgba(232, 90, 79, 0.3);
+}
+
+.stat-num {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.stat-lbl {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}

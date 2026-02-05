@@ -70,6 +70,22 @@ function initMobileMenu() {
             return;
         }
 
+        // Special handling for Admin Panel Button
+        if (link.classList.contains('admin-panel-btn')) {
+            // Close menu visually
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+
+            // Reset hamburger icon
+            const spans = toggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.transform = '';
+
+            // DO NOT reset overflow here, as modal needs it 'hidden'
+            // initAdminModal will handle opening the modal
+            return;
+        }
+
         // Standard link closing behavior
         menu.classList.remove('active');
         toggle.classList.remove('active');
