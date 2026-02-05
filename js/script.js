@@ -251,8 +251,28 @@ function initOrderForm() {
             // Push to Firebase
             await addDoc(collection(db, "orders"), orderData);
 
-            // Success Logic (WhatsApp redirect) follows...
-            // Triggering next step manually through code flow
+            // Success Feedback
+            submitBtn.innerHTML = "✅ Terkirim!";
+
+            // Format WhatsApp Message
+            const pilars = { 'creative': 'Creative Design', 'systems': 'Web & Systems', 'data': 'Data Services' };
+            const pilarTxt = pilars[data.pilarLayanan] || data.pilarLayanan;
+
+            const text = `Halo ASPYRE, saya ingin order project baru:%0A%0A` +
+                `📋 *PROJECT ORDER* (${orderId})%0A` +
+                `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
+                `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
+                `📝 Deskripsi: ${data.tentangBisnis}%0A` +
+                `📅 Deadline: ${data.deadline}%0A` +
+                `💰 Budget: ${data.budget}`;
+
+            // Redirect delay
+            setTimeout(() => {
+                window.open(`https://wa.me/6281234567890?text=${text}`, '_blank');
+                form.reset();
+                submitBtn.innerHTML = originalContent;
+                submitBtn.disabled = false;
+            }, 1000);
 
         } catch (error) {
             console.error(error);
