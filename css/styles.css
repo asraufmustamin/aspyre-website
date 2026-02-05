@@ -6209,25 +6209,50 @@ section.highlight-section {
     }
 
     /* Force "Lit Up" state on ALL cards and buttons in mobile */
+    /* Force "Lit Up" state on ALL cards and buttons in mobile */
     .layanan-card,
     .paket-card,
+    .pillar-card,
+    .proses-step,
+    .album-card,
+    /* Works for portfolio */
     .btn-primary,
     .paket-cta,
     .form-submit,
     .mobile-cta {
         animation: pulseGlowMobile 2s infinite ease-in-out !important;
-        border: 1px solid rgba(232, 90, 79, 0.3);
-        /* Ensure border is visible */
+        border: 1px solid rgba(232, 90, 79, 0.3) !important;
         position: relative;
         z-index: 1;
     }
 
+    /* Uniform Buttons in Mobile */
+    .paket-cta {
+        background: var(--gradient-warm) !important;
+        color: var(--ink) !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(232, 90, 79, 0.4) !important;
+    }
+
     /* Remove specific scaling on mobile for featured cards to keep them uniform */
-    .paket-card.featured,
-    .layanan-card:hover,
-    .paket-card:hover {
-        transform: none !important;
-        background: rgba(255, 255, 255, 0.03) !important;
+    /* Hero Proof Mobile Fix */
+    .hero-proof {
+        flex-direction: row !important;
+        /* Force horizontal row */
+        justify-content: space-between;
+        width: 100%;
+        gap: 16px;
+    }
+
+    .proof-item {
+        align-items: center;
+        /* Center text */
+        text-align: center;
+    }
+
+    .proof-number {
+        font-size: 28px !important;
+        /* Adjusted size for mobile row */
     }
 
     /* Admin Modal Mobile */
