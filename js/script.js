@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // FORCE RESET PORTFOLIO DATA (Once per session)
         // This ensures that default data is loaded if localStorage is corrupted
-        if (!sessionStorage.getItem('portfolio_init_v4')) {
+        if (!sessionStorage.getItem('portfolio_init_v5')) {
             console.log("Portfolio: Session boot - clearing potentially stale cache");
             localStorage.removeItem('aspyre_albums');
-            sessionStorage.setItem('portfolio_init_v4', 'true');
+            sessionStorage.setItem('portfolio_init_v5', 'true');
         }
     } catch (e) { console.warn("LocaleStorage access restricted"); }
 
@@ -96,6 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modal) {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+                // If already logged in, show dashboard immediately
+                if (sessionStorage.getItem('aspyre_admin') === 'true' && typeof showDashboard === 'function') {
+                    showDashboard();
+                }
             } else {
                 console.error("Admin Modal not found!");
             }
@@ -2080,24 +2085,7 @@ function initPortfolioAlbums() {
     renderAlbums();
 }
 
-// Update DOMContentLoaded to use new function
-document.addEventListener('DOMContentLoaded', () => {
-    // Remove old initProjectModal call and add new one
-    // This is handled by the initialization at the top of the file
-});
 
-// Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
-
-// Add initPortfolioAlbums to the init chain (call after DOMContentLoaded)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        initPortfolioAlbums();
-        initTrackingSystem();
-    });
-} else {
-    initPortfolioAlbums();
-    initTrackingSystem();
-}
 
 /* ============================================
    Tracking System (Dedicated Page)
