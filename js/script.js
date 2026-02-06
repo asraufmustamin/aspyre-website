@@ -132,44 +132,32 @@ function initMobileMenu() {
         const link = e.target.closest('.mobile-link, .mobile-cta');
         if (!link) return;
 
-        // Special handling for Admin Trigger
-        if (link.classList.contains('admin-trigger')) {
+        // Special handling for Admin Trigger & Admin Panel Button
+        if (link.classList.contains('admin-trigger') || link.classList.contains('admin-panel-btn')) {
             e.preventDefault();
+
+            // 1. Close Menu
             menu.classList.remove('active');
             toggle.classList.remove('active');
             document.body.style.overflow = '';
 
-            // Reset hamburger icon
             const spans = toggle.querySelectorAll('span');
-            spans[0].style.transform = '';
-            spans[1].style.transform = '';
+            if (spans.length >= 2) {
+                spans[0].style.transform = '';
+                spans[1].style.transform = '';
+            }
 
-            // Trigger CMS mode directly
-            enableCmsModeFunc();
-            return;
-        }
-
-        // Special handling for Admin Panel Button
-        if (link.classList.contains('admin-panel-btn')) {
-            e.preventDefault();
-
-            // 1. Close Menu Visually
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
-
-            // Reset hamburger icon
-            const spans = toggle.querySelectorAll('span');
-            spans[0].style.transform = '';
-            spans[1].style.transform = '';
-
-            // 2. Open Admin Modal DIRECTLY
+            // 2. Clear Session and Open Modal
             const adminModal = document.getElementById('adminModal');
             if (adminModal) {
                 adminModal.classList.add('active');
-                // Ensure overflow is hidden for modal
                 document.body.style.overflow = 'hidden';
-            }
 
+                // If already logged in, show dashboard directly
+                if (sessionStorage.getItem('aspyre_admin') === 'true') {
+                    if (typeof showDashboard === 'function') showDashboard();
+                }
+            }
             return;
         }
 
@@ -400,19 +388,12 @@ function initAdminModal() {
     let unsubscribe = null;
     let latestOrders = [];
 
-    // Open Modal
+    // Triggers logic moved to Global Listener for better reliability
+    /*
     triggers.forEach(trigger => {
-        if (trigger) {
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                if (sessionStorage.getItem('aspyre_admin') === 'true') {
-                    showDashboard();
-                }
-            });
-        }
+        ...
     });
+    */
 
     // Close modal
     closeBtn.addEventListener('click', closeModal);
