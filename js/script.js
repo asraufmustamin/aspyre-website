@@ -19,6 +19,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Global Variables
+let cmsModified = {};
+
 document.addEventListener('DOMContentLoaded', () => {
     // Clear old CMS data if version mismatch
     const CMS_VERSION = 'v2.0';
@@ -900,14 +903,14 @@ function disableCmsMode() {
     });
 
     // Check for unsaved changes
-    if (typeof cmsModified !== 'undefined' && Object.keys(cmsModified).length > 0) {
+    if (Object.keys(cmsModified).length > 0) {
         if (confirm('Ada perubahan yang belum disimpan. Simpan sekarang?')) {
             saveCmsContent();
         }
     }
 
     // Reset Modified
-    if (typeof cmsModified !== 'undefined') cmsModified = {};
+    cmsModified = {};
 
     showToast('CMS Mode dinonaktifkan.');
 }
