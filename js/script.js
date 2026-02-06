@@ -83,8 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const adminBtn = e.target.closest('.admin-trigger, .admin-panel-btn');
         if (adminBtn) {
             console.log("Global Admin Trigger Clicked");
-            if (typeof enableCmsModeFunc === 'function') {
-                enableCmsModeFunc();
+            e.preventDefault(); // Prevent hash navigation
+            const modal = document.getElementById('adminModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                console.error("Admin Modal not found!");
             }
         }
     });
