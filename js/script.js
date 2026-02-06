@@ -19,6 +19,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Expose Firebase for other scripts (testimonials.js)
+window.testimonialsFirebase = {
+    db,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    setDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    query,
+    orderBy,
+    serverTimestamp
+};
+
 // Global Variables
 let cmsModified = {};
 
