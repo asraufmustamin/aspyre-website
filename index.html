@@ -103,8 +103,7 @@
                     <span>EN</span>
                 </button>
                 <a href="#kontak" class="nav-cta">Mulai Project</a>
-                <button class="admin-trigger" aria-label="Admin" title="Admin Access"
-                    onclick="document.getElementById('admin-modal').classList.add('active')">
+                <button class="admin-trigger" aria-label="Admin" title="Admin Access">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" />
                         <path d="M7 11V7a5 5 0 0110 0v4" />
@@ -1174,70 +1173,7 @@
         </div>
     </div>
 
-    <!-- Portfolio Section (Restored) -->
-    <section id="projects" class="section-portfolio">
-        <div class="container">
-            <div class="section-intro centered animate-on-scroll">
-                <span class="section-label editable" data-key="portfolio-label">Portfolio</span>
-                <h2 class="section-title editable" data-key="portfolio-title">Karya Kami</h2>
-                <p class="section-subtitle editable" data-key="portfolio-desc">
-                    Eksplorasi hasil karya terbaik kami dalam membangun solusi digital.
-                    Klik album untuk melihat detail project.
-                </p>
-            </div>
 
-            <div class="album-scroll-nav">
-                <button class="scroll-btn prev" aria-label="Previous">←</button>
-                <div class="scroll-dots" id="scrollDots"></div>
-                <button class="scroll-btn next" aria-label="Next">→</button>
-            </div>
-
-            <div id="portfolioAlbums" class="portfolio-albums">
-                <!-- Albums injected via JS -->
-                <div class="loading-state">Memuat Portfolio...</div>
-            </div>
-
-            <div class="portfolio-cta animate-on-scroll">
-                <a href="https://wa.me/6285729715555" class="btn-ghost">
-                    <span>Lihat Lebih Banyak</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Album Detail Modal -->
-    <div id="album-modal" class="album-modal">
-        <button class="album-modal-close">×</button>
-        <div class="album-modal-content">
-            <div class="album-modal-gallery">
-                <div class="gallery-main">
-                    <img id="galleryMainImage" src="" alt="Main Preview">
-                    <button class="gallery-nav prev">‹</button>
-                    <button class="gallery-nav next">›</button>
-                </div>
-                <div class="gallery-thumbs" id="galleryThumbs"></div>
-            </div>
-            <div class="album-modal-info">
-                <div class="album-tags" id="albumTags"></div>
-                <h2 id="albumTitle">Project Title</h2>
-                <p id="albumDesc">Project description goes here.</p>
-                <div class="album-meta">
-                    <div class="meta-item">
-                        <span class="meta-label">Category</span>
-                        <span id="albumCategory">Web Design</span>
-                    </div>
-                </div>
-                <a href="#" id="albumLink" target="_blank" class="album-action-btn">
-                    <span>Kunjungi Website</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
 
     <!-- Digital Showcase -->
     <section id="digital-showcase" class="section-showcase">
@@ -1462,69 +1398,6 @@
     <link rel="stylesheet" href="css/comparison.css">
     <link rel="stylesheet" href="css/kenapa-bento.css"> <!-- Bento Grid Style -->
 
-    <!-- EMERGENCY FAILSAFE SCRIPT: Ensures Portfolio & Buttons work independently -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Force Portfolio Rendering
-            const pContainer = document.getElementById('portfolioAlbums');
-            if (pContainer && pContainer.children.length <= 1) { // Only if empty or just loading text
-                console.log("Emergency Portfolio Render Activated");
-                const pData = [
-                    { title: 'Website Desa Cenrana', category: 'Web Platform', img: 'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Web+Desa' },
-                    { title: 'Brand Identity', category: 'Branding', img: 'https://via.placeholder.com/400x300/1a1a2e/f4a261?text=Branding' },
-                    { title: 'Data Services', category: 'Data', img: 'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Data' },
-                    { title: 'E-Commerce', category: 'Web Store', img: 'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Store' },
-                    { title: 'Social Media', category: 'Marketing', img: 'https://via.placeholder.com/400x300/1a1a2e/a4c3b2?text=Social' },
-                    { title: 'UI/UX Design', category: 'App Design', img: 'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=UI+UX' }
-                ];
-
-                let html = '';
-                pData.forEach((p, i) => {
-                    html += `
-                        <div class="album-card animate-on-scroll" style="opacity: 1; transform: none; animation-delay: ${i * 0.1}s">
-                            <div class="album-preview-stack">
-                                <div class="preview-image"><img src="${p.img}" alt="${p.title}"></div>
-                            </div>
-                            <div class="album-info">
-                                <span class="album-category">${p.category}</span>
-                                <h3 class="album-title">${p.title}</h3>
-                                <div class="album-count"><span>6 karya</span></div>
-                            </div>
-                        </div>
-                    `;
-                });
-                pContainer.innerHTML = html;
-            }
-
-            // 2. Force Admin Modal Event
-            const showAdmin = () => {
-                const modal = document.getElementById('admin-modal');
-                const login = document.getElementById('adminLogin');
-                if (modal) modal.classList.add('active');
-                if (login) login.style.display = 'flex';
-            };
-
-            document.querySelectorAll('.admin-trigger, .admin-panel-btn').forEach(btn => {
-                btn.onclick = (e) => { e.preventDefault(); showAdmin(); };
-            });
-
-            // 3. Force Lang Toggle
-            document.querySelectorAll('.lang-toggle').forEach(btn => {
-                btn.onclick = () => {
-                    const spans = btn.querySelectorAll('span');
-                    if (spans[0].classList.contains('active')) {
-                        spans[0].classList.remove('active');
-                        spans[2].classList.add('active');
-                        alert('Switched to English (Demo Mode)');
-                    } else {
-                        spans[2].classList.remove('active');
-                        spans[0].classList.add('active');
-                        alert('Switched to Indonesia');
-                    }
-                };
-            });
-        });
-    </script>
 </body>
 
 </html>
