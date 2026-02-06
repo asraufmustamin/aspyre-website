@@ -23,26 +23,47 @@ const db = getFirestore(app);
 let cmsModified = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Clear old CMS data if version mismatch
-    const CMS_VERSION = 'v2.0';
-    if (localStorage.getItem('cmsVersion') !== CMS_VERSION) {
-        localStorage.removeItem('aspyreCmsContent');
-        localStorage.setItem('cmsVersion', CMS_VERSION);
-    }
+    // Safety Wrapper
+    const safeInit = (fn, name) => {
+        try {
+            fn();
+        } catch (e) {
+            console.error(`Error initializing ${name}:`, e);
+            // Don't let one failure stop the rest
+        }
+    };
 
-    initMobileMenu();
-    initSmoothScroll();
-    initScrollAnimations();
-    initOrderForm();
-    initLanguageToggle();
-    initDynamicCategories();
-    initAdminModal();
-    initMagneticButtons();
-    initMagneticButtons();
-    initProjectModal();
-    initTrackingSystem(); // Name updated
-    loadCmsContent();
-    initCmsMode();
+    // Clear old CMS data if version mismatch
+    try {
+        const CMS_VERSION = 'v2.0';
+        if (localStorage.getItem('cmsVersion') !== CMS_VERSION) {
+            localStorage.removeItem('aspyreCmsContent');
+            localStorage.setItem('cmsVersion', CMS_VERSION);
+        }
+    } catch (e) { console.warn("LocaleStorage access restricted"); }
+
+    safeInit(initMobileMenu, 'Mobile Menu');
+    safeInit(initSmoothScroll, 'Smooth Scroll');
+    safeInit(initScrollAnimations, 'Scroll Animations');
+    safeInit(initOrderForm, 'Order Form');
+    safeInit(initLanguageToggle, 'Language Toggle');
+    safeInit(initDynamicCategories, 'Dynamic Categories');
+    safeInit(initAdminModal, 'Admin Modal');
+    safeInit(initMagneticButtons, 'Magnetic Buttons');
+    safeInit(initProjectModal, 'Project Modal');
+    safeInit(initTrackingSystem, 'Tracking System');
+    safeInit(loadCmsContent, 'CMS Content');
+    safeInit(initCmsMode, 'CMS Mode');
+
+    // Failsafe: Force visibility after 1s just in case
+    setTimeout(() => {
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            if (getComputedStyle(el).opacity === '0') {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            }
+        });
+    }, 1500);
 });
 
 /* ============================================
@@ -802,7 +823,7 @@ function initAdminModal() {
 /* ============================================
    CMS Inline Editing System
    ============================================ */
-let cmsModified = {};
+// cmsModified is declared globally
 
 function initCmsMode() {
     const indicator = document.getElementById('cmsIndicator');

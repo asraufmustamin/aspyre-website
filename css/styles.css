@@ -6882,3 +6882,13 @@ section.highlight-section {
     font-size: 14px;
     color: var(--text-muted);
 }
+/* ============================================
+   FAILSAFE: Force Visibility
+   Ensures content is visible even if JS fails
+   ============================================ */
+.animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
