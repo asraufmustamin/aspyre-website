@@ -42,6 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('aspyreCmsContent');
             localStorage.setItem('cmsVersion', CMS_VERSION);
         }
+
+        // FORCE RESET PORTFOLIO DATA (Once per session)
+        // This ensures that default data is loaded if localStorage is corrupted
+        if (!sessionStorage.getItem('portfolio_init_v4')) {
+            console.log("Portfolio: Session boot - clearing potentially stale cache");
+            localStorage.removeItem('aspyre_albums');
+            sessionStorage.setItem('portfolio_init_v4', 'true');
+        }
     } catch (e) { console.warn("LocaleStorage access restricted"); }
 
     safeInit(initMobileMenu, 'Mobile Menu');
