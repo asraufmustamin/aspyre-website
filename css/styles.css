@@ -6957,12 +6957,11 @@ section.highlight-section {
     /* End of Styles */
 
     /* ============================================
-       EMERGENCY FIXES - CRITICAL REGRESSIONS
-       ============================================ */
+   EMERGENCY FIXES - CRITICAL REGRESSIONS
+   ============================================ */
 
-    /* 1. Admin Modal Container (Was missing) */
     .admin-modal {
-        position: fixed;
+        position: fixed !important;
         top: 0;
         left: 0;
         width: 100%;
@@ -6977,18 +6976,16 @@ section.highlight-section {
         visibility: hidden;
         transition: all 0.3s ease;
         pointer-events: none;
-        /* Default to none to pass clicks if hidden */
     }
 
     .admin-modal.active {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        /* Enable clicks when active */
     }
 
     .admin-modal-content {
-        background: var(--surface-dark, #1a1a1a);
+        background: #1a1a1a !important;
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 16px;
         width: 90%;
@@ -7001,12 +6998,12 @@ section.highlight-section {
         transition: transform 0.3s ease;
     }
 
-    .admin-modal.active .admin-modal-content {
-        transform: translateY(0);
+    .admin-modal-content.dashboard-mode {
+        max-width: 1000px !important;
     }
 
-    .admin-modal-content.dashboard-mode {
-        max-width: 1000px;
+    .admin-modal.active .admin-modal-content {
+        transform: translateY(0);
     }
 
     .admin-modal-close {
@@ -7025,7 +7022,6 @@ section.highlight-section {
         color: white;
     }
 
-    /* 2. Tracking Modal Safety Fix */
     .tracking-modal {
         position: fixed !important;
         top: 0;
@@ -7048,7 +7044,6 @@ section.highlight-section {
         visibility: visible !important;
     }
 
-    /* Ensure content is centered and visible */
     .tracking-content {
         background: #1a1a1a;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -7058,4 +7053,3 @@ section.highlight-section {
         max-width: 500px;
         position: relative;
     }
-}
