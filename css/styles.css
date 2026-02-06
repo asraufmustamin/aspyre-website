@@ -7055,8 +7055,18 @@ section.highlight-section {
     width: 90%;
     max-width: 500px;
     position: relative;
-}@charset " UTF-8\; 
+}
+
 /* Hardened Visibility Classes */
-.admin-view { display: none !important; }
-.admin-view.active { display: block !important; }
-#portfolioAlbums { display: grid !important; min-height: 200px; }
+.admin-view {
+    display: none !important;
+}
+
+.admin-view.active {
+    display: block !important;
+}
+
+#portfolioAlbums {
+    display: grid !important;
+    min-height: 200px;
+}

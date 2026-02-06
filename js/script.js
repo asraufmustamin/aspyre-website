@@ -443,8 +443,8 @@ function initAdminModal() {
     // Logout
     logoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('aspyre_admin');
-        dashboardView.style.display = 'none';
-        loginView.style.display = 'block';
+        if (dashboardView) dashboardView.classList.remove('active');
+        if (loginView) loginView.classList.add('active');
         loginForm.reset();
         // Fix: Remove wide mode class
         document.querySelector('.admin-modal-content').classList.remove('dashboard-mode');
@@ -529,8 +529,8 @@ function initAdminModal() {
     function showDashboard() {
         console.log("Admin: Transitioning to Dashboard...");
         try {
-            if (loginView) loginView.style.display = 'none';
-            if (dashboardView) dashboardView.style.display = 'block';
+            if (loginView) loginView.classList.remove('active');
+            if (dashboardView) dashboardView.classList.add('active');
 
             const content = document.querySelector('.admin-modal-content');
             if (content) content.classList.add('dashboard-mode');
