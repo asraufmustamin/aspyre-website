@@ -34,7 +34,24 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
+<body data-debug="true">
+    <script>
+        // ULTIMATE DEBUG SCRIPT
+        window.addEventListener('click', function (e) {
+            const btn = e.target.closest('.admin-trigger, .admin-panel-btn');
+            if (btn) {
+                console.log("DEBUG: Admin Click Captured!", btn);
+                // alert("DEBUG: Admin Click Captured!"); // Visual feedback for user
+                const modal = document.getElementById('adminModal');
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    alert("ERROR: #adminModal not found in DOM!");
+                }
+            }
+        }, true); // Capture phase to be sure
+    </script>
     <!-- CMS Hover Zone (for detecting cursor near top) -->
     <div id="cmsHoverZone" class="cms-hover-zone"></div>
 
