@@ -8,7 +8,21 @@
         content="ASPYRE.AI - Partner kreatif untuk branding, website, dan manajemen data bisnis Anda.">
     <meta name="keywords" content="Jasa Logo, Branding UMKM, Website Murah, Desain Logo, Brand Identity, Data Entry">
 
-    <title>ASPYRE.AI - Partner Kreatif Brand & Digital</title>
+    <title>ASPYRE.AI - Modern Digital Agency</title>
+
+    <!-- Failsafe: Ensure body is visible if JS errors out -->
+    <style>
+        body {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+    <script>
+        window.addEventListener('error', function (e) {
+            console.error('Global Error:', e.message);
+            document.body.style.opacity = '1';
+        });
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1370,7 +1384,6 @@
     <!-- Comparison CSS & JS -->
     <link rel="stylesheet" href="css/comparison.css">
     <link rel="stylesheet" href="css/kenapa-bento.css"> <!-- Bento Grid Style -->
-    <script src="js/script.js" defer></script>
 </body>
 
 </html>
