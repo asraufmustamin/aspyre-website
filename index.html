@@ -32,6 +32,17 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Failsafe Error Logger -->
+    <script>
+        window.onerror = function (msg, url, line) {
+            console.error("Global Error Caught: " + msg + " at " + line);
+            // Optionally alert if critical
+            // alert("System Error: " + msg); 
+        };
+        window.addEventListener('unhandledrejection', function (event) {
+            console.error("Unhandled Promise Rejection:", event.reason);
+        });
+    </script>
 </head>
 
 <body data-debug="true">

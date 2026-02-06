@@ -22,7 +22,8 @@ const db = getFirestore(app);
 // Global Variables
 let cmsModified = {};
 
-document.addEventListener('DOMContentLoaded', () => {
+// Initialization Logic
+const initApp = () => {
     // Safety Wrapper
     const safeInit = (fn, name) => {
         try {
@@ -31,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`${name} Initialized.`);
         } catch (e) {
             console.error(`Error initializing ${name}:`, e);
-            // Don't let one failure stop the rest
         }
     };
 
@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // FORCE RESET PORTFOLIO DATA (Once per session)
-        // This ensures that default data is loaded if localStorage is corrupted
         if (!sessionStorage.getItem('portfolio_init_v6')) {
             console.log("Portfolio: Session boot v6 - clearing potentially stale cache");
             localStorage.removeItem('aspyre_albums');
@@ -65,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     safeInit(loadCmsContent, 'CMS Content');
     safeInit(initCmsMode, 'CMS Mode');
 
-    // Global Event Delegation (Fallback for Buttons)
     // Global Event Delegation (Fallback for Buttons)
     document.body.addEventListener('click', (e) => {
         // Lang Toggle Fallback
@@ -106,7 +104,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-});
+};
+
+// Execute Initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp(); // DOM already ready
+}
 
 /* ============================================
    Mobile Menu
