@@ -646,14 +646,36 @@ function initAdminModal() {
 
     // Logout
     logoutBtn.addEventListener('click', () => {
+        console.log("Admin: Logging out...");
+
+        // 1. Clear session
         sessionStorage.removeItem('aspyre_admin');
+
+        // 2. Stop Firebase listener
+        if (unsubscribe) {
+            unsubscribe();
+            unsubscribe = null;
+        }
+
+        // 3. Reset views
         if (dashboardView) dashboardView.classList.remove('active');
         if (loginView) loginView.classList.add('active');
+
+        // 4. Reset form
         loginForm.reset();
-        // Fix: Remove wide mode class
-        document.querySelector('.admin-modal-content').classList.remove('dashboard-mode');
+
+        // 5. Remove dashboard mode class
+        const modalContent = document.querySelector('.admin-modal-content');
+        if (modalContent) modalContent.classList.remove('dashboard-mode');
+
+        // 6. Disable CMS mode
         disableCmsMode();
-        if (unsubscribe) unsubscribe();
+
+        // 7. Close modal completely
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+
+        console.log("Admin: Logged out successfully.");
     });
 
     // Tabs
