@@ -1634,7 +1634,7 @@ function initPortfolioAlbums() {
 
             // Create dots
             if (scrollDots) {
-                const pageCount = Math.ceil(albums.length / 4);
+                const pageCount = Math.ceil(albums.length / 6);
                 scrollDots.innerHTML = Array(pageCount).fill(0).map((_, i) =>
                     `<div class="scroll-dot ${i === 0 ? 'active' : ''}" data-page="${i}"></div>`
                 ).join('');

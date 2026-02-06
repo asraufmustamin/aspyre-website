@@ -269,6 +269,7 @@ ul {
 
 .lang-toggle:hover {
     background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
 }
 
 .lang-toggle .active {
