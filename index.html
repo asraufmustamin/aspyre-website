@@ -1173,6 +1173,71 @@
         </div>
     </div>
 
+    <!-- Portfolio Section (Restored) -->
+    <section id="projects" class="section-portfolio">
+        <div class="container">
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label editable" data-key="portfolio-label">Portfolio</span>
+                <h2 class="section-title editable" data-key="portfolio-title">Karya Kami</h2>
+                <p class="section-subtitle editable" data-key="portfolio-desc">
+                    Eksplorasi hasil karya terbaik kami dalam membangun solusi digital.
+                    Klik album untuk melihat detail project.
+                </p>
+            </div>
+
+            <div class="album-scroll-nav">
+                <button class="scroll-btn prev" aria-label="Previous">←</button>
+                <div class="scroll-dots" id="scrollDots"></div>
+                <button class="scroll-btn next" aria-label="Next">→</button>
+            </div>
+
+            <div id="portfolioAlbums" class="portfolio-albums">
+                <!-- Albums injected via JS -->
+                <div class="loading-state">Memuat Portfolio...</div>
+            </div>
+
+            <div class="portfolio-cta animate-on-scroll">
+                <a href="https://wa.me/6285729715555" class="btn-ghost">
+                    <span>Lihat Lebih Banyak</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Album Detail Modal -->
+    <div id="album-modal" class="album-modal">
+        <button class="album-modal-close">×</button>
+        <div class="album-modal-content">
+            <div class="album-modal-gallery">
+                <div class="gallery-main">
+                    <img id="galleryMainImage" src="" alt="Main Preview">
+                    <button class="gallery-nav prev">‹</button>
+                    <button class="gallery-nav next">›</button>
+                </div>
+                <div class="gallery-thumbs" id="galleryThumbs"></div>
+            </div>
+            <div class="album-modal-info">
+                <div class="album-tags" id="albumTags"></div>
+                <h2 id="albumTitle">Project Title</h2>
+                <p id="albumDesc">Project description goes here.</p>
+                <div class="album-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span id="albumCategory">Web Design</span>
+                    </div>
+                </div>
+                <a href="#" id="albumLink" target="_blank" class="album-action-btn">
+                    <span>Kunjungi Website</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Digital Showcase -->
     <section id="digital-showcase" class="section-showcase">
         <div class="container">
