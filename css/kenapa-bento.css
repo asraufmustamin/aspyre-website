@@ -1,0 +1,194 @@
+/* Bento Grid Layout - Why Us Section */
+.section-kenapa-bento {
+    padding: 100px 0;
+    position: relative;
+    /* Transparent to show Galaxy BG */
+    background: transparent;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 220px);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+/* Card Base */
+.bento-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.bento-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(232, 90, 79, 0.4);
+    box-shadow: 0 15px 40px rgba(232, 90, 79, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Specific Areas */
+/* Main Value: Spans 2 cols, 2 rows (Big Square) */
+.main-value {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(232, 90, 79, 0.05) 100%);
+    justify-content: flex-end;
+}
+
+.main-value h3 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #fff, #e85a4f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.main-value p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.bento-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.bento-tags span {
+    background: rgba(232, 90, 79, 0.15);
+    color: #e85a4f;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(232, 90, 79, 0.2);
+}
+
+/* Feature 1: Tall Vertical */
+.feature-1 {
+    grid-column: span 1;
+    grid-row: span 2;
+    background: rgba(20, 20, 20, 0.6);
+}
+
+/* Feature 2 & 3: Small Squares */
+.feature-2,
+.feature-3 {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+/* Feature 4: Wide Stat Bar (Bottom Right if needed, or fits elsewhere) 
+   Actually, let's adjust layout to fit 4x2 grid neatly.
+   Layout Map:
+   [ Main Value (2x2) ] [ Feat 1 (1x2) ] [ Feat 2 (1x1) ]
+                                          [ Feat 3 (1x1) ]
+   Wait, that's 2+1+1 = 4 cols. Correct.
+*/
+
+.bento-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.bento-card h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.bento-card p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Orb Animation in Main Card */
+.bento-visual-orb {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #e85a4f 0%, transparent 60%);
+    opacity: 0.2;
+    filter: blur(40px);
+    animation: pulseOrb 6s infinite ease-in-out;
+}
+
+@keyframes pulseOrb {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .main-value {
+        grid-column: span 2;
+    }
+
+    .feature-1 {
+        grid-column: span 1;
+        grid-row: span 1;
+        min-height: 200px;
+    }
+
+    .feature-2 {
+        grid-column: span 1;
+    }
+
+    .feature-3 {
+        grid-column: span 1;
+    }
+
+    .feature-4 {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-value,
+    .feature-1,
+    .feature-2,
+    .feature-3,
+    .feature-4 {
+        grid-column: span 1;
+        grid-row: auto;
+        min-height: auto;
+    }
+}

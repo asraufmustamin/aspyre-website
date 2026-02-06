@@ -74,6 +74,7 @@
             <div class="nav-links">
                 <a href="#layanan" class="nav-link">Layanan</a>
                 <a href="#paket" class="nav-link">Paket</a>
+                <a href="#proses" class="nav-link">Cara Kerja</a>
                 <a href="#testimonials" class="nav-link">Testimoni</a>
                 <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#calculator" class="nav-link highlight">Estimasi</a>
@@ -960,69 +961,64 @@
             </div>
         </div>
     </section>
-    <div class="container">
-        <div class="kenapa-grid">
-            <div class="kenapa-content animate-on-scroll">
-                <span class="section-label editable" data-key="kenapa-label">Kenapa ASPYRE?</span>
-                <h2 class="section-title editable" data-key="kenapa-title">Beda dari yang Lain</h2>
-
-                <div class="kenapa-list">
-                    <div class="kenapa-item hover-card">
-                        <span class="kenapa-icon">⚡</span>
-                        <div>
-                            <h4 class="editable" data-key="kenapa1-title">Fleksibel</h4>
-                            <p class="editable" data-key="kenapa1-desc">Deadline disesuaikan dengan kebutuhan Anda.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="kenapa-item hover-card">
-                        <span class="kenapa-icon">✦</span>
-                        <div>
-                            <h4 class="editable" data-key="kenapa2-title">Orisinal</h4>
-                            <p class="editable" data-key="kenapa2-desc">Tidak pakai template. Setiap desain dibuat
-                                khusus.</p>
-                        </div>
-                    </div>
-                    <div class="kenapa-item hover-card">
-                        <span class="kenapa-icon">♥</span>
-                        <div>
-                            <h4 class="editable" data-key="kenapa3-title">Terjangkau</h4>
-                            <p class="editable" data-key="kenapa3-desc">Kualitas agency, harga yang masuk akal untuk
-                                UMKM.</p>
-                        </div>
-                    </div>
-                    <div class="kenapa-item hover-card">
-                        <span class="kenapa-icon">🔄</span>
-                        <div>
-                            <h4 class="editable" data-key="kenapa4-title">Revisi Sesuai Paket</h4>
-                            <p class="editable" data-key="kenapa4-desc">Revisi gratis sesuai ketentuan paket yang
-                                dipilih.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    <!-- Kenapa ASPYRE (Bento Grid Redesign) -->
+    <section id="kenapa" class="section-kenapa-bento">
+        <div class="container">
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label">Why Choose Us</span>
+                <h2 class="section-title">Kenapa ASPYRE.AI?</h2>
             </div>
-            <div class="kenapa-visual animate-on-scroll">
-                <div class="visual-card hover-card" id="kenapa3dVisual">
-                    <div class="visual-shapes-3d">
-                        <div class="cube-scene">
-                            <div class="cube">
-                                <div class="cube-face front"></div>
-                                <div class="cube-face back"></div>
-                                <div class="cube-face right"></div>
-                                <div class="cube-face left"></div>
-                                <div class="cube-face top"></div>
-                                <div class="cube-face bottom"></div>
-                            </div>
+
+            <div class="bento-grid animate-on-scroll">
+                <!-- Main Value Prop (Large Card) -->
+                <div class="bento-card bento-large main-value">
+                    <div class="bento-content">
+                        <h3>Beda dari yang Lain.</h3>
+                        <p>Kami memadukan estetika desain dengan logika bisnis. Bukan sekadar visual bagus, tapi visual
+                            yang menjual.</p>
+                        <div class="bento-tags">
+                            <span>🚀 High Convert</span>
+                            <span>🎯 Targeted</span>
+                            <span>✨ Premium</span>
                         </div>
-                        <div class="floating-orb orb-1"></div>
-                        <div class="floating-orb orb-2"></div>
-                        <div class="floating-orb orb-3"></div>
+                    </div>
+                    <div class="bento-visual-orb"></div>
+                </div>
+
+                <!-- Feature 1 -->
+                <div class="bento-card bento-tall feature-1">
+                    <div class="bento-icon">⚡</div>
+                    <h3>Fleksibel</h3>
+                    <p>Timeline & Budget menyesuaikan kebutuhan bisnis Anda.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bento-card feature-2">
+                    <div class="bento-icon">🎨</div>
+                    <h3>100% Orisinal</h3>
+                    <p>Anti template. Desain crafted from scratch.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bento-card feature-3">
+                    <div class="bento-icon">🔄</div>
+                    <h3>Revisi Terjamin</h3>
+                    <p>Garansi kepuasan hingga final.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bento-card wide-stat feature-4">
+                    <div class="stat-unit">
+                        <span class="stat-num">4.9/5</span>
+                        <span class="stat-lbl">Rating Klien</span>
+                    </div>
+                    <div class="stat-unit">
+                        <span class="stat-num">50+</span>
+                        <span class="stat-lbl">Project Finished</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
 
     <!-- Kontak Section -->
@@ -1373,7 +1369,8 @@
 
     <!-- Comparison CSS & JS -->
     <link rel="stylesheet" href="css/comparison.css">
-    <script src="js/comparison.js" defer></script>
+    <link rel="stylesheet" href="css/kenapa-bento.css"> <!-- Bento Grid Style -->
+    <script src="js/script.js" defer></script>
 </body>
 
 </html>

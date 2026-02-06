@@ -3,7 +3,8 @@
     padding: 60px 0;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(to bottom, #0f0f0f, #151515);
+    background: transparent;
+    /* Transparent for Galaxy BG */
 }
 
 .timeline-container {
