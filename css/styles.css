@@ -7079,3 +7079,152 @@ section.highlight-section {
     display: grid !important;
     min-height: 200px;
 }
+
+/* ============================================
+   Admin Table Styling (v7.0 Fix)
+   ============================================ */
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.admin-table thead {
+    background: rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+}
+
+.admin-table th {
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 12px 10px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-table .client-name {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.admin-table .order-id-compact {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: monospace;
+}
+
+.admin-table .service-pill {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.admin-table .status-select-compact {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 90px;
+}
+
+.admin-table .action-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.admin-table .action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-table .action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-table .action-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.admin-table .btn-wa {
+    color: #25D366;
+}
+
+.admin-table .btn-delete {
+    color: #e74c3c;
+}
+
+.admin-table .btn-view {
+    color: #3498db;
+}
+
+.admin-table .urgent-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #e74c3c;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Mobile Admin Table */
+@media (max-width: 768px) {
+    .admin-table {
+        font-size: 12px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 8px 6px;
+    }
+
+    .admin-table .action-btn {
+        width: 28px;
+        height: 28px;
+    }
+}

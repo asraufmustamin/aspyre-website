@@ -231,6 +231,137 @@ function initScrollAnimations() {
 }
 
 /* ============================================
+   Language Toggle System
+   ============================================ */
+const TRANSLATIONS = {
+    'id': {
+        'hero-eyebrow': 'Partner Kreatif Bisnis Anda',
+        'hero-title': 'Desain <span class="highlight">Premium</span> untuk Bisnis yang <span class="highlight">Serius</span>',
+        'hero-desc': 'Kami membantu bisnis tampil profesional dengan desain yang memorable, website yang powerful, dan data yang terkelola rapi.',
+        'hero-cta-1': 'Mulai Project',
+        'hero-cta-2': 'Konsultasi Gratis',
+        'nav-layanan': 'Layanan',
+        'nav-paket': 'Paket',
+        'nav-proses': 'Cara Kerja',
+        'nav-testimoni': 'Testimoni',
+        'nav-faq': 'FAQ',
+        'nav-projects': 'Projects',
+        'nav-kontak': 'Kontak',
+        'nav-cta': 'Mulai Project',
+        'paket-label': 'Pilihan Paket',
+        'paket-title': 'Investasi untuk Pertumbuhan Bisnis',
+        'projects-label': 'Portfolio',
+        'projects-title': 'Karya Kami',
+        'proses-label': 'Cara Kerja',
+        'proses-title': 'Proses Mudah & Transparan'
+    },
+    'en': {
+        'hero-eyebrow': 'Your Creative Business Partner',
+        'hero-title': '<span class="highlight">Premium</span> Design for <span class="highlight">Serious</span> Business',
+        'hero-desc': 'We help businesses look professional with memorable designs, powerful websites, and well-organized data.',
+        'hero-cta-1': 'Start Project',
+        'hero-cta-2': 'Free Consultation',
+        'nav-layanan': 'Services',
+        'nav-paket': 'Packages',
+        'nav-proses': 'How It Works',
+        'nav-testimoni': 'Testimonials',
+        'nav-faq': 'FAQ',
+        'nav-projects': 'Projects',
+        'nav-kontak': 'Contact',
+        'nav-cta': 'Start Project',
+        'paket-label': 'Our Packages',
+        'paket-title': 'Investment for Business Growth',
+        'projects-label': 'Portfolio',
+        'projects-title': 'Our Work',
+        'proses-label': 'How It Works',
+        'proses-title': 'Easy & Transparent Process'
+    }
+};
+
+function initLanguageToggle() {
+    const toggle = document.querySelector('.lang-toggle');
+    if (!toggle) return;
+
+    // Get current language from localStorage or default to 'id'
+    let currentLang = localStorage.getItem('aspyreLang') || 'id';
+
+    // Apply current language on load
+    applyLanguage(currentLang);
+    updateToggleUI(toggle, currentLang);
+
+    // Toggle click handler
+    toggle.addEventListener('click', () => {
+        currentLang = currentLang === 'id' ? 'en' : 'id';
+        localStorage.setItem('aspyreLang', currentLang);
+        applyLanguage(currentLang);
+        updateToggleUI(toggle, currentLang);
+    });
+}
+
+function updateToggleUI(toggle, lang) {
+    const spans = toggle.querySelectorAll('span');
+    if (spans.length >= 3) {
+        if (lang === 'id') {
+            spans[0].classList.add('active');
+            spans[2].classList.remove('active');
+        } else {
+            spans[0].classList.remove('active');
+            spans[2].classList.add('active');
+        }
+    }
+}
+
+function applyLanguage(lang) {
+    const translations = TRANSLATIONS[lang];
+    if (!translations) return;
+
+    // Apply to editable elements with data-key
+    Object.keys(translations).forEach(key => {
+        const el = document.querySelector(`[data-key="${key}"]`);
+        if (el) el.innerHTML = translations[key];
+    });
+
+    // Update navigation links
+    const navLinks = {
+        'layanan': translations['nav-layanan'],
+        'paket': translations['nav-paket'],
+        'proses': translations['nav-proses'],
+        'testimoni': translations['nav-testimoni'],
+        'faq': translations['nav-faq'],
+        'projects': translations['nav-projects'],
+        'kontak': translations['nav-kontak']
+    };
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+            const section = href.replace('#', '');
+            if (navLinks[section]) {
+                link.textContent = navLinks[section];
+            }
+        }
+    });
+
+    // Update CTA buttons
+    document.querySelectorAll('.nav-cta, .mobile-cta').forEach(btn => {
+        if (!btn.classList.contains('admin-panel-btn')) {
+            btn.textContent = translations['nav-cta'];
+        }
+    });
+
+    console.log(`Language switched to: ${lang.toUpperCase()}`);
+}
+
+// Expose globally for fallback use
+window.switchLanguage = function (lang) {
+    localStorage.setItem('aspyreLang', lang);
+    applyLanguage(lang);
+    const toggle = document.querySelector('.lang-toggle');
+    if (toggle) updateToggleUI(toggle, lang);
+};
+
+
+/* ============================================
    Dynamic Categories
    ============================================ */
 function initDynamicCategories() {
@@ -488,6 +619,12 @@ function initAdminModal() {
     // Refresh & Clear
     refreshBtn.addEventListener('click', () => {
         refreshBtn.classList.add('spin');
+        // Actually refresh data by resetting listener
+        if (unsubscribe) {
+            unsubscribe();
+            unsubscribe = null;
+        }
+        setupRealtimeListener();
         setTimeout(() => refreshBtn.classList.remove('spin'), 1000);
     });
 
@@ -999,74 +1136,40 @@ function disableCmsMode() {
 }
 
 /* ============================================
-   Language Toggle
+   CMS Save to Firebase
    ============================================ */
-const TRANSLATIONS = {
-    id: {
-        nav: ['Layanan', 'Paket', 'Cara Kerja', 'Testimoni', 'FAQ', 'Estimasi', 'Projects', 'Kontak'],
-        hero: { cta1: 'Mulai Project', cta2: 'Konsultasi Gratis', eyebrow: 'Partner Kreatif Bisnis Anda' },
-        sect: { why: 'Kenapa ASPYRE?', how: 'Cara Kerja', faq: 'FAQ' }
-    },
-    en: {
-        nav: ['Services', 'Pricing', 'Process', 'Testimonials', 'FAQ', 'Calculator', 'Projects', 'Contact'],
-        hero: { cta1: 'Start Project', cta2: 'Free Consult', eyebrow: 'Your Creative Business Partner' },
-        sect: { why: 'Why Choose Us?', how: 'How It Works', faq: 'Freq. Questions' }
+async function saveCmsContentToDb() {
+    try {
+        const content = {};
+        document.querySelectorAll('.editable[data-key]').forEach(el => {
+            content[el.dataset.key] = el.innerHTML;
+        });
+
+        const docRef = doc(db, "settings", "cms_content");
+        await setDoc(docRef, {
+            ...content,
+            updatedAt: serverTimestamp()
+        });
+
+        // Also save to localStorage as cache
+        localStorage.setItem('aspyreCmsContent', JSON.stringify(content));
+        console.log("CMS Content saved to Firebase!");
+        return true;
+    } catch (e) {
+        console.error("CMS Save Error:", e);
+        // Fallback to localStorage only
+        const content = {};
+        document.querySelectorAll('.editable[data-key]').forEach(el => {
+            content[el.dataset.key] = el.innerHTML;
+        });
+        localStorage.setItem('aspyreCmsContent', JSON.stringify(content));
+        return false;
     }
-};
+}
 
-function initLanguageToggle() {
-    const toggle = document.querySelector('.lang-toggle');
-    if (!toggle) return;
-
-    let currentLang = localStorage.getItem('aspyreLang') || 'id';
-    updateLangUI(currentLang);
-
-    toggle.addEventListener('click', () => {
-        currentLang = currentLang === 'id' ? 'en' : 'id';
-        localStorage.setItem('aspyreLang', currentLang);
-        updateLangUI(currentLang);
-    });
-
-    function updateLangUI(lang) {
-        // Toggle UI State
-        const spans = toggle.querySelectorAll('span');
-        if (lang === 'id') {
-            spans[0].className = 'active'; // ID
-            spans[2].className = '';       // EN
-        } else {
-            spans[0].className = '';
-            spans[2].className = 'active';
-        }
-
-        // Update Nav
-        const navLinks = document.querySelectorAll('.nav-link');
-        const dict = TRANSLATIONS[lang];
-
-        if (navLinks.length >= 7) {
-            navLinks.forEach((link, i) => {
-                if (dict.nav[i]) link.textContent = dict.nav[i];
-            });
-        }
-
-        // Update Static Elements (Simple map)
-        if (lang === 'en') {
-            safeSetText('.hero-cta .btn-primary span:first-child', dict.hero.cta1);
-            safeSetText('.hero-cta .btn-ghost span', dict.hero.cta2);
-            safeSetText('.hero-eyebrow .editable', dict.hero.eyebrow);
-            safeSetText('.section-kenapa-bento .section-title', dict.sect.why);
-        } else {
-            // Revert to ID
-            safeSetText('.hero-cta .btn-primary span:first-child', dict.hero.cta1);
-            safeSetText('.hero-cta .btn-ghost span', dict.hero.cta2);
-            safeSetText('.hero-eyebrow .editable', dict.hero.eyebrow);
-            safeSetText('.section-kenapa-bento .section-title', dict.sect.why);
-        }
-    }
-
-    function safeSetText(selector, text) {
-        const el = document.querySelector(selector);
-        if (el) el.textContent = text;
-    }
+// Legacy saveCmsContent wrapper
+function saveCmsContent() {
+    saveCmsContentToDb();
 }
 
 /* ============================================
