@@ -487,24 +487,30 @@ function initAdminModal() {
     clearBtn.style.display = 'none'; // Hide clear button for safety
 
     // Enable CMS Mode
-    enableCmsBtn.addEventListener('click', () => {
-        enableCmsModeFunc();
-        closeModal();
-    });
+    if (enableCmsBtn) {
+        enableCmsBtn.addEventListener('click', () => {
+            enableCmsModeFunc();
+            closeModal();
+        });
+    }
 
     // Save CMS
-    saveCmsBtn.addEventListener('click', () => {
-        saveCmsContent();
-        showToast('Semua konten berhasil disimpan!');
-    });
+    if (saveCmsBtn) {
+        saveCmsBtn.addEventListener('click', () => {
+            saveCmsContent();
+            showToast('Semua konten berhasil disimpan!');
+        });
+    }
 
     // Reset CMS
-    resetCmsBtn.addEventListener('click', () => {
-        if (confirm('Reset semua konten ke default? Perubahan yang belum disimpan akan hilang.')) {
-            localStorage.removeItem('aspyre_cms');
-            location.reload();
-        }
-    });
+    if (resetCmsBtn) {
+        resetCmsBtn.addEventListener('click', () => {
+            if (confirm('Reset semua konten ke default? Perubahan yang belum disimpan akan hilang.')) {
+                localStorage.removeItem('aspyre_cms');
+                location.reload();
+            }
+        });
+    }
 
     // CMS Nav buttons
     document.querySelectorAll('.cms-nav-btn').forEach(btn => {
@@ -1424,6 +1430,11 @@ function initPortfolioAlbums() {
     const editForm = document.getElementById('albumEditForm');
 
     if (!albumsContainer) return;
+
+    // Safety check for add button
+    if (addAlbumBtn) {
+        addAlbumBtn.addEventListener('click', () => openEditModal());
+    }
 
     // Current state
     let currentAlbumItems = [];
