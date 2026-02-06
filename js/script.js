@@ -1260,15 +1260,7 @@ window.enableCmsModeFunc = function () {
     });
 };
 
-async function saveCmsContentToDb() {
-    const current = JSON.parse(localStorage.getItem('aspyreCmsContent')) || {};
-    try {
-        await setDoc(doc(db, "settings", "cms_content"), current, { merge: true });
-        console.log("CMS Data Synced to Firestore");
-    } catch (e) {
-        alert("Gagal menyimpan ke database: " + e.message);
-    }
-}
+// saveCmsContentToDb is defined above - removed duplicate
 
 /* ============================================
    Magnetic Buttons
