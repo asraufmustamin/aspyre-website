@@ -1363,7 +1363,9 @@ function initPortfolioAlbums() {
     ];
 
     // Load saved albums from localStorage (CMS)
-    let albums = JSON.parse(localStorage.getItem('aspyre_albums')) || albumsData;
+    let savedAlbums = JSON.parse(localStorage.getItem('aspyre_albums'));
+    let albums = (savedAlbums && savedAlbums.length > 0) ? savedAlbums : albumsData;
+
 
     // DOM Elements
     const albumsContainer = document.getElementById('portfolioAlbums');
