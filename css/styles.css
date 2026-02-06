@@ -249,6 +249,9 @@ ul {
     display: flex;
     align-items: center;
     gap: 16px;
+    z-index: 1002;
+    /* Ensure above mobile menu overlay if needed */
+    position: relative;
 }
 
 .lang-toggle {
