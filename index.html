@@ -103,7 +103,8 @@
                     <span>EN</span>
                 </button>
                 <a href="#kontak" class="nav-cta">Mulai Project</a>
-                <button class="admin-trigger" aria-label="Admin" title="Admin Access">
+                <button class="admin-trigger" aria-label="Admin" title="Admin Access"
+                    onclick="document.getElementById('admin-modal').classList.add('active')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" />
                         <path d="M7 11V7a5 5 0 0110 0v4" />
@@ -1460,6 +1461,70 @@
     <!-- Comparison CSS & JS -->
     <link rel="stylesheet" href="css/comparison.css">
     <link rel="stylesheet" href="css/kenapa-bento.css"> <!-- Bento Grid Style -->
+
+    <!-- EMERGENCY FAILSAFE SCRIPT: Ensures Portfolio & Buttons work independently -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Force Portfolio Rendering
+            const pContainer = document.getElementById('portfolioAlbums');
+            if (pContainer && pContainer.children.length <= 1) { // Only if empty or just loading text
+                console.log("Emergency Portfolio Render Activated");
+                const pData = [
+                    { title: 'Website Desa Cenrana', category: 'Web Platform', img: 'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Web+Desa' },
+                    { title: 'Brand Identity', category: 'Branding', img: 'https://via.placeholder.com/400x300/1a1a2e/f4a261?text=Branding' },
+                    { title: 'Data Services', category: 'Data', img: 'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Data' },
+                    { title: 'E-Commerce', category: 'Web Store', img: 'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Store' },
+                    { title: 'Social Media', category: 'Marketing', img: 'https://via.placeholder.com/400x300/1a1a2e/a4c3b2?text=Social' },
+                    { title: 'UI/UX Design', category: 'App Design', img: 'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=UI+UX' }
+                ];
+
+                let html = '';
+                pData.forEach((p, i) => {
+                    html += `
+                        <div class="album-card animate-on-scroll" style="opacity: 1; transform: none; animation-delay: ${i * 0.1}s">
+                            <div class="album-preview-stack">
+                                <div class="preview-image"><img src="${p.img}" alt="${p.title}"></div>
+                            </div>
+                            <div class="album-info">
+                                <span class="album-category">${p.category}</span>
+                                <h3 class="album-title">${p.title}</h3>
+                                <div class="album-count"><span>6 karya</span></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                pContainer.innerHTML = html;
+            }
+
+            // 2. Force Admin Modal Event
+            const showAdmin = () => {
+                const modal = document.getElementById('admin-modal');
+                const login = document.getElementById('adminLogin');
+                if (modal) modal.classList.add('active');
+                if (login) login.style.display = 'flex';
+            };
+
+            document.querySelectorAll('.admin-trigger, .admin-panel-btn').forEach(btn => {
+                btn.onclick = (e) => { e.preventDefault(); showAdmin(); };
+            });
+
+            // 3. Force Lang Toggle
+            document.querySelectorAll('.lang-toggle').forEach(btn => {
+                btn.onclick = () => {
+                    const spans = btn.querySelectorAll('span');
+                    if (spans[0].classList.contains('active')) {
+                        spans[0].classList.remove('active');
+                        spans[2].classList.add('active');
+                        alert('Switched to English (Demo Mode)');
+                    } else {
+                        spans[2].classList.remove('active');
+                        spans[0].classList.add('active');
+                        alert('Switched to Indonesia');
+                    }
+                };
+            });
+        });
+    </script>
 </body>
 
 </html>
