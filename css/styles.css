@@ -6027,6 +6027,85 @@ section.highlight-section {
 }
 
 /* ============================================
+   Portfolio Admin Controls
+   ============================================ */
+.album-cms-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 20;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+.album-card:hover .album-cms-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.album-edit-btn,
+.album-delete-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.album-edit-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+}
+
+.album-edit-btn:hover {
+    background: var(--white);
+    transform: scale(1.1);
+}
+
+.album-delete-btn {
+    background: rgba(232, 90, 79, 0.9);
+    color: var(--white);
+}
+
+.album-delete-btn:hover {
+    background: var(--coral);
+    transform: scale(1.1);
+}
+
+/* CMS Add Button */
+.album-add-btn.cms-only {
+    display: none;
+    /* JS will toggle flex */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 380px;
+    /* Match card height */
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.album-add-btn.cms-only:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* ============================================
    Kenapa ASPYRE Section - Grid Layout
    ============================================ */
 .section-kenapa .kenapa-grid {
