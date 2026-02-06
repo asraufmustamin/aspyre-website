@@ -10,7 +10,7 @@
     // Configuration & Pricing Logic
     const PRICING = {
         creative: {
-            base: 150000,
+            base: 99000,
             types: {
                 logo: { label: 'Logo & Brand Identity', mult: 1.5 },
                 banner: { label: 'Banner & Spanduk', mult: 1.0 },
@@ -29,17 +29,17 @@
         },
         web: {
             types: {
-                landing: { label: 'Landing Page', base: 1000000 },
-                company: { label: 'Company Profile', base: 2000000 },
-                ecommerce: { label: 'E-Commerce Simple', base: 3500000 },
-                webapp: { label: 'Web App Custom', base: 6000000 }
+                landing: { label: 'Landing Page', base: 799000 },
+                company: { label: 'Company Profile', base: 1499000 },
+                ecommerce: { label: 'E-Commerce Simple', base: 2999000 },
+                webapp: { label: 'Web App Custom', base: 4999000 }
             },
             extras: {
-                cms: { label: 'CMS / Blog', val: 300000 },
-                seo: { label: 'Basic SEO', val: 500000 },
-                domain: { label: 'Domain & Hosting (1 Tahun)', val: 400000 }
+                cms: { label: 'CMS / Blog', val: 250000 },
+                seo: { label: 'Basic SEO', val: 300000 },
+                domain: { label: 'Domain & Hosting (1 Tahun)', val: 350000 }
             },
-            urgent: 0.4 // 40% markup
+            urgent: 0.4
         },
         data: {
             basePerBatch: 50000, // per 100 items

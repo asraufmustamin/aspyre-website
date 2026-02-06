@@ -31,7 +31,7 @@
     overflow-y: auto;
     position: relative;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    background: radial-gradient(circle at top right, rgba(102, 126, 234, 0.1), transparent 40%),
+    background: radial-gradient(circle at top right, rgba(232, 90, 79, 0.1), transparent 40%),
         linear-gradient(to bottom, #1a1a1a, #0f0f0f);
 }
 
@@ -146,16 +146,20 @@
 }
 
 .highlight-creative {
-    color: #a29bfe;
+    color: #f4a261;
 }
 
+/* Peach */
 .highlight-web {
-    color: #667eea;
+    color: #e85a4f;
 }
 
+/* Coral */
 .highlight-data {
-    color: #48bb78;
+    color: #d6453b;
 }
+
+/* Darker Coral */
 
 /* Trigger Button */
 .comp-trigger-container {

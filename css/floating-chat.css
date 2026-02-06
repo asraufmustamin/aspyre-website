@@ -1,7 +1,8 @@
 :root {
-    --chat-primary: #667eea;
-    --chat-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --chat-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    --chat-primary: #e85a4f;
+    /* Coral */
+    --chat-gradient: linear-gradient(135deg, #e85a4f 0%, #d6453b 100%);
+    --chat-shadow: 0 4px 15px rgba(232, 90, 79, 0.4);
 }
 
 .floating-chat-container {

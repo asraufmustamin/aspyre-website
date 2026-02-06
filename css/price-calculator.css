@@ -1,107 +1,98 @@
-/* Price Calculator Wizard */
+/* Compact Price Calculator - Coral Theme */
 .section-calculator {
-    padding: 100px 0;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(102, 126, 234, 0.05) 50%, rgba(10, 10, 10, 0) 100%);
+    padding: 60px 0;
     position: relative;
+    background: #111;
 }
 
 .calc-container {
-    max-width: 900px;
+    max-width: 700px;
+    /* Reduced width */
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .calc-card {
-    background: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #1a1a1f;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Header */
+/* Compact Header */
 .calc-header {
     background: rgba(255, 255, 255, 0.02);
-    padding: 30px;
+    padding: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .calc-progress {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     position: relative;
-    max-width: 400px;
+    max-width: 250px;
     margin: 0 auto;
 }
 
 .progress-bar-bg {
     position: absolute;
     top: 50%;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-50%);
-    z-index: 1;
-    border-radius: 4px;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
 }
 
 .progress-bar-fill {
     position: absolute;
     top: 50%;
-    left: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
     transform: translateY(-50%);
-    z-index: 2;
+    height: 3px;
+    background: #e85a4f;
+    /* Coral */
     width: 0%;
-    transition: width 0.5s ease;
-    border-radius: 4px;
+    transition: width 0.3s ease;
+    z-index: 1;
 }
 
 .step-indicator {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+    background: #2d2d35;
+    border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    background: #1a1a1a;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    position: relative;
-    z-index: 3;
-    transition: all 0.3s ease;
+    font-size: 12px;
+    color: #888;
+    z-index: 2;
+    transition: all 0.3s;
 }
 
 .step-indicator.active {
-    border-color: #667eea;
-    color: #fff;
-    box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
-    background: #667eea;
+    border-color: #e85a4f;
+    color: #e85a4f;
+    background: #1a1a1f;
 }
 
 .step-indicator.completed {
-    background: #48bb78;
-    border-color: #48bb78;
-    color: #fff;
+    background: #e85a4f;
+    border-color: #e85a4f;
+    color: white;
 }
 
 /* Body */
 .calc-body {
-    padding: 40px;
-    min-height: 400px;
+    padding: 25px;
+    min-height: 200px;
 }
 
 .step-content {
     display: none;
-    animation: fadeIn 0.4s ease;
+    animation: fadeIn 0.3s ease;
 }
 
 .step-content.active {
@@ -109,226 +100,154 @@
 }
 
 .step-title {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 24px;
+    font-size: 18px;
+    margin-bottom: 20px;
     color: #fff;
+    text-align: center;
 }
 
-/* Step 1: Service Selection */
+/* Service Grid - 3 Col Compact */
 .service-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 
 .service-option {
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
     cursor: pointer;
-    transition: all 0.3s ease;
     text-align: center;
-    position: relative;
+    transition: all 0.2s;
 }
 
 .service-option:hover {
     background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .service-option.selected {
-    border-color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+    border-color: #e85a4f;
+    background: rgba(232, 90, 79, 0.1);
 }
 
 .serv-icon {
-    font-size: 32px;
-    margin-bottom: 15px;
+    font-size: 24px;
     display: block;
+    margin-bottom: 8px;
+}
+
+.service-option h4 {
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    color: #fff;
 }
 
 .serv-price {
+    font-size: 12px;
+    color: #aaa;
     display: block;
-    color: #667eea;
-    font-weight: 600;
-    margin-top: 10px;
-    font-size: 14px;
 }
 
-/* Step 2: Form Inputs */
+/* Form Elements */
 .calc-form-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
-.calc-label {
+.calc-form-group label {
     display: block;
-    margin-bottom: 10px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
+    font-size: 13px;
+    color: #bbb;
+    margin-bottom: 5px;
 }
 
 .calc-select,
-.calc-input-num {
+.calc-input-addon {
     width: 100%;
-    padding: 12px 15px;
-    background: rgba(0, 0, 0, 0.3);
+    background: #2d2d35;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #fff;
-    font-family: inherit;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
     font-size: 14px;
-    transition: border-color 0.3s;
 }
 
-.calc-select:focus,
-.calc-input-num:focus {
+.calc-select:focus {
+    border-color: #e85a4f;
     outline: none;
-    border-color: #667eea;
 }
 
-/* Checkboxes */
-.checkbox-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.custom-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-}
-
-.custom-checkbox:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.custom-checkbox input:checked+span {
-    color: #667eea;
-    font-weight: 500;
-}
-
-.cb-price {
-    margin-left: auto;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Step 3: Result */
+/* Result Box */
 .result-box {
     text-align: center;
+    background: rgba(232, 90, 79, 0.05);
+    /* Faint Coral */
+    border: 1px dashed rgba(232, 90, 79, 0.3);
+    border-radius: 12px;
+    padding: 20px;
 }
 
 .total-price {
-    font-size: 48px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #a29bfe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 10px 0;
     display: block;
+    font-size: 32px;
+    font-weight: 800;
+    color: #e85a4f;
+    margin-bottom: 5px;
 }
 
 .price-range {
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 30px;
     display: block;
-}
-
-.breakdown-list {
-    text-align: left;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-}
-
-.breakdown-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.breakdown-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-/* Footer Controls */
-.calc-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.calc-btn {
-    padding: 12px 24px;
-    border-radius: 12px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-back {
-    background: transparent;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.btn-back:hover {
-    color: #fff;
-}
-
-.btn-next {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.btn-next:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-}
-
-.btn-next:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 15px;
 }
 
 .btn-wa-order {
-    background: #25D366;
+    background: linear-gradient(135deg, #e85a4f 0%, #d6453b 100%);
     color: white;
     width: 100%;
-    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 15px;
 }
 
-@media (max-width: 768px) {
-    .calc-body {
-        padding: 20px;
-    }
+/* Footer */
+.calc-footer {
+    padding: 15px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+}
 
-    .checkbox-group {
+.calc-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-next {
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-next:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .service-grid {
         grid-template-columns: 1fr;
-    }
-
-    .total-price {
-        font-size: 36px;
     }
 }
