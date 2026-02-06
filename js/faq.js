@@ -25,17 +25,25 @@
             const item = this.parentElement;
             const answer = this.nextElementSibling;
 
-            // NOTE: Optional 'accordion' style (close others)
-            // Uncomment next lines if single-open preferred
+            const isActive = item.classList.contains('active');
+
+            // Close others (Optional - Accordion Style)
             /*
             document.querySelectorAll('.faq-item').forEach(other => {
                 if(other !== item) {
                     other.classList.remove('active');
+                    other.querySelector('.faq-answer').style.maxHeight = null;
                 }
             });
             */
 
             item.classList.toggle('active');
+
+            if (!isActive) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            } else {
+                answer.style.maxHeight = null;
+            }
 
             // Aria
             const expanded = this.getAttribute('aria-expanded') === 'true' || false;

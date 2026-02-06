@@ -128,8 +128,8 @@
         timer = setInterval(nextSlide, interval);
     }
 
-    // Listeners
-    document.addEventListener('DOMContentLoaded', () => {
+    // Listeners - Safe Init
+    function init() {
         createTestimonialHTML();
 
         const nextBtn = document.querySelector('.t-btn.next');
@@ -145,22 +145,56 @@
             resetTimer();
         });
 
-        // Touch Swipe
+        // Better Touch Handling
         const track = document.querySelector('.testimonial-track');
         if (track) {
             let startX = 0;
             let endX = 0;
+            let startY = 0;
+            let endY = 0;
 
-            track.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
+            track.addEventListener('touchstart', e => {
+                startX = e.changedTouches[0].screenX;
+                startY = e.changedTouches[0].screenY;
+            }, { passive: true });
+
+            track.addEventListener('touchmove', e => {
+                // Prevent vertical scroll if horizontal swipe detected
+                const deltaX = Math.abs(e.changedTouches[0].screenX - startX);
+                const deltaY = Math.abs(e.changedTouches[0].screenY - startY);
+
+                if (deltaX > deltaY && deltaX > 10) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
             track.addEventListener('touchend', e => {
                 endX = e.changedTouches[0].screenX;
-                if (startX - endX > 50) nextSlide();
-                if (endX - startX > 50) prevSlide();
+                endY = e.changedTouches[0].screenY;
+
+                const deltaX = startX - endX;
+                const deltaY = Math.abs(startY - endY);
+
+                // Only trigger if horizontal swipe > vertical swipe
+                if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
+                    if (deltaX > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                    resetTimer();
+                }
             });
         }
 
         // Start Auto
         resetTimer();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 
 })();

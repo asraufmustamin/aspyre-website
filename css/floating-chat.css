@@ -96,6 +96,8 @@
     transform: translateY(20px) scale(0.95);
     opacity: 0;
     pointer-events: none;
+    max-width: calc(100vw - 40px);
+    /* Prevent overflow */
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-origin: bottom right;
 }
