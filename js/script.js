@@ -235,11 +235,13 @@ function initScrollAnimations() {
    ============================================ */
 const TRANSLATIONS = {
     'id': {
+        // Hero
         'hero-eyebrow': 'Partner Kreatif Bisnis Anda',
         'hero-title': 'Desain <span class="highlight">Premium</span> untuk Bisnis yang <span class="highlight">Serius</span>',
         'hero-desc': 'Kami membantu bisnis tampil profesional dengan desain yang memorable, website yang powerful, dan data yang terkelola rapi.',
         'hero-cta-1': 'Mulai Project',
         'hero-cta-2': 'Konsultasi Gratis',
+        // Navigation
         'nav-layanan': 'Layanan',
         'nav-paket': 'Paket',
         'nav-proses': 'Cara Kerja',
@@ -248,33 +250,69 @@ const TRANSLATIONS = {
         'nav-projects': 'Projects',
         'nav-kontak': 'Kontak',
         'nav-cta': 'Mulai Project',
+        // Sections
+        'layanan-label': 'Layanan Kami',
+        'layanan-title': '3 Pilar Solusi Digital',
         'paket-label': 'Pilihan Paket',
         'paket-title': 'Investasi untuk Pertumbuhan Bisnis',
         'projects-label': 'Portfolio',
         'projects-title': 'Karya Kami',
         'proses-label': 'Cara Kerja',
-        'proses-title': 'Proses Mudah & Transparan'
+        'proses-title': 'Proses Mudah & Transparan',
+        'faq-label': 'FAQ',
+        'faq-title': 'Pertanyaan yang Sering Ditanyakan',
+        'testimoni-label': 'Testimoni',
+        'testimoni-title': 'Apa Kata Klien Kami',
+        'kontak-label': 'Kontak',
+        'kontak-title': 'Mulai Project Anda',
+        // Paket Cards
+        'paket1-name': 'ASPYRE First',
+        'paket2-name': 'ASPYRE Second',
+        'paket3-name': 'ASPYRE Third',
+        // Footer
+        'footer-desc': 'Partner kreatif untuk bisnis yang serius berkembang.',
+        'footer-nav': 'Navigasi',
+        'footer-contact': 'Kontak'
     },
     'en': {
+        // Hero
         'hero-eyebrow': 'Your Creative Business Partner',
         'hero-title': '<span class="highlight">Premium</span> Design for <span class="highlight">Serious</span> Business',
         'hero-desc': 'We help businesses look professional with memorable designs, powerful websites, and well-organized data.',
         'hero-cta-1': 'Start Project',
         'hero-cta-2': 'Free Consultation',
+        // Navigation
         'nav-layanan': 'Services',
         'nav-paket': 'Packages',
-        'nav-proses': 'How It Works',
-        'nav-testimoni': 'Testimonials',
+        'nav-proses': 'Process',
+        'nav-testimoni': 'Reviews',
         'nav-faq': 'FAQ',
         'nav-projects': 'Projects',
         'nav-kontak': 'Contact',
         'nav-cta': 'Start Project',
+        // Sections
+        'layanan-label': 'Our Services',
+        'layanan-title': '3 Pillars of Digital Solutions',
         'paket-label': 'Our Packages',
         'paket-title': 'Investment for Business Growth',
         'projects-label': 'Portfolio',
         'projects-title': 'Our Work',
-        'proses-label': 'How It Works',
-        'proses-title': 'Easy & Transparent Process'
+        'proses-label': 'Process',
+        'proses-title': 'Easy & Transparent Process',
+        'faq-label': 'FAQ',
+        'faq-title': 'Frequently Asked Questions',
+        'testimoni-label': 'Testimonials',
+        'testimoni-title': 'What Our Clients Say',
+        'kontak-label': 'Contact',
+        'kontak-title': 'Start Your Project',
+        // Paket Cards
+        'paket1-name': 'ASPYRE First',
+        'paket2-name': 'ASPYRE Second',
+        'paket3-name': 'ASPYRE Third',
+        // Footer
+        'footer-desc': 'Creative partner for businesses serious about growth.',
+        'footer-nav': 'Navigation',
+        'footer-contact': 'Contact'
     }
 };
 
