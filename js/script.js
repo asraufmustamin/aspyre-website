@@ -96,9 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // FORCE RESET PORTFOLIO DATA (Once per session)
     // This ensures that default data is loaded if localStorage is corrupted
-    if (!sessionStorage.getItem('portfolio_init_v2')) {
-        console.log("Portfolio: Session boot - ensuring robust data initialization");
-        sessionStorage.setItem('portfolio_init_v2', 'true');
+    if (!sessionStorage.getItem('portfolio_init_v3')) {
+        console.log("Portfolio: Session boot - clearing potentially stale cache");
+        localStorage.removeItem('aspyre_albums');
+        sessionStorage.setItem('portfolio_init_v3', 'true');
     }
 });
 
@@ -521,28 +522,39 @@ function initAdminModal() {
     });
 
     function showDashboard() {
-        loginView.style.display = 'none';
-        dashboardView.style.display = 'block';
-        // Widen modal for dashboard
-        document.querySelector('.admin-modal-content').classList.add('dashboard-mode');
-        setupRealtimeListener();
+        console.log("Admin: Transitioning to Dashboard...");
+        try {
+            if (loginView) loginView.style.display = 'none';
+            if (dashboardView) dashboardView.style.display = 'block';
+
+            const content = document.querySelector('.admin-modal-content');
+            if (content) content.classList.add('dashboard-mode');
+
+            setupRealtimeListener();
+        } catch (e) {
+            console.error("Admin: Error in showDashboard:", e);
+        }
     }
 
     function setupRealtimeListener() {
         if (unsubscribe) return; // Already listening
 
-        const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
-        unsubscribe = onSnapshot(q, (snapshot) => {
-            const orders = [];
-            snapshot.forEach((doc) => {
-                orders.push({ id: doc.id, docId: doc.id, ...doc.data() }); // docId for deletion
+        try {
+            const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                const orders = [];
+                snapshot.forEach((doc) => {
+                    orders.push({ id: doc.id, docId: doc.id, ...doc.data() });
+                });
+                latestOrders = orders;
+                updateStats(orders);
+                renderOrders(orders);
+            }, (error) => {
+                console.error("Firebase Snapshot Error:", error);
             });
-            latestOrders = orders; // Update global store
-            updateStats(orders);
-            renderOrders(orders);
-        }, (error) => {
-            console.error("Error getting realtime update:", error);
-        });
+        } catch (e) {
+            console.error("Firebase Query Error:", e);
+        }
     }
 
     function updateStats(orders) {
@@ -1441,9 +1453,9 @@ function initPortfolioAlbums() {
                     </svg>
                 </button>
                 <div class="album-preview-stack">
-                    ${album.previews.slice(0, 3).map((src, i) => `
+                    ${(album.previews || []).slice(0, 3).map((src, i) => `
                         <div class="preview-image">
-                            <img src="${src}" alt="${album.title} preview ${i + 1}" loading="lazy">
+                            <img src="${src}" alt="${album.title || 'Preview'} ${i + 1}" loading="lazy">
                         </div>
                     `).join('')}
                 </div>
