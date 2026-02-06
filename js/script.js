@@ -98,9 +98,19 @@ const initApp = () => {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
 
-                // Use the shared function
-                if (window.aspyreShowDashboard) {
+                // FIX: Check session before showing dashboard
+                const isLoggedIn = sessionStorage.getItem('aspyre_admin') === 'true';
+                if (isLoggedIn && window.aspyreShowDashboard) {
                     window.aspyreShowDashboard();
+                } else {
+                    // Start fresh with login form
+                    const loginView = document.getElementById('adminLogin');
+                    const dashboardView = document.getElementById('adminDashboard');
+                    const modalContent = document.querySelector('.admin-modal-content');
+
+                    if (dashboardView) dashboardView.classList.remove('active');
+                    if (loginView) loginView.classList.add('active');
+                    if (modalContent) modalContent.classList.remove('dashboard-mode');
                 }
             } else {
                 console.error("Admin Modal not found!");
