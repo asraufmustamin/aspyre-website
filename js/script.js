@@ -57,16 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
     safeInit(loadCmsContent, 'CMS Content');
     safeInit(initCmsMode, 'CMS Mode');
 
-    // Failsafe: Force visibility after 1s just in case
-    setTimeout(() => {
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            if (getComputedStyle(el).opacity === '0') {
-                el.style.opacity = '1';
-                el.style.transform = 'none';
-            }
-        });
-    }, 1500);
-
     // Global Event Delegation (Fallback for Buttons)
     document.body.addEventListener('click', (e) => {
         // Lang Toggle Fallback
