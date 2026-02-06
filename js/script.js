@@ -178,13 +178,25 @@ function initMobileMenu() {
 
             // 2. Clear Session and Open Modal
             const adminModal = document.getElementById('adminModal');
+            const loginView = document.getElementById('adminLogin');
+            const dashboardView = document.getElementById('adminDashboard');
+            const modalContent = document.querySelector('.admin-modal-content');
+
             if (adminModal) {
                 adminModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
 
-                // If already logged in, show dashboard directly
-                if (sessionStorage.getItem('aspyre_admin') === 'true' && window.aspyreShowDashboard) {
+                // Check if already logged in session
+                const isLoggedIn = sessionStorage.getItem('aspyre_admin') === 'true';
+
+                if (isLoggedIn && window.aspyreShowDashboard) {
+                    // Already authenticated - show dashboard
                     window.aspyreShowDashboard();
+                } else {
+                    // Not authenticated - show login form (reset state)
+                    if (dashboardView) dashboardView.classList.remove('active');
+                    if (loginView) loginView.classList.add('active');
+                    if (modalContent) modalContent.classList.remove('dashboard-mode');
                 }
             }
             return;
