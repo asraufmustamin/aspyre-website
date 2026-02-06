@@ -1,8 +1,7 @@
-/* Floating Chat & Popup */
 :root {
-    --chat-primary: #25D366;
-    --chat-gradient: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    --chat-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    --chat-primary: #667eea;
+    --chat-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --chat-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 .floating-chat-container {
