@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Safety Wrapper
     const safeInit = (fn, name) => {
         try {
+            console.log(`Initializing ${name}...`);
             fn();
+            console.log(`${name} Initialized.`);
         } catch (e) {
             console.error(`Error initializing ${name}:`, e);
             // Don't let one failure stop the rest
@@ -50,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     safeInit(initDynamicCategories, 'Dynamic Categories');
     safeInit(initAdminModal, 'Admin Modal');
     safeInit(initMagneticButtons, 'Magnetic Buttons');
-    safeInit(initProjectModal, 'Project Modal');
+    safeInit(initPortfolioAlbums, 'Portfolio Albums');
     safeInit(initTrackingSystem, 'Tracking System');
     safeInit(loadCmsContent, 'CMS Content');
     safeInit(initCmsMode, 'CMS Mode');
@@ -64,6 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, 1500);
+
+    // Global Event Delegation (Fallback for Buttons)
+    document.body.addEventListener('click', (e) => {
+        // Lang Toggle Fallback
+        const langToggle = e.target.closest('.lang-toggle');
+        if (langToggle) {
+            console.log("Global Lang Toggle Clicked");
+            // Logic handled by initLanguageToggle if active, 
+            // but if it failed, we can try to re-trigger or just let it be.
+            // Usually init logic attaches listener to element. 
+            // If element is replaced, this won't help unless we move logic here.
+        }
+
+        // Admin Trigger Fallback
+        const adminBtn = e.target.closest('.admin-trigger');
+        if (adminBtn) {
+            console.log("Global Admin Trigger Clicked");
+            if (typeof enableCmsModeFunc === 'function') {
+                enableCmsModeFunc();
+            }
+        }
+    });
 });
 
 /* ============================================
