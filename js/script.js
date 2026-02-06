@@ -58,19 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
     safeInit(initCmsMode, 'CMS Mode');
 
     // Global Event Delegation (Fallback for Buttons)
+    // Global Event Delegation (Fallback for Buttons)
     document.body.addEventListener('click', (e) => {
         // Lang Toggle Fallback
         const langToggle = e.target.closest('.lang-toggle');
         if (langToggle) {
-            console.log("Global Lang Toggle Clicked");
-            // Logic handled by initLanguageToggle if active, 
-            // but if it failed, we can try to re-trigger or just let it be.
-            // Usually init logic attaches listener to element. 
-            // If element is replaced, this won't help unless we move logic here.
+            console.log("Global Lang Toggle Actions");
+            const activeSpan = langToggle.querySelector('.active');
+            if (activeSpan) {
+                const currentLang = activeSpan.textContent.trim();
+                const newLang = currentLang === 'ID' ? 'en' : 'id';
+                // Call standard switch function if available
+                if (typeof switchLanguage === 'function') {
+                    switchLanguage(newLang);
+                } else {
+                    // Fallback manual switch
+                    localStorage.setItem('aspyreLang', newLang);
+                    location.reload();
+                }
+            }
         }
 
-        // Admin Trigger Fallback
-        const adminBtn = e.target.closest('.admin-trigger');
+        // Admin Trigger Fallback (Handle both classes)
+        const adminBtn = e.target.closest('.admin-trigger, .admin-panel-btn');
         if (adminBtn) {
             console.log("Global Admin Trigger Clicked");
             if (typeof enableCmsModeFunc === 'function') {
@@ -78,6 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // FORCE RESET PORTFOLIO DATA (Once)
+    // This fixes empty portfolio if localStorage has bad data
+    if (!sessionStorage.getItem('portfolio_fixed')) {
+        localStorage.removeItem('aspyre_albums');
+        sessionStorage.setItem('portfolio_fixed', 'true');
+    }
 });
 
 /* ============================================
