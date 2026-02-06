@@ -1103,14 +1103,7 @@ function applyCmsContent(data) {
     });
 }
 
-function initCmsMode() {
-    // Hidden Trigger (Admin button in Mobile Menu or Url param ?mode=cms)
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('mode') === 'cms' || localStorage.getItem('cmsMode') === 'true') {
-        enableCmsModeFunc();
-    }
-}
+// initCmsMode is already defined above - removed duplicate
 
 // Global function to enable CMS
 window.enableCmsModeFunc = function () {
