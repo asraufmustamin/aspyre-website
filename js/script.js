@@ -2,8 +2,8 @@
    ASPYRE.AI - Premium Agency Scripts
    ============================================ */
 // Import Firebase SDKs
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, where, getDocs, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, where, getDocs, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -51,20 +51,7 @@ const initApp = () => {
         }
     } catch (e) { console.warn("LocaleStorage access restricted"); }
 
-    safeInit(initMobileMenu, 'Mobile Menu');
-    safeInit(initSmoothScroll, 'Smooth Scroll');
-    safeInit(initScrollAnimations, 'Scroll Animations');
-    safeInit(initOrderForm, 'Order Form');
-    safeInit(initLanguageToggle, 'Language Toggle');
-    safeInit(initDynamicCategories, 'Dynamic Categories');
-    safeInit(initAdminModal, 'Admin Modal');
-    safeInit(initMagneticButtons, 'Magnetic Buttons');
-    safeInit(initPortfolioAlbums, 'Portfolio Albums');
-    safeInit(initTrackingSystem, 'Tracking System');
-    safeInit(loadCmsContent, 'CMS Content');
-    safeInit(initCmsMode, 'CMS Mode');
-
-    // Global Event Delegation (Fallback for Buttons)
+    // 1. Install Global Listeners FIRST (Critical for interactivity)
     document.body.addEventListener('click', (e) => {
         // Lang Toggle Fallback
         const langToggle = e.target.closest('.lang-toggle');
@@ -104,6 +91,21 @@ const initApp = () => {
             }
         }
     });
+
+    safeInit(initMobileMenu, 'Mobile Menu');
+    safeInit(initSmoothScroll, 'Smooth Scroll');
+    safeInit(initScrollAnimations, 'Scroll Animations');
+    safeInit(initOrderForm, 'Order Form');
+    safeInit(initLanguageToggle, 'Language Toggle');
+    safeInit(initDynamicCategories, 'Dynamic Categories');
+    safeInit(initAdminModal, 'Admin Modal');
+    safeInit(initMagneticButtons, 'Magnetic Buttons');
+    safeInit(initPortfolioAlbums, 'Portfolio Albums');
+    safeInit(initTrackingSystem, 'Tracking System');
+    safeInit(loadCmsContent, 'CMS Content');
+    safeInit(initCmsMode, 'CMS Mode');
+
+    // Listeners installed at top.
 };
 
 // Execute Initialization
