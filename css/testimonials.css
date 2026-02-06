@@ -212,4 +212,19 @@
     .t-stats {
         gap: 30px;
     }
+
+    /* Profile stacked vertically: photo on top, name below */
+    .t-author {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .t-info {
+        text-align: center;
+    }
+
+    .t-avatar {
+        width: 70px;
+        height: 70px;
+    }
 }

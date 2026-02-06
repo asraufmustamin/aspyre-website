@@ -7717,20 +7717,33 @@ section.highlight-section {
 
 /* Fix for very small screens */
 @media (max-width: 400px) {
+
+    /* Keep hero stats small and inline - just centered */
     .hero-proof {
-        flex-direction: column !important;
-        gap: 20px !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;
     }
 
     .proof-item {
-        width: 100% !important;
-        padding: 15px !important;
-        background: rgba(255, 255, 255, 0.03) !important;
-        border-radius: 12px !important;
+        flex: 0 0 auto !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        width: auto !important;
     }
 
     .proof-number {
-        font-size: 24px !important;
+        font-size: 18px !important;
+    }
+
+    .proof-unit {
+        font-size: 12px !important;
+    }
+
+    .proof-label {
+        font-size: 10px !important;
     }
 
     .hero-title {
@@ -7742,5 +7755,25 @@ section.highlight-section {
         width: 100% !important;
         text-align: center !important;
         justify-content: center !important;
+    }
+
+    /* Contact benefits - small and centered, not large grid */
+    .contact-benefits {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 15px !important;
+    }
+
+    .contact-benefits .benefit-item,
+    .form-benefits .benefit {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 20px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
     }
 }
