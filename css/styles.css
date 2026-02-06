@@ -226,14 +226,19 @@ ul {
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 20px;
+    /* Reduced from 32px/40px */
+    align-items: center;
 }
 
-.nav-links a {
+.nav-link {
     font-size: 14px;
+    /* Reduced slightly for tidiness */
     font-weight: 500;
     color: var(--muted);
-    transition: color 0.3s ease;
+    transition: var(--transition);
+    position: relative;
+    padding: 5px 0;
 }
 
 .nav-links a:hover {

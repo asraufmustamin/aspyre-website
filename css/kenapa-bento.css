@@ -93,13 +93,40 @@
     grid-row: span 1;
 }
 
-/* Feature 4: Wide Stat Bar (Bottom Right if needed, or fits elsewhere) 
-   Actually, let's adjust layout to fit 4x2 grid neatly.
-   Layout Map:
-   [ Main Value (2x2) ] [ Feat 1 (1x2) ] [ Feat 2 (1x1) ]
-                                          [ Feat 3 (1x1) ]
-   Wait, that's 2+1+1 = 4 cols. Correct.
-*/
+/* Feature 4: Wide Stat Bar Styles */
+.feature-4 {
+    flex-direction: row;
+    /* Horizontal layout */
+    align-items: center;
+    justify-content: space-around;
+    /* Space out items */
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-unit {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    line-height: 1;
+}
+
+.stat-lbl {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+}
 
 .bento-icon {
     font-size: 32px;
@@ -173,7 +200,7 @@
     }
 
     .feature-4 {
-        grid-column: span 1;
+        grid-column: span 2;
     }
 }
 
