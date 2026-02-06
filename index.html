@@ -523,6 +523,74 @@
         </div>
     </section>
 
+    <!-- Comparison Modal -->
+    <div id="comparisonModal" class="modal-comparison">
+        <div class="comp-modal-content">
+            <div class="comp-header">
+                <h2>Perbandingan Layanan & Paket</h2>
+                <button id="closeCompModal" class="comp-close">×</button>
+            </div>
+            <div class="comp-body">
+                <div class="comp-table-wrapper">
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Fitur / Layanan</th>
+                                <th class="highlight-creative">Creative Design</th>
+                                <th class="highlight-web">Web & Systems</th>
+                                <th class="highlight-data">Data Services</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Cocok Untuk</strong></td>
+                                <td>Branding, Konten Medsos, Promosi</td>
+                                <td>Company Profile, Toko Online, Aplikasi</td>
+                                <td>Arsip, Rekap Data, Administrasi</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estimasi Waktu</strong></td>
+                                <td>1 - 3 Hari</td>
+                                <td>3 - 14 Hari</td>
+                                <td>24 Jam - 3 Hari</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revisi</strong></td>
+                                <td>Sesuai Paket (1x, 2x, Unlimited)</td>
+                                <td>3x Minor Revisions</td>
+                                <td>1x Check & Revisi</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Source File</strong></td>
+                                <td><span class="comp-check">✔</span> Lengkap (AI, PSD)</td>
+                                <td><span class="comp-check">✔</span> Source Code (Zip/Git)</td>
+                                <td><span class="comp-check">✔</span> Excel / CSV / PDF</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Konsultasi</strong></td>
+                                <td><span class="comp-check">✔</span> Free Briefing</td>
+                                <td><span class="comp-check">✔</span> In-depth Analysis</td>
+                                <td><span class="comp-check">✔</span> Data Assessment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hak Cipta</strong></td>
+                                <td>100% Milik Klien</td>
+                                <td>100% Milik Klien</td>
+                                <td>Rahasia & Aman (NDA)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Support</strong></td>
+                                <td>7 Hari pasca kirim</td>
+                                <td>30 Hari Maintenance</td>
+                                <td>3 Hari Garansi Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <!-- Timeline CSS -->
     <link rel="stylesheet" href="css/timeline-new.css">
@@ -723,71 +791,232 @@
         </div>
     </div>
 
-    <!-- Kenapa Section -->
-    <section id="kenapa" class="section-kenapa">
+    <!-- Testimonials Section (New) -->
+    <section id="testimonials" class="section-testimonials">
         <div class="container">
-            <div class="kenapa-grid">
-                <div class="kenapa-content animate-on-scroll">
-                    <span class="section-label editable" data-key="kenapa-label">Kenapa ASPYRE?</span>
-                    <h2 class="section-title editable" data-key="kenapa-title">Beda dari yang Lain</h2>
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label">Kata Mereka</span>
+                <h2 class="section-title">Apa Kata Klien Kami?</h2>
+                <p class="section-subtitle">Cerita sukses dari bisnis yang bertumbuh bersama ASPYRE</p>
+            </div>
 
-                    <div class="kenapa-list">
-                        <div class="kenapa-item hover-card">
-                            <span class="kenapa-icon">⚡</span>
-                            <div>
-                                <h4 class="editable" data-key="kenapa1-title">Fleksibel</h4>
-                                <p class="editable" data-key="kenapa1-desc">Deadline disesuaikan dengan kebutuhan Anda.
-                                </p>
-                            </div>
+            <div class="testimonial-container animate-on-scroll">
+                <div class="testimonial-wrapper">
+                    <div class="testimonial-track">
+                        <!-- JS Generated -->
+                    </div>
+                </div>
+
+                <div class="t-controls">
+                    <button class="t-btn prev" aria-label="Previous">←</button>
+                    <div class="t-indicators">
+                        <!-- JS Generated -->
+                    </div>
+                    <button class="t-btn next" aria-label="Next">→</button>
+                </div>
+            </div>
+
+            <div class="t-stats animate-on-scroll">
+                <div class="t-stat-item">
+                    <span class="t-stat-num">50+</span>
+                    <span class="t-stat-label">Klien Puas</span>
+                </div>
+                <div class="t-stat-item">
+                    <span class="t-stat-num">100%</span>
+                    <span class="t-stat-label">On Time</span>
+                </div>
+                <div class="t-stat-item">
+                    <span class="t-stat-num">4.9</span>
+                    <span class="t-stat-label">Rating Rata-rata</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (New) -->
+    <section id="faq" class="section-faq">
+        <div class="container">
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">Pertanyaan Umum</h2>
+            </div>
+            <div class="faq-container animate-on-scroll">
+                <!-- Tabs and Content handled by JS structure to save context size, ensuring div structure is correct -->
+                <div class="faq-tabs">
+                    <button class="faq-tab active" data-target="faq-layanan">Tentang Layanan</button>
+                    <button class="faq-tab" data-target="faq-harga">Harga & Pembayaran</button>
+                    <button class="faq-tab" data-target="faq-proses">Proses Kerja</button>
+                </div>
+                <div id="faq-layanan" class="faq-content active">
+                    <div class="faq-item"><button class="faq-question">Berapa lama waktu pengerjaan? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Untuk desain grafis rata-rata 2-3 hari. Website landing page 3-5 hari.
+                            Web apps atau sistem membutuhkan waktu 2-4 minggu tergantung kompleksitas.</div>
+                    </div>
+                    <div class="faq-item"><button class="faq-question">Apakah bisa request revisi? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Tentu! Setiap paket sudah termasuk kuota revisi. Basic (1x), Standard
+                            (2x), dan Premium (Unlimited). Kami akan pastikan hasil sesuai keinginan Anda.</div>
+                    </div>
+                    <div class="faq-item"><button class="faq-question">Apakah saya dapat file mentah (Source File)?
+                            <span class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Ya. Berbeda dengan freelancer murah yang menahan file asli, kami
+                            memberikan SEMUA source file (AI, PSD, Figma) di akhir project agar Anda punya kontrol penuh
+                            atas aset Anda.</div>
+                    </div>
+                </div>
+                <div id="faq-harga" class="faq-content">
+                    <div class="faq-item"><button class="faq-question">Sistem pembayarannya bagaimana? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Untuk memulai project, kami memerlukan DP (Down Payment) sebesar 50%.
+                            Sisanya dilunasi setelah preview final disetujui, sebelum serah terima file master.</div>
+                    </div>
+                    <div class="faq-item"><button class="faq-question">Apakah bisa menerbitkan Invoice/Faktur? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Bisa. Kami dapat menerbitkan invoice profesional untuk kebutuhan
+                            reimbursement perusahaan atau administrasi bisnis Anda.</div>
+                    </div>
+                </div>
+                <div id="faq-proses" class="faq-content">
+                    <div class="faq-item"><button class="faq-question">Bagaimana cara mulai order? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Sangat mudah! Pilih paket yang Anda mau, isi form order di website ini,
+                            atau langsung chat kami via WhatsApp. Tim kami akan segera merespon untuk diskusi brief.
                         </div>
-                        <div class="kenapa-item hover-card">
-                            <span class="kenapa-icon">✦</span>
-                            <div>
-                                <h4 class="editable" data-key="kenapa2-title">Orisinal</h4>
-                                <p class="editable" data-key="kenapa2-desc">Tidak pakai template. Setiap desain dibuat
-                                    khusus.</p>
+                    </div>
+                    <div class="faq-item"><button class="faq-question">Apakah bisa meeting konsultasi dulu? <span
+                                class="faq-icon">▼</span></button>
+                        <div class="faq-answer">Tentu saja. Anda bisa klik tombol "Konsultasi Gratis" untuk diskusi via
+                            chat WhatsApp, atau jadwalkan Google Meet jika project cukup kompleks.</div>
+                    </div>
+                </div>
+                <div class="faq-cta">
+                    <p>Masih ada pertanyaan lain?</p>
+                    <a href="https://wa.me/6285729715555" target="_blank" class="faq-cta-link">Hubungi Tim Support Kami
+                        →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Price Calculator (New) -->
+    <section id="calculator" class="section-calculator">
+        <div class="calc-container">
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label">Estimasi Biaya</span>
+                <h2 class="section-title">Hitung Budget Project</h2>
+                <p class="section-subtitle">Dapatkan perkiraan harga instan sesuai kebutuhan Anda</p>
+            </div>
+            <div class="calc-card animate-on-scroll">
+                <div class="calc-header">
+                    <div class="calc-progress">
+                        <div class="progress-bar-bg"></div>
+                        <div class="progress-bar-fill"></div>
+                        <div class="step-indicator active">1</div>
+                        <div class="step-indicator">2</div>
+                        <div class="step-indicator">3</div>
+                    </div>
+                </div>
+                <div class="calc-body">
+                    <div class="step-content active" id="step1">
+                        <h3 class="step-title">Pilih Layanan</h3>
+                        <div class="service-grid">
+                            <div class="service-option" data-value="creative"><span class="serv-icon">🎨</span>
+                                <h4>Creative Design</h4><span class="serv-price">Mulai Rp 99rb</span>
                             </div>
-                        </div>
-                        <div class="kenapa-item hover-card">
-                            <span class="kenapa-icon">♥</span>
-                            <div>
-                                <h4 class="editable" data-key="kenapa3-title">Terjangkau</h4>
-                                <p class="editable" data-key="kenapa3-desc">Kualitas agency, harga yang masuk akal untuk
-                                    UMKM.</p>
+                            <div class="service-option" data-value="web"><span class="serv-icon">💻</span>
+                                <h4>Web & Systems</h4><span class="serv-price">Mulai Rp 1jt</span>
                             </div>
-                        </div>
-                        <div class="kenapa-item hover-card">
-                            <span class="kenapa-icon">🔄</span>
-                            <div>
-                                <h4 class="editable" data-key="kenapa4-title">Revisi Sesuai Paket</h4>
-                                <p class="editable" data-key="kenapa4-desc">Revisi gratis sesuai ketentuan paket yang
-                                    dipilih.
-                                </p>
+                            <div class="service-option" data-value="data"><span class="serv-icon">📊</span>
+                                <h4>Data Services</h4><span class="serv-price">Mulai Rp 50rb</span>
                             </div>
                         </div>
                     </div>
+                    <div class="step-content" id="step2">
+                        <h3 class="step-title">Detail Kebutuhan</h3>
+                        <div id="step2Form"></div>
+                    </div>
+                    <div class="step-content" id="step3">
+                        <h3 class="step-title">Estimasi Biaya</h3>
+                        <div class="result-box">
+                            <span class="total-price" id="calcTotal">Rp 0</span><span class="price-range"
+                                id="calcRange">Estimasi Range: -</span>
+                            <div class="breakdown-list" id="resultBreakdown"></div>
+                            <button id="calcWaBtn" class="calc-btn btn-wa-order">💬 Order via WhatsApp (Sesuai
+                                Estimasi)</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="kenapa-visual animate-on-scroll">
-                    <div class="visual-card hover-card" id="kenapa3dVisual">
-                        <div class="visual-shapes-3d">
-                            <div class="cube-scene">
-                                <div class="cube">
-                                    <div class="cube-face front"></div>
-                                    <div class="cube-face back"></div>
-                                    <div class="cube-face right"></div>
-                                    <div class="cube-face left"></div>
-                                    <div class="cube-face top"></div>
-                                    <div class="cube-face bottom"></div>
-                                </div>
-                            </div>
-                            <div class="floating-orb orb-1"></div>
-                            <div class="floating-orb orb-2"></div>
-                            <div class="floating-orb orb-3"></div>
+                <div class="calc-footer">
+                    <button id="calcBackBtn" class="calc-btn btn-back">← Kembali</button>
+                    <button id="calcNextBtn" class="calc-btn btn-next" disabled>Lanjut →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="kenapa-grid">
+            <div class="kenapa-content animate-on-scroll">
+                <span class="section-label editable" data-key="kenapa-label">Kenapa ASPYRE?</span>
+                <h2 class="section-title editable" data-key="kenapa-title">Beda dari yang Lain</h2>
+
+                <div class="kenapa-list">
+                    <div class="kenapa-item hover-card">
+                        <span class="kenapa-icon">⚡</span>
+                        <div>
+                            <h4 class="editable" data-key="kenapa1-title">Fleksibel</h4>
+                            <p class="editable" data-key="kenapa1-desc">Deadline disesuaikan dengan kebutuhan Anda.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="kenapa-item hover-card">
+                        <span class="kenapa-icon">✦</span>
+                        <div>
+                            <h4 class="editable" data-key="kenapa2-title">Orisinal</h4>
+                            <p class="editable" data-key="kenapa2-desc">Tidak pakai template. Setiap desain dibuat
+                                khusus.</p>
+                        </div>
+                    </div>
+                    <div class="kenapa-item hover-card">
+                        <span class="kenapa-icon">♥</span>
+                        <div>
+                            <h4 class="editable" data-key="kenapa3-title">Terjangkau</h4>
+                            <p class="editable" data-key="kenapa3-desc">Kualitas agency, harga yang masuk akal untuk
+                                UMKM.</p>
+                        </div>
+                    </div>
+                    <div class="kenapa-item hover-card">
+                        <span class="kenapa-icon">🔄</span>
+                        <div>
+                            <h4 class="editable" data-key="kenapa4-title">Revisi Sesuai Paket</h4>
+                            <p class="editable" data-key="kenapa4-desc">Revisi gratis sesuai ketentuan paket yang
+                                dipilih.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="kenapa-visual animate-on-scroll">
+                <div class="visual-card hover-card" id="kenapa3dVisual">
+                    <div class="visual-shapes-3d">
+                        <div class="cube-scene">
+                            <div class="cube">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                        </div>
+                        <div class="floating-orb orb-1"></div>
+                        <div class="floating-orb orb-2"></div>
+                        <div class="floating-orb orb-3"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
     </section>
 
     <!-- Kontak Section -->
