@@ -97,9 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
 
-                // If already logged in, show dashboard immediately
-                if (sessionStorage.getItem('aspyre_admin') === 'true' && typeof showDashboard === 'function') {
-                    showDashboard();
+                // Use the shared function
+                if (window.aspyreShowDashboard) {
+                    window.aspyreShowDashboard();
                 }
             } else {
                 console.error("Admin Modal not found!");
@@ -160,8 +160,8 @@ function initMobileMenu() {
                 document.body.style.overflow = 'hidden';
 
                 // If already logged in, show dashboard directly
-                if (sessionStorage.getItem('aspyre_admin') === 'true') {
-                    if (typeof showDashboard === 'function') showDashboard();
+                if (sessionStorage.getItem('aspyre_admin') === 'true' && window.aspyreShowDashboard) {
+                    window.aspyreShowDashboard();
                 }
             }
             return;
@@ -525,6 +525,9 @@ function initAdminModal() {
             }, 300);
         });
     });
+
+    // Expose for global trigger
+    window.aspyreShowDashboard = showDashboard;
 
     function showDashboard() {
         console.log("Admin: Transitioning to Dashboard...");
@@ -1653,8 +1656,9 @@ function initPortfolioAlbums() {
     // Scroll to page
     function scrollToPage(page) {
         const cardWidth = albumsContainer.querySelector('.album-card')?.offsetWidth || 400;
-        const gap = 28;
-        const scrollAmount = page * (cardWidth * 2 + gap * 2);
+        const gap = 24;
+        // Desktop: 3 items per page. Scroll by 3 card widths + gaps.
+        const scrollAmount = page * (cardWidth * 3 + gap * 3);
         albumsContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
 
         // Update dots
