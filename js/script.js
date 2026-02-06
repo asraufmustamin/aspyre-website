@@ -94,11 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // FORCE RESET PORTFOLIO DATA (Once)
-    // This fixes empty portfolio if localStorage has bad data
-    if (!sessionStorage.getItem('portfolio_fixed')) {
-        localStorage.removeItem('aspyre_albums');
-        sessionStorage.setItem('portfolio_fixed', 'true');
+    // FORCE RESET PORTFOLIO DATA (Once per session)
+    // This ensures that default data is loaded if localStorage is corrupted
+    if (!sessionStorage.getItem('portfolio_init_v2')) {
+        console.log("Portfolio: Session boot - ensuring robust data initialization");
+        sessionStorage.setItem('portfolio_init_v2', 'true');
     }
 });
 
@@ -381,8 +381,20 @@ function initAdminModal() {
 
     if (!modal) return;
 
+    // Check URL Params for Auto-Login
+    const urlParams = new URLSearchParams(window.location.search);
+    const adminUserParam = urlParams.get('adminUser');
+    const adminPassParam = urlParams.get('adminPass');
+
     const ADMIN_USER = 'aspyre.ai';
     const ADMIN_PASS = 'theaspyreai22';
+
+    if (adminUserParam === ADMIN_USER && adminPassParam === ADMIN_PASS) {
+        console.log("Admin: Auto-login detected from URL parameters.");
+        sessionStorage.setItem('aspyre_admin', 'true');
+        modal.classList.add('active');
+        showDashboard();
+    }
 
     let currentCategory = 'all';
     let unsubscribe = null;
@@ -1363,8 +1375,19 @@ function initPortfolioAlbums() {
     ];
 
     // Load saved albums from localStorage (CMS)
-    let savedAlbums = JSON.parse(localStorage.getItem('aspyre_albums'));
-    let albums = (savedAlbums && savedAlbums.length > 0) ? savedAlbums : albumsData;
+    let albums = albumsData;
+    try {
+        const saved = localStorage.getItem('aspyre_albums');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                albums = parsed;
+                console.log("Portfolio: Loaded from cache.");
+            }
+        }
+    } catch (e) {
+        console.warn("Portfolio: Error loading cache, using defaults.");
+    }
 
 
     // DOM Elements
