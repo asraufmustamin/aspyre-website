@@ -180,41 +180,30 @@
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
     }
-}
 
-@media (max-width: 768px) {
-    .bento-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+    .main-value {
+        grid-column: span 2;
+    }
+
+    .feature-1 {
+        grid-row: span 1;
+        min-height: 200px;
+    }
+
+    .feature-4 {
+        grid-column: span 2;
     }
 }
 
-.main-value {
-    grid-column: span 2;
-}
+@media (max-width: 768px) {
+    .section-kenapa-bento {
+        padding: 60px 0;
+    }
 
-.feature-1 {
-    grid-column: span 1;
-    grid-row: span 1;
-    min-height: 200px;
-}
-
-.feature-2 {
-    grid-column: span 1;
-}
-
-.feature-3 {
-    grid-column: span 1;
-}
-
-.feature-4 {
-    grid-column: span 2;
-}
-}
-
-@media (max-width: 600px) {
     .bento-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 16px;
     }
 
     .main-value,
@@ -225,5 +214,35 @@
         grid-column: span 1;
         grid-row: auto;
         min-height: auto;
+    }
+
+    .main-value h3 {
+        font-size: 24px;
+    }
+
+    .bento-card {
+        padding: 24px;
+    }
+
+    /* Stats bar stacks on mobile */
+    .feature-4 {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+    }
+
+    .stat-unit {
+        flex-direction: row;
+        gap: 12px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .stat-num {
+        font-size: 24px;
+    }
+
+    .stat-lbl {
+        font-size: 11px;
     }
 }

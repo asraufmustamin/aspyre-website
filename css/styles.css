@@ -7542,3 +7542,205 @@ section.highlight-section {
     position: relative;
     margin-bottom: 70px;
 }
+
+/* ============================================
+   Mobile Responsive Fixes (v7.5)
+   ============================================ */
+
+/* === MOBILE (max-width: 768px) === */
+@media (max-width: 768px) {
+
+    /* 1. Hero Proof Stats - Centered */
+    .hero-proof {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .proof-item {
+        flex: 0 0 auto !important;
+        text-align: center !important;
+    }
+
+    .proof-divider {
+        display: none !important;
+    }
+
+    .proof-number {
+        font-size: 20px !important;
+    }
+
+    .proof-unit {
+        font-size: 14px !important;
+    }
+
+    .proof-label {
+        font-size: 11px !important;
+    }
+
+    /* 2. Hero Section - Better centering */
+    .hero-content {
+        text-align: center !important;
+        align-items: center !important;
+    }
+
+    .hero-cta {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+
+    /* 3. Contact Section - Centered */
+    .section-kontak .container,
+    #kontak .form-container {
+        text-align: center !important;
+    }
+
+    .contact-info {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 20px !important;
+    }
+
+    .contact-info .info-item {
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    /* Contact form centering */
+    .form-container {
+        padding: 0 16px !important;
+    }
+
+    .form-container form {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* 4. Mobile Navigation - Full height scroll */
+    .nav-menu-mobile {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow-y: auto !important;
+        padding-bottom: 100px !important;
+    }
+
+    .mobile-link {
+        padding: 16px 0 !important;
+        font-size: 16px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .mobile-cta {
+        margin-top: 20px !important;
+    }
+
+    /* Mobile controls visibility */
+    .mobile-controls {
+        justify-content: center !important;
+    }
+
+    /* 5. General mobile improvements */
+    .section-intro {
+        text-align: center !important;
+        padding: 0 16px !important;
+    }
+
+    .section-title {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+    }
+
+    .section-subtitle {
+        font-size: 14px !important;
+    }
+
+    .section-label {
+        font-size: 12px !important;
+    }
+}
+
+/* === TABLET (max-width: 1024px) === */
+@media (max-width: 1024px) and (min-width: 769px) {
+
+    /* Prevent overlapping elements on tablet */
+    .hero-content {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .hero-title {
+        font-size: 42px !important;
+    }
+
+    .nav-links {
+        gap: 15px !important;
+    }
+
+    .nav-link {
+        font-size: 13px !important;
+    }
+
+    /* Package cards on tablet */
+    .paket-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    /* Bento grid tablet */
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Timeline tablet */
+    .timeline-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Contact form tablet */
+    .form-container {
+        max-width: 600px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Testimonials tablet */
+    .testimonial-card {
+        min-height: 250px !important;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 400px) {
+    .hero-proof {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+
+    .proof-item {
+        width: 100% !important;
+        padding: 15px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 12px !important;
+    }
+
+    .proof-number {
+        font-size: 24px !important;
+    }
+
+    .hero-title {
+        font-size: 28px !important;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+}

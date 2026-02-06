@@ -134,25 +134,41 @@
 }
 
 @media (max-width: 600px) {
+    .section-proses {
+        padding: 40px 0;
+    }
+
     .timeline-container {
         grid-template-columns: 1fr;
         padding: 0 20px;
-        gap: 15px;
+        gap: 20px;
     }
 
+    /* Mobile: Keep number centered on top (user request) */
     .timeline-item {
-        flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .timeline-node {
-        margin-bottom: 0;
-        margin-right: 15px;
-        min-width: 40px;
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
+        margin-bottom: 16px;
+        margin-right: 0;
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+    }
+
+    .timeline-content {
+        padding: 20px;
+    }
+
+    .timeline-content h3 {
+        font-size: 15px;
+    }
+
+    .timeline-content p {
+        font-size: 12px;
     }
 }
 
