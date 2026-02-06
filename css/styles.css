@@ -249,8 +249,8 @@ ul {
     display: flex;
     align-items: center;
     gap: 16px;
-    z-index: 1002;
-    /* Ensure above mobile menu overlay if needed */
+    z-index: 2100;
+    /* Higher than hero */
     position: relative;
 }
 
@@ -265,6 +265,14 @@ ul {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     transition: all 0.3s ease;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 50;
+}
+
+.admin-trigger,
+.admin-panel-btn {
+    cursor: pointer !important;
 }
 
 .lang-toggle:hover {

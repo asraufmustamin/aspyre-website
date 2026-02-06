@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // FORCE RESET PORTFOLIO DATA (Once per session)
         // This ensures that default data is loaded if localStorage is corrupted
-        if (!sessionStorage.getItem('portfolio_init_v5')) {
-            console.log("Portfolio: Session boot - clearing potentially stale cache");
+        if (!sessionStorage.getItem('portfolio_init_v6')) {
+            console.log("Portfolio: Session boot v6 - clearing potentially stale cache");
             localStorage.removeItem('aspyre_albums');
-            sessionStorage.setItem('portfolio_init_v5', 'true');
+            sessionStorage.setItem('portfolio_init_v6', 'true');
         }
     } catch (e) { console.warn("LocaleStorage access restricted"); }
 
