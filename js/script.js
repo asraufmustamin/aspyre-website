@@ -101,14 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    // FORCE RESET PORTFOLIO DATA (Once per session)
-    // This ensures that default data is loaded if localStorage is corrupted
-    if (!sessionStorage.getItem('portfolio_init_v3')) {
-        console.log("Portfolio: Session boot - clearing potentially stale cache");
-        localStorage.removeItem('aspyre_albums');
-        sessionStorage.setItem('portfolio_init_v3', 'true');
-    }
 });
 
 /* ============================================
