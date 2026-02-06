@@ -6496,7 +6496,8 @@ section.highlight-section {
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: transparent;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.7);
+    /* Explicit bright color for visibility */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6529,7 +6530,9 @@ section.highlight-section {
     display: inline-block;
     width: 8px;
     height: 8px;
-    background: var(--danger);
+    background: #FF0000;
+    /* Explicit Red */
+    box-shadow: 0 0 5px #ff0000;
     border-radius: 50%;
     margin-right: 6px;
     animation: pulse 2s infinite;

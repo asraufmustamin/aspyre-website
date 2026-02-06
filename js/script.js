@@ -269,13 +269,16 @@ function initOrderForm() {
                 `📅 Deadline: ${data.deadline}%0A` +
                 `💰 Budget: ${data.budget}`;
 
-            // Redirect delay
-            setTimeout(() => {
-                window.open(`https://wa.me/6285729715555?text=${text}`, '_blank');
-                form.reset();
-                submitBtn.innerHTML = originalContent;
-                submitBtn.disabled = false;
-            }, 1000);
+            // Redirect immediately (better for mobile)
+            const waUrl = `https://wa.me/6285729715555?text=${text}`;
+
+            // Allow simplified UI update before redirect
+            form.reset();
+            submitBtn.innerHTML = originalContent;
+            submitBtn.disabled = false;
+
+            // Navigate
+            window.location.href = waUrl;
 
         } catch (error) {
             console.error(error);
