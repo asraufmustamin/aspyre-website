@@ -330,6 +330,8 @@ ul {
     z-index: 99;
     background: var(--ink);
     padding: 100px 24px 40px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobile-menu.active {
@@ -341,6 +343,7 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-bottom: 100px;
 }
 
 .mobile-link {
