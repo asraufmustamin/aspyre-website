@@ -1185,13 +1185,13 @@
                     <span class="section-label editable" data-key="showcase-label">Digital Hub</span>
                     <h2 class="showcase-title editable" data-key="showcase-title">Aset Digital Siap Pakai</h2>
                     <p class="showcase-desc editable" data-key="showcase-desc">
-                        Dapatkan koleksi prompt library dan template desain premium untuk mempercepat workflow Anda.
+                        Koleksi template desain dan resource digital premium — sedang kami siapkan untuk Anda.
                     </p>
                 </div>
-                <a href="https://lynk.id/produk-digital" target="_blank" class="showcase-cta magnetic-btn">
-                    <span class="editable" data-key="showcase-cta">Lihat Koleksi</span>
+                <button onclick="showComingSoon()" class="showcase-cta magnetic-btn" style="border: none; cursor: pointer;">
+                    <span>Segera Hadir ✨</span>
                     <span class="cta-arrow">→</span>
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -1248,8 +1248,8 @@
                     </div>
                     <div class="footer-col">
                         <h4>Store</h4>
-                        <a href="https://lynk.id/produk-digital" target="_blank">Digital Assets</a>
-                        <a href="https://lynk.id/produk-digital" target="_blank">Templates</a>
+                        <a href="#" onclick="showComingSoon(); return false;">Digital Assets</a>
+                        <a href="#" onclick="showComingSoon(); return false;">Templates</a>
                     </div>
                 </div>
             </div>
@@ -1399,6 +1399,97 @@
     <!-- Comparison CSS & JS -->
     <link rel="stylesheet" href="css/comparison.css">
     <link rel="stylesheet" href="css/kenapa-bento.css"> <!-- Bento Grid Style -->
+
+    <!-- Coming Soon Toast -->
+    <style>
+        .coming-soon-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 90, 79, 0.3);
+            border-radius: 20px;
+            padding: 40px 50px;
+            text-align: center;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(232, 90, 79, 0.1);
+        }
+        .coming-soon-toast.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .coming-soon-toast .toast-emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .coming-soon-toast .toast-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .coming-soon-toast .toast-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            max-width: 280px;
+        }
+        .coming-soon-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .coming-soon-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        @media (max-width: 768px) {
+            .coming-soon-toast {
+                padding: 30px 28px;
+                margin: 0 20px;
+                width: calc(100% - 40px);
+                max-width: 320px;
+            }
+            .coming-soon-toast .toast-emoji { font-size: 40px; }
+            .coming-soon-toast .toast-title { font-size: 18px; }
+            .coming-soon-toast .toast-desc { font-size: 13px; }
+        }
+    </style>
+    <div class="coming-soon-overlay" id="comingSoonOverlay"></div>
+    <div class="coming-soon-toast" id="comingSoonToast">
+        <span class="toast-emoji">🚀</span>
+        <div class="toast-title">Segera Hadir!</div>
+        <p class="toast-desc">Kami sedang menyiapkan koleksi aset digital terbaik untuk Anda. Nantikan ya!</p>
+    </div>
+    <script>
+        function showComingSoon() {
+            const toast = document.getElementById('comingSoonToast');
+            const overlay = document.getElementById('comingSoonOverlay');
+            toast.classList.add('active');
+            overlay.classList.add('active');
+
+            function closeToast() {
+                toast.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+
+            overlay.onclick = closeToast;
+            toast.onclick = closeToast;
+            setTimeout(closeToast, 3500);
+        }
+    </script>
 
 </body>
 

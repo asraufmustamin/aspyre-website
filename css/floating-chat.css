@@ -180,6 +180,7 @@
 .contact-icon {
     width: 36px;
     height: 36px;
+    min-width: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -187,22 +188,31 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
+.contact-info {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+}
+
 .contact-info h4 {
     margin: 0;
     font-size: 14px;
     color: #fff;
+    font-weight: 600;
 }
 
 .contact-info span {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
+    display: block;
+    margin-top: 2px;
 }
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .floating-chat-container {
-        bottom: 20px;
-        right: 20px;
+        bottom: 16px;
+        right: 16px;
     }
 
     .chat-btn {
@@ -211,7 +221,37 @@
     }
 
     .chat-popup {
-        width: 280px;
-        bottom: 70px;
+        width: 270px;
+        bottom: 65px;
+        right: -4px;
+    }
+
+    .chat-header {
+        padding: 16px;
+    }
+
+    .chat-header h3 {
+        font-size: 15px;
+    }
+
+    .chat-header p {
+        font-size: 12px;
+    }
+
+    .chat-body {
+        padding: 12px;
+    }
+
+    .contact-item {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .contact-info h4 {
+        font-size: 13px;
+    }
+
+    .contact-info span {
+        font-size: 11px;
     }
 }
