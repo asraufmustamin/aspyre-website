@@ -495,20 +495,19 @@ function initOrderForm() {
         deadlineInput.setAttribute('min', today);
     }
 
-    form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         const orderId = generateOrderId();
 
-        // Prepare Firestore Data
+        // Prepare Firestore/Local Data
         const orderData = {
-            id: orderId, // Keep readable ID
+            id: orderId,
             ...data,
             createdAt: new Date().toISOString(),
             date: new Date().toLocaleDateString('id-ID'),
-            timestamp: serverTimestamp(), // Firebase Server Timestamp
             status: 'pending'
         };
 
@@ -517,51 +516,46 @@ function initOrderForm() {
         submitBtn.innerHTML = `<span>Menyimpan...</span>`;
         submitBtn.disabled = true;
 
+        // 1. Fallback save to localStorage first (so data isn't lost if DB fails)
         try {
-            // Push to Firebase
-            await addDoc(collection(db, "orders"), orderData);
+            saveOrder({ ...orderData, timestamp: Date.now() });
+        } catch (e) { console.error("Local save error:", e); }
 
-            // Success Feedback
-            submitBtn.innerHTML = "✅ Terkirim!";
+        // 2. Format WhatsApp Message
+        const pilars = { 'creative': 'Creative Design', 'systems': 'Web & Systems', 'data': 'Data Services' };
+        const pilarTxt = pilars[data.pilarLayanan] || data.pilarLayanan;
 
-            // Format WhatsApp Message
-            const pilars = { 'creative': 'Creative Design', 'systems': 'Web & Systems', 'data': 'Data Services' };
-            const pilarTxt = pilars[data.pilarLayanan] || data.pilarLayanan;
+        const text = `Halo ASPYRE, saya ingin order project baru:%0A%0A` +
+            `📋 *PROJECT ORDER* (${orderId})%0A` +
+            `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
+            `📱 WhatsApp: ${data.userPhone}%0A` +
+            `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
+            `📝 Deskripsi: ${data.tentangBisnis}%0A` +
+            `📅 Deadline: ${data.deadline}%0A` +
+            `💰 Budget: ${data.budget}`;
 
-            const text = `Halo ASPYRE, saya ingin order project baru:%0A%0A` +
-                `📋 *PROJECT ORDER* (${orderId})%0A` +
-                `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
-                `📱 WhatsApp: ${data.userPhone}%0A` +
-                `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
-                `📝 Deskripsi: ${data.tentangBisnis}%0A` +
-                `📅 Deadline: ${data.deadline}%0A` +
-                `💰 Budget: ${data.budget}`;
+        const waUrl = `https://wa.me/6285729715555?text=${text}`;
 
-            // Redirect immediately (better for mobile)
-            const waUrl = `https://wa.me/6285729715555?text=${text}`;
-
-            // Allow simplified UI update before redirect
-            form.reset();
-            submitBtn.innerHTML = originalContent;
-            submitBtn.disabled = false;
-
-            // Navigate
-            window.location.href = waUrl;
-
+        try {
+            // 3. Push to Firebase (Try)
+            const fbData = { ...orderData, timestamp: serverTimestamp() };
+            await addDoc(collection(db, "orders"), fbData);
         } catch (error) {
-            console.error(error);
-            submitBtn.innerHTML = "Gagal";
-            setTimeout(() => { submitBtn.innerHTML = originalContent; submitBtn.disabled = false; }, 2000);
-            return;
+            console.warn("Database sync error (likely permissions), but order is saved locally.", error.message);
+            // We DO NOT return here, we proceed to redirect the user!
         }
 
-        // Legacy 'saveOrder' removed.
-        // WhatsApp Redirect Logic (Simplified for Success Path)
-        // ... handled in try/catch block above.
+        // 4. Success Feedback & Redirect
+        submitBtn.innerHTML = "✅ Terkirim!";
+        form.reset();
 
+        setTimeout(() => {
+            submitBtn.innerHTML = originalContent;
+            submitBtn.disabled = false;
+            window.location.href = waUrl;
+        }, 1000);
     });
 }
-
 
 function generateOrderId() {
     const date = new Date();
@@ -574,8 +568,11 @@ function generateOrderId() {
 
 function saveOrder(order) {
     const orders = JSON.parse(localStorage.getItem('aspyre_orders') || '[]');
-    orders.push(order);
-    localStorage.setItem('aspyre_orders', JSON.stringify(orders));
+    // Check if duplicate ID exists
+    if (!orders.some(o => o.id === order.id)) {
+        orders.push(order);
+        localStorage.setItem('aspyre_orders', JSON.stringify(orders));
+    }
 }
 
 /* ============================================
@@ -792,24 +789,43 @@ function initAdminModal() {
         }
     }
 
+    function fallbackToLocalOrders(ordersParam) {
+        const localOrders = JSON.parse(localStorage.getItem('aspyre_orders') || '[]');
+        let mergedOrders = [];
+
+        if (ordersParam && ordersParam.length > 0) {
+            // Merge Firebase and LocalStorage, avoiding duplicates based on 'id'
+            const firebaseIds = new Set(ordersParam.map(o => o.id));
+            const uniqueLocalOrders = localOrders.filter(o => !firebaseIds.has(o.id));
+            mergedOrders = [...ordersParam, ...uniqueLocalOrders];
+        } else {
+            mergedOrders = localOrders;
+        }
+
+        latestOrders = mergedOrders;
+        updateStats(mergedOrders);
+        renderOrders(mergedOrders);
+    }
+
     function setupRealtimeListener() {
         if (unsubscribe) return; // Already listening
 
         try {
             const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
             unsubscribe = onSnapshot(q, (snapshot) => {
-                const orders = [];
+                const firebaseOrders = [];
                 snapshot.forEach((doc) => {
-                    orders.push({ id: doc.id, docId: doc.id, ...doc.data() });
+                    firebaseOrders.push({ id: doc.id, docId: doc.id, ...doc.data() });
                 });
-                latestOrders = orders;
-                updateStats(orders);
-                renderOrders(orders);
+                // Successfully got Firebase data, merge with any offline/local orders
+                fallbackToLocalOrders(firebaseOrders);
             }, (error) => {
-                console.error("Firebase Snapshot Error:", error);
+                console.warn("Firebase Snapshot Error (Likely Rules):", error.message);
+                fallbackToLocalOrders();
             });
         } catch (e) {
-            console.error("Firebase Query Error:", e);
+            console.warn("Firebase Query Error:", e.message);
+            fallbackToLocalOrders();
         }
     }
 
