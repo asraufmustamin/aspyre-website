@@ -130,6 +130,7 @@ const initApp = () => {
     safeInit(initTrackingSystem, 'Tracking System');
     safeInit(loadCmsContent, 'CMS Content');
     safeInit(initCmsMode, 'CMS Mode');
+    safeInit(initVisibilityToggles, 'Visibility Toggles');
 
     // Listeners installed at top.
 };
@@ -139,6 +140,37 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {
     initApp(); // DOM already ready
+}
+
+/* ============================================
+   Visibility Toggles Setup (v8.3)
+   ============================================ */
+function initVisibilityToggles() {
+    document.querySelectorAll('.section-visibility-toggle').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const sectionId = checkbox.dataset.section;
+            const isVisible = checkbox.checked;
+            
+            // Instantly apply display style locally
+            const sec = document.getElementById(sectionId);
+            if (sec) {
+                if (isVisible) {
+                    sec.style.removeProperty('display');
+                } else {
+                    sec.style.setProperty('display', 'none', 'important');
+                }
+            }
+            
+            // Instantly apply link visibility locally
+            document.querySelectorAll('a[href="#' + sectionId + '"]:not(.cms-nav-btn)').forEach(link => {
+                if (isVisible) {
+                    link.style.removeProperty('display');
+                } else {
+                    link.style.setProperty('display', 'none', 'important');
+                }
+            });
+        });
+    });
 }
 
 /* ============================================
@@ -1251,6 +1283,15 @@ async function saveCmsContentToDb() {
             content[el.dataset.key] = el.innerHTML;
         });
 
+        // Add section visibility settings to the payload
+        const defaultSections = ['hero', 'layanan', 'paket', 'proses', 'projects', 'faq', 'calculator', 'kenapa', 'kontak'];
+        defaultSections.forEach(sectionId => {
+            const checkbox = document.getElementById('toggle-section-' + sectionId);
+            if (checkbox) {
+                content['visibility-' + sectionId] = checkbox.checked;
+            }
+        });
+
         const docRef = doc(db, "settings", "cms_content");
         await setDoc(docRef, {
             ...content,
@@ -1267,6 +1308,13 @@ async function saveCmsContentToDb() {
         const content = {};
         document.querySelectorAll('.editable[data-key]').forEach(el => {
             content[el.dataset.key] = el.innerHTML;
+        });
+        const defaultSections = ['hero', 'layanan', 'paket', 'proses', 'projects', 'faq', 'calculator', 'kenapa', 'kontak'];
+        defaultSections.forEach(sectionId => {
+            const checkbox = document.getElementById('toggle-section-' + sectionId);
+            if (checkbox) {
+                content['visibility-' + sectionId] = checkbox.checked;
+            }
         });
         localStorage.setItem('asyncCmsContent', JSON.stringify(content));
         return false;
@@ -1306,7 +1354,44 @@ async function loadCmsContent() {
 
 function applyCmsContent(data) {
     if (!data) return;
+
+    // 1. Process and Apply Section Visibility
+    const defaultSections = ['hero', 'layanan', 'paket', 'proses', 'projects', 'faq', 'calculator', 'kenapa', 'kontak'];
+    defaultSections.forEach(sectionId => {
+        const val = data['visibility-' + sectionId];
+        // If undefined (not configured in db yet), default to true. Otherwise, check boolean or string true.
+        const isVisible = (val === undefined || val === true || val === 'true');
+
+        // Apply to section element
+        const sec = document.getElementById(sectionId);
+        if (sec) {
+            if (isVisible) {
+                sec.style.removeProperty('display');
+            } else {
+                sec.style.setProperty('display', 'none', 'important');
+            }
+        }
+
+        // Apply to navigation links pointing to this section (desktop, mobile menu, footer, etc.)
+        document.querySelectorAll('a[href="#' + sectionId + '"]:not(.cms-nav-btn)').forEach(link => {
+            if (isVisible) {
+                link.style.removeProperty('display');
+            } else {
+                link.style.setProperty('display', 'none', 'important');
+            }
+        });
+
+        // Sync toggle state in Admin Panel if it exists
+        const checkbox = document.getElementById('toggle-section-' + sectionId);
+        if (checkbox) {
+            checkbox.checked = isVisible;
+        }
+    });
+
+    // 2. Process and Apply Text Content
     Object.keys(data).forEach(key => {
+        if (key.startsWith('visibility-')) return; // handled above
+
         const val = data[key];
         // Ignore old CMS content containing the word "ASPYRE"
         if (typeof val === 'string' && val.toUpperCase().includes('ASPYRE')) {
