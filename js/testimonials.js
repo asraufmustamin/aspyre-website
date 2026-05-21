@@ -6,7 +6,7 @@
             id: 'default-1',
             name: "Budi Santoso",
             role: "Owner, Warung Kopi Nusantara",
-            quote: "ASPYRE bikin logo dan banner promo warung kopi saya. Hasilnya keren banget, pelanggan jadi lebih tertarik!",
+            quote: "ASYNC SOLUTIONS bikin logo dan banner promo warung kopi saya. Hasilnya keren banget, pelanggan jadi lebih tertarik!",
             service: "Logo & Banner Design",
             img: "https://ui-avatars.com/api/?name=Budi+Santoso&background=random&color=fff",
             order: 0
@@ -15,7 +15,7 @@
             id: 'default-2',
             name: "Siti Aminah",
             role: "Founder, Hijab Style",
-            quote: "Website toko online saya dibikin sama ASPYRE, sekarang orderan naik 40%!",
+            quote: "Website toko online saya dibuat oleh ASYNC SOLUTIONS, sekarang orderan naik 40%!",
             service: "E-Commerce Website",
             img: "https://ui-avatars.com/api/?name=Siti+Aminah&background=ff6b6b&color=fff",
             order: 1
@@ -24,7 +24,7 @@
             id: 'default-3',
             name: "Agus Prasetyo",
             role: "Manager, Bengkel Motor Jaya",
-            quote: "Tim ASPYRE sabar banget jelasin, revisi juga cepet. Hasil akhirnya profesional!",
+            quote: "Tim ASYNC SOLUTIONS sabar banget jelasin, revisi juga cepet. Hasil akhirnya profesional!",
             service: "Company Profile Website",
             img: "https://ui-avatars.com/api/?name=Agus+Prasetyo&background=4ecdc4&color=fff",
             order: 2
@@ -55,16 +55,16 @@
                 }
             } catch (e) {
                 console.log("Firebase load failed, using cached/default:", e);
-                const cached = localStorage.getItem('aspyreTestimonials');
+                const cached = localStorage.getItem('asyncTestimonials');
                 testimonialsData = cached ? JSON.parse(cached) : [...defaultData];
             }
         } else {
-            const cached = localStorage.getItem('aspyreTestimonials');
+            const cached = localStorage.getItem('asyncTestimonials');
             testimonialsData = cached ? JSON.parse(cached) : [...defaultData];
         }
 
         // Cache locally
-        localStorage.setItem('aspyreTestimonials', JSON.stringify(testimonialsData));
+        localStorage.setItem('asyncTestimonials', JSON.stringify(testimonialsData));
         return testimonialsData;
     }
 
@@ -91,7 +91,7 @@
                 data.id = data.id || 'local-' + Date.now();
                 testimonialsData.push(data);
             }
-            localStorage.setItem('aspyreTestimonials', JSON.stringify(testimonialsData));
+            localStorage.setItem('asyncTestimonials', JSON.stringify(testimonialsData));
             return true;
         } catch (e) {
             console.error("Save testimonial error:", e);
@@ -107,7 +107,7 @@
                 await fb.deleteDoc(fb.doc(fb.db, "testimonials", id));
             }
             testimonialsData = testimonialsData.filter(t => t.id !== id);
-            localStorage.setItem('aspyreTestimonials', JSON.stringify(testimonialsData));
+            localStorage.setItem('asyncTestimonials', JSON.stringify(testimonialsData));
             return true;
         } catch (e) {
             console.error("Delete testimonial error:", e);

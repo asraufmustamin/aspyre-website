@@ -3,14 +3,14 @@
     // Current State
     const state = {
         step: 1,
-        service: null, // 'creative', 'web', 'data'
+        service: null, // 'creative', 'web'
         data: {} // Holds form values
     };
 
     // Configuration & Pricing Logic
     const PRICING = {
         creative: {
-            base: 99000,
+            base: 149000,
             types: {
                 logo: { label: 'Logo & Brand Identity', mult: 1.5 },
                 banner: { label: 'Banner & Spanduk', mult: 1.0 },
@@ -29,10 +29,10 @@
         },
         web: {
             types: {
-                landing: { label: 'Landing Page', base: 799000 },
-                company: { label: 'Company Profile', base: 1499000 },
-                ecommerce: { label: 'E-Commerce Simple', base: 2999000 },
-                webapp: { label: 'Web App Custom', base: 4999000 }
+                landing: { label: 'Landing Page', base: 999000 },
+                company: { label: 'Company Profile', base: 1999000 },
+                ecommerce: { label: 'E-Commerce Simple', base: 3499000 },
+                webapp: { label: 'Web App Custom', base: 5999000 }
             },
             extras: {
                 cms: { label: 'CMS / Blog', val: 250000 },
@@ -40,17 +40,6 @@
                 domain: { label: 'Domain & Hosting (1 Tahun)', val: 350000 }
             },
             urgent: 0.4
-        },
-        data: {
-            basePerBatch: 50000, // per 100 items
-            types: {
-                entry1: { label: 'Entry Class A (Simple)', mult: 1 },
-                entry2: { label: 'Entry Class B (Complex)', mult: 1.5 },
-                clean: { label: 'Data Cleaning', mult: 3 }
-            },
-            addons: {
-                urgent: 0.5 // 50%
-            }
         }
     };
 
@@ -197,20 +186,6 @@
                     <small style="color:#aaa">Rp 150.000 / halaman</small>
                 </div>
             `;
-        } else if (type === 'data') {
-            html = `
-                <div class="calc-form-group">
-                    <label class="calc-label">Jenis Pekerjaan</label>
-                    <select class="calc-select" id="dataType">
-                         ${Object.entries(PRICING.data.types).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="calc-form-group">
-                    <label class="calc-label">Estimasi Jumlah Data (Baris/Row)</label>
-                    <input type="number" class="calc-input-num" id="dataCount" value="500" step="100" min="100">
-                    <small style="color:#aaa">Diskon 10% untuk >500 data, 20% untuk >1000 data</small>
-                </div>
-            `;
         }
 
         step2Container.innerHTML = html;
@@ -272,31 +247,6 @@
                 breakdown.push({ label: `${pages} Extra Pages`, price: pageCost });
             }
         }
-        else if (state.service === 'data') {
-            const typeKey = document.getElementById('dataType').value;
-            const count = parseInt(document.getElementById('dataCount').value) || 100;
-            const typeData = PRICING.data.types[typeKey];
-
-            const batches = Math.ceil(count / 100);
-            const baseBatchPrice = PRICING.data.basePerBatch * typeData.mult;
-            let subtotal = baseBatchPrice * batches;
-
-            breakdown.push({ label: `${typeData.label} (~${count} data)`, price: subtotal });
-
-            // Discount
-            let discount = 0;
-            if (count >= 5000) discount = 0.3;
-            else if (count >= 1000) discount = 0.2;
-            else if (count >= 500) discount = 0.1;
-
-            if (discount > 0) {
-                const diskonVal = subtotal * discount;
-                subtotal -= diskonVal;
-                breakdown.push({ label: `Volume Discount (${discount * 100}%)`, price: -diskonVal });
-            }
-
-            total = subtotal;
-        }
 
         // Display Result
         renderResult(total, breakdown);
@@ -325,7 +275,7 @@
 
         // Setup WhatsApp Link
         const waBtn = document.getElementById('calcWaBtn');
-        const text = `Halo ASPYRE, saya sudah hitung estimasi harga untuk layanan ${state.service.toUpperCase()}.\n\n` +
+        const text = `Halo ASYNC SOLUTIONS, saya sudah hitung estimasi harga untuk layanan ${state.service.toUpperCase()}.\n\n` +
             `Estimasi: ${formatCurrency(total)}\n` +
             `Detail: \n${breakdown.map(b => `- ${b.label}: ${formatCurrency(b.price)}`).join('\n')}\n\n` +
             `Bisa diskusi lebih lanjut?`;

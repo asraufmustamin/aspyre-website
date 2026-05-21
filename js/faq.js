@@ -77,14 +77,14 @@
                 }
             } catch (e) {
                 console.log("FAQ Firebase load failed, using default:", e);
-                const cached = localStorage.getItem('aspyreFaq');
+                const cached = localStorage.getItem('asyncFaq');
                 faqData = cached ? JSON.parse(cached) : [...defaultData];
             }
         } else {
-            const cached = localStorage.getItem('aspyreFaq');
+            const cached = localStorage.getItem('asyncFaq');
             faqData = cached ? JSON.parse(cached) : [...defaultData];
         }
-        localStorage.setItem('aspyreFaq', JSON.stringify(faqData));
+        localStorage.setItem('asyncFaq', JSON.stringify(faqData));
         return faqData;
     }
 
@@ -111,7 +111,7 @@
                 data.id = data.id || 'local-' + Date.now();
                 faqData.push(data);
             }
-            localStorage.setItem('aspyreFaq', JSON.stringify(faqData));
+            localStorage.setItem('asyncFaq', JSON.stringify(faqData));
             return true;
         } catch (e) {
             console.error("Save FAQ error:", e);
@@ -127,7 +127,7 @@
                 await fb.deleteDoc(fb.doc(fb.db, "faq_items", id));
             }
             faqData = faqData.filter(t => t.id !== id);
-            localStorage.setItem('aspyreFaq', JSON.stringify(faqData));
+            localStorage.setItem('asyncFaq', JSON.stringify(faqData));
             return true;
         } catch (e) {
             console.error("Delete FAQ error:", e);

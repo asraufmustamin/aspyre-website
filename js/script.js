@@ -1,5 +1,5 @@
 /* ============================================
-   ASPYRE.AI - Premium Agency Scripts
+   ASYNC SOLUTIONS - Premium Agency Scripts
    ============================================ */
 // Import Firebase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -53,17 +53,17 @@ const initApp = () => {
 
     // Clear old CMS data if version mismatch
     try {
-        const CMS_VERSION = 'v2.0';
+        const CMS_VERSION = 'v3.0';
         if (localStorage.getItem('cmsVersion') !== CMS_VERSION) {
-            localStorage.removeItem('aspyreCmsContent');
+            localStorage.removeItem('asyncCmsContent');
             localStorage.setItem('cmsVersion', CMS_VERSION);
         }
 
         // FORCE RESET PORTFOLIO DATA (Once per session)
-        if (!sessionStorage.getItem('portfolio_init_v6')) {
-            console.log("Portfolio: Session boot v6 - clearing potentially stale cache");
-            localStorage.removeItem('aspyre_albums');
-            sessionStorage.setItem('portfolio_init_v6', 'true');
+        if (!sessionStorage.getItem('portfolio_init_v7')) {
+            console.log("Portfolio: Session boot v7 - clearing potentially stale cache");
+            localStorage.removeItem('async_albums');
+            sessionStorage.setItem('portfolio_init_v7', 'true');
         }
     } catch (e) { console.warn("LocaleStorage access restricted"); }
 
@@ -82,7 +82,7 @@ const initApp = () => {
                     switchLanguage(newLang);
                 } else {
                     // Fallback manual switch
-                    localStorage.setItem('aspyreLang', newLang);
+                    localStorage.setItem('asyncLang', newLang);
                     location.reload();
                 }
             }
@@ -99,9 +99,9 @@ const initApp = () => {
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
 
                 // FIX: Check session before showing dashboard
-                const isLoggedIn = sessionStorage.getItem('aspyre_admin') === 'true';
-                if (isLoggedIn && window.aspyreShowDashboard) {
-                    window.aspyreShowDashboard();
+                const isLoggedIn = sessionStorage.getItem('async_admin') === 'true';
+                if (isLoggedIn && window.asyncShowDashboard) {
+                    window.asyncShowDashboard();
                 } else {
                     // Start fresh with login form
                     const loginView = document.getElementById('adminLogin');
@@ -197,11 +197,11 @@ function initMobileMenu() {
                 document.body.style.overflow = 'hidden';
 
                 // Check if already logged in session
-                const isLoggedIn = sessionStorage.getItem('aspyre_admin') === 'true';
+                const isLoggedIn = sessionStorage.getItem('async_admin') === 'true';
 
-                if (isLoggedIn && window.aspyreShowDashboard) {
+                if (isLoggedIn && window.asyncShowDashboard) {
                     // Already authenticated - show dashboard
-                    window.aspyreShowDashboard();
+                    window.asyncShowDashboard();
                 } else {
                     // Not authenticated - show login form (reset state)
                     if (dashboardView) dashboardView.classList.remove('active');
@@ -274,9 +274,9 @@ function initScrollAnimations() {
 const TRANSLATIONS = {
     'id': {
         // Hero
-        'hero-eyebrow': 'Partner Kreatif Bisnis Anda',
-        'hero-title': 'Desain <span class="highlight">Premium</span> untuk Bisnis yang <span class="highlight">Serius</span>',
-        'hero-desc': 'Kami membantu bisnis tampil profesional dengan desain yang memorable, website yang powerful, dan data yang terkelola rapi.',
+        'hero-eyebrow': 'Partner Desain & Teknologi Bisnis Anda',
+        'hero-title': 'Solusi Desain & Sistem Digital Profesional',
+        'hero-desc': 'Kami membantu bisnis berkembang dengan identitas desain yang kuat dan infrastruktur sistem website yang handal.',
         'hero-cta-1': 'Mulai Project',
         'hero-cta-2': 'Konsultasi Gratis',
         // Navigation
@@ -290,9 +290,9 @@ const TRANSLATIONS = {
         'nav-cta': 'Mulai Project',
         // Sections
         'layanan-label': 'Layanan Kami',
-        'layanan-title': '3 Pilar Solusi Digital',
+        'layanan-title': 'Solusi Digital Kami',
         'paket-label': 'Pilihan Paket',
-        'paket-title': 'Investasi untuk Pertumbuhan Bisnis',
+        'paket-title': 'Pilihan Paket Investasi',
         'projects-label': 'Portfolio',
         'projects-title': 'Karya Kami',
         'proses-label': 'Cara Kerja',
@@ -304,19 +304,18 @@ const TRANSLATIONS = {
         'kontak-label': 'Kontak',
         'kontak-title': 'Mulai Project Anda',
         // Paket Cards
-        'paket1-name': 'ASPYRE First',
-        'paket2-name': 'ASPYRE Second',
-        'paket3-name': 'ASPYRE Third',
+        'paket1-name': 'ASYNC Design',
+        'paket2-name': 'ASYNC System',
         // Footer
-        'footer-desc': 'Partner kreatif untuk bisnis yang serius berkembang.',
+        'footer-desc': 'Partner teknologi dan desain profesional untuk pertumbuhan bisnis Anda.',
         'footer-nav': 'Navigasi',
         'footer-contact': 'Kontak'
     },
     'en': {
         // Hero
-        'hero-eyebrow': 'Your Creative Business Partner',
-        'hero-title': '<span class="highlight">Premium</span> Design for <span class="highlight">Serious</span> Business',
-        'hero-desc': 'We help businesses look professional with memorable designs, powerful websites, and well-organized data.',
+        'hero-eyebrow': 'Your Professional Digital Partner',
+        'hero-title': 'Professional Design & System Solutions',
+        'hero-desc': 'We help businesses grow with strong design identity and reliable website infrastructure.',
         'hero-cta-1': 'Start Project',
         'hero-cta-2': 'Free Consultation',
         // Navigation
@@ -330,9 +329,9 @@ const TRANSLATIONS = {
         'nav-cta': 'Start Project',
         // Sections
         'layanan-label': 'Our Services',
-        'layanan-title': '3 Pillars of Digital Solutions',
+        'layanan-title': 'Our Digital Solutions',
         'paket-label': 'Our Packages',
-        'paket-title': 'Investment for Business Growth',
+        'paket-title': 'Investment Packages',
         'projects-label': 'Portfolio',
         'projects-title': 'Our Work',
         'proses-label': 'Process',
@@ -344,11 +343,10 @@ const TRANSLATIONS = {
         'kontak-label': 'Contact',
         'kontak-title': 'Start Your Project',
         // Paket Cards
-        'paket1-name': 'ASPYRE First',
-        'paket2-name': 'ASPYRE Second',
-        'paket3-name': 'ASPYRE Third',
+        'paket1-name': 'ASYNC Design',
+        'paket2-name': 'ASYNC System',
         // Footer
-        'footer-desc': 'Creative partner for businesses serious about growth.',
+        'footer-desc': 'Professional design and technology partner for your business growth.',
         'footer-nav': 'Navigation',
         'footer-contact': 'Contact'
     }
@@ -359,7 +357,7 @@ function initLanguageToggle() {
     if (!toggle) return;
 
     // Get current language from localStorage or default to 'id'
-    let currentLang = localStorage.getItem('aspyreLang') || 'id';
+    let currentLang = localStorage.getItem('asyncLang') || 'id';
 
     // Apply current language on load
     applyLanguage(currentLang);
@@ -368,7 +366,7 @@ function initLanguageToggle() {
     // Toggle click handler
     toggle.addEventListener('click', () => {
         currentLang = currentLang === 'id' ? 'en' : 'id';
-        localStorage.setItem('aspyreLang', currentLang);
+        localStorage.setItem('asyncLang', currentLang);
         applyLanguage(currentLang);
         updateToggleUI(toggle, currentLang);
     });
@@ -430,7 +428,7 @@ function applyLanguage(lang) {
 
 // Expose globally for fallback use
 window.switchLanguage = function (lang) {
-    localStorage.setItem('aspyreLang', lang);
+    localStorage.setItem('asyncLang', lang);
     applyLanguage(lang);
     const toggle = document.querySelector('.lang-toggle');
     if (toggle) updateToggleUI(toggle, lang);
@@ -458,12 +456,6 @@ function initDynamicCategories() {
             { value: 'company', label: 'Website Company Profile' },
             { value: 'webapp', label: 'Web App + Dashboard + Database' },
             { value: 'ecommerce', label: 'E-Commerce Sederhana' }
-        ],
-        'data': [
-            { value: 'entry', label: 'Jasa Entri Data' },
-            { value: 'digitalisasi', label: 'Digitalisasi Dokumen' },
-            { value: 'rekap', label: 'Rekap & Reporting' },
-            { value: 'cleaning', label: 'Data Cleaning' }
         ]
     };
 
@@ -522,10 +514,10 @@ function initOrderForm() {
         } catch (e) { console.error("Local save error:", e); }
 
         // 2. Format WhatsApp Message
-        const pilars = { 'creative': 'Creative Design', 'systems': 'Web & Systems', 'data': 'Data Services' };
+        const pilars = { 'creative': 'DESIGN', 'systems': 'SYSTEM' };
         const pilarTxt = pilars[data.pilarLayanan] || data.pilarLayanan;
 
-        const text = `Halo ASPYRE, saya ingin order project baru:%0A%0A` +
+        const text = `Halo ASYNC SOLUTIONS, saya ingin order project baru:%0A%0A` +
             `📋 *PROJECT ORDER* (${orderId})%0A` +
             `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
             `📱 WhatsApp: ${data.userPhone}%0A` +
@@ -563,15 +555,15 @@ function generateOrderId() {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `ASP-${year}${month}${day}-${random}`;
+    return `ASY-${year}${month}${day}-${random}`;
 }
 
 function saveOrder(order) {
-    const orders = JSON.parse(localStorage.getItem('aspyre_orders') || '[]');
+    const orders = JSON.parse(localStorage.getItem('async_orders') || '[]');
     // Check if duplicate ID exists
     if (!orders.some(o => o.id === order.id)) {
         orders.push(order);
-        localStorage.setItem('aspyre_orders', JSON.stringify(orders));
+        localStorage.setItem('async_orders', JSON.stringify(orders));
     }
 }
 
@@ -603,12 +595,12 @@ function initAdminModal() {
     const adminUserParam = urlParams.get('adminUser');
     const adminPassParam = urlParams.get('adminPass');
 
-    const ADMIN_USER = 'aspyre.ai';
-    const ADMIN_PASS = 'theaspyreai22';
+    const ADMIN_USER = 'async.solutions';
+    const ADMIN_PASS = 'asyncsolutions2026';
 
     if (adminUserParam === ADMIN_USER && adminPassParam === ADMIN_PASS) {
         console.log("Admin: Auto-login detected from URL parameters.");
-        sessionStorage.setItem('aspyre_admin', 'true');
+        sessionStorage.setItem('async_admin', 'true');
         modal.classList.add('active');
         showDashboard();
     }
@@ -642,7 +634,7 @@ function initAdminModal() {
         const pass = document.getElementById('adminPass').value;
 
         if (user === ADMIN_USER && pass === ADMIN_PASS) {
-            sessionStorage.setItem('aspyre_admin', 'true');
+            sessionStorage.setItem('async_admin', 'true');
             errorEl.classList.remove('show');
             showDashboard();
         } else {
@@ -656,7 +648,7 @@ function initAdminModal() {
         console.log("Admin: Logging out...");
 
         // 1. Clear session
-        sessionStorage.removeItem('aspyre_admin');
+        sessionStorage.removeItem('async_admin');
 
         // 2. Stop Firebase listener
         if (unsubscribe) {
@@ -745,7 +737,7 @@ function initAdminModal() {
     if (resetCmsBtn) {
         resetCmsBtn.addEventListener('click', () => {
             if (confirm('Reset semua konten ke default? Perubahan yang belum disimpan akan hilang.')) {
-                localStorage.removeItem('aspyre_cms');
+                localStorage.removeItem('async_cms');
                 location.reload();
             }
         });
@@ -772,7 +764,7 @@ function initAdminModal() {
     });
 
     // Expose for global trigger
-    window.aspyreShowDashboard = showDashboard;
+    window.asyncShowDashboard = showDashboard;
 
     function showDashboard() {
         console.log("Admin: Transitioning to Dashboard...");
@@ -790,7 +782,7 @@ function initAdminModal() {
     }
 
     function fallbackToLocalOrders(ordersParam) {
-        const localOrders = JSON.parse(localStorage.getItem('aspyre_orders') || '[]');
+        const localOrders = JSON.parse(localStorage.getItem('async_orders') || '[]');
         let mergedOrders = [];
 
         if (ordersParam && ordersParam.length > 0) {
@@ -1266,7 +1258,7 @@ async function saveCmsContentToDb() {
         });
 
         // Also save to localStorage as cache
-        localStorage.setItem('aspyreCmsContent', JSON.stringify(content));
+        localStorage.setItem('asyncCmsContent', JSON.stringify(content));
         console.log("CMS Content saved to Firebase!");
         return true;
     } catch (e) {
@@ -1276,7 +1268,7 @@ async function saveCmsContentToDb() {
         document.querySelectorAll('.editable[data-key]').forEach(el => {
             content[el.dataset.key] = el.innerHTML;
         });
-        localStorage.setItem('aspyreCmsContent', JSON.stringify(content));
+        localStorage.setItem('asyncCmsContent', JSON.stringify(content));
         return false;
     }
 }
@@ -1300,14 +1292,14 @@ async function loadCmsContent() {
         if (docSnap.exists()) {
             const data = docSnap.data();
             applyCmsContent(data);
-            localStorage.setItem('aspyreCmsContent', JSON.stringify(data));
+            localStorage.setItem('asyncCmsContent', JSON.stringify(data));
         } else {
-            const saved = localStorage.getItem('aspyreCmsContent');
+            const saved = localStorage.getItem('asyncCmsContent');
             if (saved) applyCmsContent(JSON.parse(saved));
         }
     } catch (e) {
         console.error("CMS Load Error:", e);
-        const saved = localStorage.getItem('aspyreCmsContent');
+        const saved = localStorage.getItem('asyncCmsContent');
         if (saved) applyCmsContent(JSON.parse(saved));
     }
 }
@@ -1315,8 +1307,14 @@ async function loadCmsContent() {
 function applyCmsContent(data) {
     if (!data) return;
     Object.keys(data).forEach(key => {
+        const val = data[key];
+        // Ignore old CMS content containing the word "ASPYRE"
+        if (typeof val === 'string' && val.toUpperCase().includes('ASPYRE')) {
+            console.log(`CMS Protection: Ignored old content for key: ${key}`);
+            return;
+        }
         const el = document.querySelector(`[data-key="${key}"]`);
-        if (el) el.innerHTML = data[key];
+        if (el) el.innerHTML = val;
     });
 }
 
@@ -1360,9 +1358,9 @@ window.enableCmsModeFunc = function () {
             // Auto-save to local temp
             const key = el.dataset.key;
             if (key) {
-                const current = JSON.parse(localStorage.getItem('aspyreCmsContent')) || {};
+                const current = JSON.parse(localStorage.getItem('asyncCmsContent')) || {};
                 current[key] = el.innerHTML;
-                localStorage.setItem('aspyreCmsContent', JSON.stringify(current));
+                localStorage.setItem('asyncCmsContent', JSON.stringify(current));
             }
         });
     });
@@ -1530,25 +1528,6 @@ function initPortfolioAlbums() {
             ]
         },
         {
-            id: 'data-services',
-            title: 'Data Management',
-            category: 'Data Services',
-            description: 'Layanan manajemen data profesional termasuk entri data massal, digitalisasi dokumen, pembuatan laporan, dan pembersihan data dengan akurasi tinggi.',
-            tech: ['Excel', 'Google Sheets', 'Data Visualization', 'Automation'],
-            link: null,
-            previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/6b9080?text=Data+Entry',
-                'https://via.placeholder.com/400x300/232328/a4c3b2?text=Reports',
-                'https://via.placeholder.com/400x300/2d2d35/e85a4f?text=Charts'
-            ],
-            items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/6b9080?text=Spreadsheet', caption: 'Data Entry Project' },
-                { src: 'https://via.placeholder.com/600x400/232328/a4c3b2?text=Dashboard', caption: 'Dashboard Report' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/e85a4f?text=Charts', caption: 'Data Visualization' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/f4a261?text=Cleaning', caption: 'Data Cleaning Result' }
-            ]
-        },
-        {
             id: 'ecommerce',
             title: 'E-Commerce Solutions',
             category: 'Web Store',
@@ -1612,7 +1591,7 @@ function initPortfolioAlbums() {
     // Load saved albums from localStorage (CMS)
     let albums = albumsData;
     try {
-        const saved = localStorage.getItem('aspyre_albums');
+        const saved = localStorage.getItem('async_albums');
         if (saved) {
             const parsed = JSON.parse(saved);
             if (Array.isArray(parsed) && parsed.length > 0) {
@@ -2292,7 +2271,7 @@ function initPortfolioAlbums() {
     // Save albums to localStorage with error handling
     function saveAlbums() {
         try {
-            localStorage.setItem('aspyre_albums', JSON.stringify(albums));
+            localStorage.setItem('async_albums', JSON.stringify(albums));
             return true;
         } catch (e) {
             console.error('Error saving albums:', e);
@@ -2347,7 +2326,7 @@ function initTrackingSystem() {
                 resultDiv.innerHTML = `
                     <div class="tracking-status" style="text-align:center; color: #e74c3c; background: rgba(231, 76, 60, 0.1); padding: 20px; border-radius: 12px;">
                         ❌ <strong>Order ID Tidak Ditemukan</strong><br>
-                        <span style="font-size:14px; opacity:0.8; display:block; margin-top:4px;">Periksa kembali ID Anda (Contoh: ASP-2402...)</span>
+                        <span style="font-size:14px; opacity:0.8; display:block; margin-top:4px;">Periksa kembali ID Anda (Contoh: ASY-2605...)</span>
                     </div>
                 `;
                 trackActionBtn.innerHTML = 'Cek Status';

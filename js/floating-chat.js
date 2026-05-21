@@ -5,8 +5,8 @@
         autoOpenDelay: 2500, // 2.5s
         autoHideDelay: 8000, // 8s (if no interaction)
         number: '6285729715555',
-        email: 'aspyre.ai@gmail.com',
-        text: 'Halo ASPYRE, saya mau tanya-tanya dulu boleh?'
+        email: 'asyncsolutions.tech@gmail.com',
+        text: 'Halo ASYNC SOLUTIONS, saya mau tanya-tanya dulu boleh?'
     };
 
     const container = document.createElement('div');
@@ -63,7 +63,7 @@
         } else {
             popup.classList.add('active');
             badge.style.display = 'none'; // Hide badge once opened
-            localStorage.setItem('aspyre_chat_seen', 'true');
+            localStorage.setItem('async_chat_seen', 'true');
         }
     }
 
@@ -81,7 +81,7 @@
     });
 
     // Auto Open
-    if (!localStorage.getItem('aspyre_chat_seen')) {
+    if (!localStorage.getItem('async_chat_seen')) {
         setTimeout(() => {
             popup.classList.add('active');
             // Auto hide if ignored
