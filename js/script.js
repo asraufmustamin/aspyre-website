@@ -285,7 +285,7 @@ const TRANSLATIONS = {
         'nav-proses': 'Cara Kerja',
         'nav-testimoni': 'Testimoni',
         'nav-faq': 'FAQ',
-        'nav-projects': 'Projects',
+        'nav-projects': 'Portofolio',
         'nav-kontak': 'Kontak',
         'nav-cta': 'Mulai Project',
         // Sections
@@ -324,7 +324,7 @@ const TRANSLATIONS = {
         'nav-proses': 'Process',
         'nav-testimoni': 'Reviews',
         'nav-faq': 'FAQ',
-        'nav-projects': 'Projects',
+        'nav-projects': 'Portfolio',
         'nav-kontak': 'Contact',
         'nav-cta': 'Start Project',
         // Sections
