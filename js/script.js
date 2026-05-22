@@ -2551,6 +2551,7 @@ const systemData = [
         categoryLabel: "Front-Facing",
         icon: "🌐",
         price: "Rp 2.500.000",
+        estimation: "1 - 1.5 Bulan",
         desc: "Situs web representatif premium yang berfungsi sebagai wajah digital perusahaan dan alat penangkap prospek (lead generation) berkonversi tinggi.",
         features: [
             "Desain antarmuka (UI/UX) modern & responsif",
@@ -2565,6 +2566,7 @@ const systemData = [
         categoryLabel: "Commerce",
         icon: "🛒",
         price: "Rp 5.500.000",
+        estimation: "1.5 - 2 Bulan",
         desc: "Platform penjualan digital independen untuk skalabilitas bisnis Anda, dengan kontrol penuh atas data pelanggan dan transaksi tanpa potongan marketplace.",
         features: [
             "Manajemen katalog produk & keranjang belanja",
@@ -2579,6 +2581,7 @@ const systemData = [
         categoryLabel: "Commerce",
         icon: "🧾",
         price: "Rp 3.500.000",
+        estimation: "1.5 - 2 Bulan",
         desc: "Solusi operasional ritel cerdas yang memadukan kecepatan transaksi kasir (O2O) dengan pelacakan pergerakan stok secara instan.",
         features: [
             "Sistem transaksi kasir cepat berbasis web/cloud",
@@ -2593,6 +2596,7 @@ const systemData = [
         categoryLabel: "Commerce",
         icon: "📅",
         price: "Rp 3.000.000",
+        estimation: "1.5 Bulan",
         desc: "Automatisasi alur penjadwalan cerdas untuk bisnis jasa (klinik, salon, penyewaan, hotel) guna mencegah bentrok jadwal.",
         features: [
             "Kalender ketersediaan interaktif secara real-time",
@@ -2607,6 +2611,7 @@ const systemData = [
         categoryLabel: "Internal Systems",
         icon: "📈",
         price: "Rp 6.000.000",
+        estimation: "2 - 3 Bulan",
         desc: "Pusat kendali operasional digital untuk memantau metrik bisnis kunci, mengelola data internal, dan mengambil keputusan berbasis data.",
         features: [
             "Visualisasi data komprehensif (Grafik interaktif)",
@@ -2621,6 +2626,7 @@ const systemData = [
         categoryLabel: "Internal Systems",
         icon: "⚙️",
         price: "Rp 8.500.000",
+        estimation: "3 - 4 Bulan",
         desc: "Perangkat lunak terpusat untuk mendigitalisasi operasi internal perusahaan, mulai dari SDM, manajemen proyek, hingga arus kas.",
         features: [
             "Modul HRIS: Absensi digital & manajemen karyawan",
@@ -2635,6 +2641,7 @@ const systemData = [
         categoryLabel: "EdTech",
         icon: "🎓",
         price: "Rp 7.000.000",
+        estimation: "3 - 4 Bulan",
         desc: "Platform manajemen pendidikan terpadu untuk sekolah atau institusi yang mengatur data siswa, nilai, jadwal pelajaran, hingga absensi.",
         features: [
             "Portal terpisah untuk Siswa, Guru, dan Admin",
@@ -2649,6 +2656,7 @@ const systemData = [
         categoryLabel: "HealthTech",
         icon: "🏥",
         price: "Rp 5.000.000",
+        estimation: "2 - 3 Bulan",
         desc: "Digitalisasi rekam medis dan antrean pasien untuk fasilitas kesehatan guna mempercepat pelayanan dan akurasi riwayat medis.",
         features: [
             "Pencatatan Rekam Medis Elektronik (RME)",
@@ -2663,6 +2671,7 @@ const systemData = [
         categoryLabel: "Custom",
         icon: "💻",
         price: "Hubungi Admin",
+        estimation: "Fleksibel (Min. 2 Bulan)",
         desc: "Tidak menemukan solusi yang pas? Klien dapat sepenuhnya mengkustomisasi sistem yang ingin dibuat sesuai alur bisnis yang unik. Hubungi nomor Admin Konsultan kami untuk merancang arsitektur eksklusif Anda.",
         features: [
             "Analisis dan konsultasi kebutuhan bisnis secara mendalam",
@@ -2753,6 +2762,11 @@ function openPortfolioModal(id) {
     document.getElementById('modalTitle').textContent = data.title;
     document.getElementById('modalCategory').textContent = data.categoryLabel;
     document.getElementById('modalDesc').textContent = data.desc;
+    
+    const estEl = document.getElementById('modalEstimation');
+    if (estEl) {
+        estEl.textContent = data.estimation || "1 Bulan";
+    }
     
     const priceEl = document.getElementById('modalPrice');
     if (priceEl) {
