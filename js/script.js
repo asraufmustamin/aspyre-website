@@ -2546,100 +2546,128 @@ function initTrackingSystem() {
 const systemData = [
     {
         id: "sys-1",
-        title: "Landing Page & Company Profile",
+        title: "Company Profile & Landing Page",
         category: "front-facing",
         categoryLabel: "Front-Facing",
         icon: "🌐",
         price: "Rp 2.500.000",
-        desc: "Situs web representatif yang berfungsi sebagai brosur digital premium dan alat penangkap prospek (lead generation) untuk bisnis Anda.",
+        desc: "Situs web representatif premium yang berfungsi sebagai wajah digital perusahaan dan alat penangkap prospek (lead generation) berkonversi tinggi.",
         features: [
-            "Desain UI/UX modern & presisi",
-            "Integrasi formulir kontak & WhatsApp",
-            "Optimasi performa & SEO dasar"
+            "Desain antarmuka (UI/UX) modern & responsif",
+            "Integrasi formulir kontak langsung ke WhatsApp admin",
+            "Optimasi performa & SEO teknis tingkat dasar"
         ]
     },
     {
-        id: "sys-3",
-        title: "E-Commerce & Toko Online",
+        id: "sys-2",
+        title: "Sistem E-Commerce & Toko Online",
         category: "commerce",
         categoryLabel: "Commerce",
         icon: "🛒",
         price: "Rp 5.500.000",
-        desc: "Platform penjualan digital independen dengan kontrol penuh atas katalog, transaksi, dan data pelanggan tanpa potongan marketplace.",
+        desc: "Platform penjualan digital independen untuk skalabilitas bisnis Anda, dengan kontrol penuh atas data pelanggan dan transaksi tanpa potongan marketplace.",
         features: [
-            "Manajemen katalog & keranjang belanja cerdas",
-            "Integrasi payment gateway & ongkos kirim otomatis",
-            "Dashboard analitik penjualan"
+            "Manajemen katalog produk & keranjang belanja",
+            "Integrasi payment gateway (BCA, QRIS, dll)",
+            "Kalkulasi ongkos kirim otomatis terintegrasi kurir lokal"
         ]
     },
     {
-        id: "sys-4",
-        title: "POS Kasir & Inventori",
+        id: "sys-3",
+        title: "Point of Sale (POS) & Kasir",
         category: "commerce",
         categoryLabel: "Commerce",
         icon: "🧾",
         price: "Rp 3.500.000",
-        desc: "Solusi O2O untuk operasional ritel, memadukan kecepatan transaksi kasir dengan pelacakan stok otomatis.",
+        desc: "Solusi operasional ritel cerdas yang memadukan kecepatan transaksi kasir (O2O) dengan pelacakan pergerakan stok secara instan.",
         features: [
-            "Penjualan kasir cepat (Point of Sale)",
-            "Pelacakan stok real-time & multi-cabang",
-            "Laporan harian & shift otomatis"
+            "Sistem transaksi kasir cepat berbasis web/cloud",
+            "Pelacakan stok barang real-time antar cabang",
+            "Otomatisasi laporan harian, laba-rugi, dan shift"
         ]
     },
     {
-        id: "sys-5",
-        title: "Booking & Reservasi Online",
+        id: "sys-4",
+        title: "Sistem Reservasi & Booking",
         category: "commerce",
         categoryLabel: "Commerce",
         icon: "📅",
         price: "Rp 3.000.000",
-        desc: "Sistem penjadwalan cerdas untuk klinik, salon, hotel, atau penyewaan yang mengotomatiskan alur reservasi.",
+        desc: "Automatisasi alur penjadwalan cerdas untuk bisnis jasa (klinik, salon, penyewaan, hotel) guna mencegah bentrok jadwal.",
         features: [
-            "Kalender ketersediaan real-time",
-            "Notifikasi pengingat via WhatsApp/Email",
-            "Manajemen jadwal staf & kapasitas"
+            "Kalender ketersediaan interaktif secara real-time",
+            "Notifikasi pengingat otomatis via WhatsApp/Email",
+            "Manajemen jadwal staf dan kapasitas layanan"
         ]
     },
     {
-        id: "sys-6",
+        id: "sys-5",
         title: "Web App & Dashboard Admin",
         category: "internal-systems",
         categoryLabel: "Internal Systems",
         icon: "📈",
         price: "Rp 6.000.000",
-        desc: "Pusat kendali digital berbasis web untuk memantau metrik, mengelola pengguna, dan mengontrol parameter bisnis secara terpusat.",
+        desc: "Pusat kendali operasional digital untuk memantau metrik bisnis kunci, mengelola data internal, dan mengambil keputusan berbasis data.",
         features: [
-            "Visualisasi data (Grafik & Chart interaktif)",
-            "Manajemen peran & akses pengguna (RBAC)",
-            "Sistem audit log & pemantauan kesehatan"
+            "Visualisasi data komprehensif (Grafik interaktif)",
+            "Manajemen peran & hak akses berlapis (RBAC)",
+            "Sistem audit log dan pencatatan aktivitas pengguna"
         ]
     },
     {
-        id: "sys-7",
+        id: "sys-6",
         title: "Sistem Manajemen (ERP Lite)",
         category: "internal-systems",
         categoryLabel: "Internal Systems",
         icon: "⚙️",
         price: "Rp 8.500.000",
-        desc: "Memusatkan operasi internal untuk efisiensi kerja tim, pelacakan proyek, dan pemantauan kesehatan metrik bisnis.",
+        desc: "Perangkat lunak terpusat untuk mendigitalisasi operasi internal perusahaan, mulai dari SDM, manajemen proyek, hingga arus kas.",
         features: [
-            "Manajemen karyawan & presensi digital",
-            "Penugasan & pelacakan proyek (Kanban)",
-            "Pelaporan keuangan & arus kas dasar"
+            "Modul HRIS: Absensi digital & manajemen karyawan",
+            "Penugasan & pelacakan status proyek (Kanban Board)",
+            "Pemantauan kesehatan metrik operasional harian"
+        ]
+    },
+    {
+        id: "sys-7",
+        title: "Sistem Informasi Akademik (SIAKAD)",
+        category: "govtech",
+        categoryLabel: "EdTech",
+        icon: "🎓",
+        price: "Rp 7.000.000",
+        desc: "Platform manajemen pendidikan terpadu untuk sekolah atau institusi yang mengatur data siswa, nilai, jadwal pelajaran, hingga absensi.",
+        features: [
+            "Portal terpisah untuk Siswa, Guru, dan Admin",
+            "Manajemen rapor online dan e-learning dasar",
+            "Integrasi absensi kehadiran realtime"
         ]
     },
     {
         id: "sys-8",
-        title: "Custom System",
+        title: "Sistem Manajemen Klinik Dasar",
+        category: "internal-systems",
+        categoryLabel: "HealthTech",
+        icon: "🏥",
+        price: "Rp 5.000.000",
+        desc: "Digitalisasi rekam medis dan antrean pasien untuk fasilitas kesehatan guna mempercepat pelayanan dan akurasi riwayat medis.",
+        features: [
+            "Pencatatan Rekam Medis Elektronik (RME)",
+            "Sistem antrean poli dan farmasi",
+            "Manajemen stok obat dan resep dokter"
+        ]
+    },
+    {
+        id: "sys-9",
+        title: "Sistem Khusus (Custom Development)",
         category: "custom",
         categoryLabel: "Custom",
         icon: "💻",
-        price: "Hubungi Kami",
-        desc: "Solusi perangkat lunak pesanan khusus yang dirancang eksklusif untuk mengatasi alur kerja dan aturan bisnis yang sangat spesifik.",
+        price: "Hubungi Admin",
+        desc: "Tidak menemukan solusi yang pas? Klien dapat sepenuhnya mengkustomisasi sistem yang ingin dibuat sesuai alur bisnis yang unik. Hubungi nomor Admin Konsultan kami untuk merancang arsitektur eksklusif Anda.",
         features: [
-            "Arsitektur database kustom yang skalabel",
-            "Integrasi API pihak ketiga tanpa batas",
-            "Modul fungsionalitas khusus (Bespoke)"
+            "Analisis dan konsultasi kebutuhan bisnis secara mendalam",
+            "Arsitektur database dan logika sistem yang sepenuhnya disesuaikan",
+            "Konsultasi langsung via WhatsApp dengan Lead Developer"
         ]
     }
 ];
@@ -2694,8 +2722,7 @@ function initInteractiveGrid(gridId, tabsClass, dataArray) {
 }
 
 function initInteractivePortfolio() {
-    // Initialize both grids
-    initInteractiveGrid('designGrid', 'design-tab', designData);
+    // Initialize portfolio grid
     initInteractiveGrid('portfolioGrid', 'portfolio-tab', systemData);
 
     // Setup Shared Modal Listeners
