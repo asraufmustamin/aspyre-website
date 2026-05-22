@@ -131,6 +131,7 @@ const initApp = () => {
     safeInit(loadCmsContent, 'CMS Content');
     safeInit(initCmsMode, 'CMS Mode');
     safeInit(initVisibilityToggles, 'Visibility Toggles');
+    safeInit(initPaketTabs, 'Paket Tabs');
 
     // Listeners installed at top.
 };
@@ -169,6 +170,39 @@ function initVisibilityToggles() {
                     link.style.setProperty('display', 'none', 'important');
                 }
             });
+        });
+    });
+}
+
+/* ============================================
+   Paket Tab Switcher
+   ============================================ */
+function initPaketTabs() {
+    const tabs = document.querySelectorAll('.paket-tab');
+    const contents = document.querySelectorAll('.paket-tab-content');
+    
+    if (!tabs.length || !contents.length) return;
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.dataset.tab;
+            
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Update active content
+            contents.forEach(c => c.classList.remove('active'));
+            const target = document.getElementById('paket-content-' + targetTab);
+            if (target) {
+                target.classList.add('active');
+                // Re-trigger animations
+                target.querySelectorAll('.animate-on-scroll').forEach(el => {
+                    el.classList.remove('visible');
+                    void el.offsetWidth; // force reflow
+                    el.classList.add('visible');
+                });
+            }
         });
     });
 }
@@ -1573,23 +1607,28 @@ function initPortfolioAlbums() {
     const albumsData = [
         {
             id: 'desa-cenrana',
-            title: 'Website Desa Cenrana',
-            category: 'Web Platform',
-            description: 'Platform digital terintegrasi untuk Desa Cenrana. Memungkinkan warga menyampaikan aspirasi, melihat agenda desa, mengakses layanan UMKM lokal, dan mendapatkan informasi desa secara real-time.',
-            tech: ['Next.js', 'Supabase', 'Vercel', 'TailwindCSS'],
+            title: 'Sistem Informasi Desa Cenrana',
+            category: 'Digitalisasi Desa',
+            description: 'Pengembangan Sistem Informasi Desa Cenrana Berbasis Aspirasi Publik — platform digital terintegrasi yang menyediakan layanan warga digital 24/7, pusat informasi terpadu, Lapak Warga dengan integrasi WhatsApp, dan dashboard admin dengan analitik real-time. Proyek kemitraan yang berhasil diterapkan dan kini berjalan mandiri.',
+            tech: ['Next.js', 'Supabase', 'Vercel', 'WhatsApp API', 'Dashboard Analitik'],
             link: 'https://desacenrana.vercel.app',
+            stats: [
+                { value: '70%', label: 'Birokrasi Surat Lebih Cepat' },
+                { value: 'WhatsApp', label: 'Lapak Warga Terintegrasi' },
+                { value: 'Sukses', label: 'Status Proyek Mandiri' }
+            ],
             previews: [
                 'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Cenrana+Home',
                 'https://via.placeholder.com/400x300/232328/6b9080?text=Aspirasi+Page',
                 'https://via.placeholder.com/400x300/2d2d35/f4a261?text=UMKM+Lapak'
             ],
             items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Halaman Utama' },
+                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Halaman Utama Desa' },
                 { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Aspirasi', caption: 'Form Aspirasi Warga' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=UMKM', caption: 'Katalog UMKM Lokal' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Agenda', caption: 'Agenda Desa' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Admin', caption: 'Dashboard Admin' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Mobile', caption: 'Tampilan Mobile' }
+                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=Lapak+Warga', caption: 'Lapak Warga (Ekonomi Digital)' },
+                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Info+Desa', caption: 'Pusat Informasi Terpadu' },
+                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Dashboard', caption: 'Dashboard Admin & Analitik' },
+                { src: 'https://via.placeholder.com/600x400/2d2d35/6b9080?text=Mobile', caption: 'Responsif Multi-Perangkat' }
             ]
         },
         {
@@ -1970,6 +2009,26 @@ function initPortfolioAlbums() {
         modal.querySelector('.album-modal-tag').textContent = album.category;
         modal.querySelector('.album-modal-title').textContent = album.title;
         modal.querySelector('.album-modal-desc').textContent = album.description;
+
+        // Render Stats if available
+        let statsContainer = modal.querySelector('.album-modal-stats');
+        if (!statsContainer) {
+            statsContainer = document.createElement('div');
+            statsContainer.className = 'album-modal-stats';
+            modal.querySelector('.album-modal-info').appendChild(statsContainer);
+        }
+        if (album.stats && album.stats.length > 0) {
+            statsContainer.innerHTML = album.stats.map(s => `
+                <div class="modal-stat-card">
+                    <span class="stat-value">${s.value}</span>
+                    <span class="stat-label">${s.label}</span>
+                </div>
+            `).join('');
+            statsContainer.style.display = 'grid';
+        } else {
+            statsContainer.innerHTML = '';
+            statsContainer.style.display = 'none';
+        }
 
         // Tech stack
         const techStack = modal.querySelector('.album-tech-stack');

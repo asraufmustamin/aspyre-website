@@ -314,94 +314,296 @@
                 </div>
             </div>
         </div>
-    </section>      </div>
-                </div>
-            </div>
-        </div>
     </section>
 
-    <!-- Paket Section - Synced with 3 Pillars -->
+    <!-- Paket Section - Tabbed: Bisnis & Digitalisasi Desa -->
     <section id="paket" class="section-paket">
         <div class="container">
             <div class="section-intro centered animate-on-scroll">
                 <span class="section-label editable" data-key="paket-label">Pilihan Paket</span>
-                <h2 class="section-title editable" data-key="paket-title">Investasi untuk Bisnis Anda</h2>
-                <p class="section-subtitle editable" data-key="paket-subtitle">Pilih pilar layanan sesuai kebutuhan.
-                    Harga transparan, kualitas terjaga.</p>
+                <h2 class="section-title editable" data-key="paket-title">Investasi untuk Kebutuhan Anda</h2>
+                <p class="section-subtitle editable" data-key="paket-subtitle">Pilih kategori layanan sesuai kebutuhan.</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="paket-tabs animate-on-scroll">
+                <button class="paket-tab active" data-tab="bisnis">
+                    <span class="tab-icon">💼</span>
+                    <span class="tab-text">Bisnis & UMKM</span>
+                </button>
+                <button class="paket-tab" data-tab="desa">
+                    <span class="tab-icon">🏘️</span>
+                    <span class="tab-text">Digitalisasi Desa</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: Bisnis & UMKM -->
+            <div id="paket-content-bisnis" class="paket-tab-content active">
                 <p class="price-disclaimer">
                     💡 <span class="editable" data-key="paket-disclaimer">Harga "Mulai dari" adalah untuk kebutuhan
                         paling sederhana. Biaya akhir disesuaikan berdasarkan kompleksitas, jumlah item, revisi, dan
                         deadline proyek.</span>
                 </p>
+                <div class="paket-grid paket-grid-2col">
+                    <!-- ASYNC Design -->
+                    <div class="paket-card paket-pillar animate-on-scroll" data-pillar="creative">
+                        <div class="paket-icon-wrapper">
+                            <div class="paket-icon pulse-glow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="paket-header">
+                            <span class="paket-name editable" data-key="paket1-name">ASYNC Design</span>
+                            <p class="paket-for editable" data-key="paket1-for">DESIGN</p>
+                        </div>
+                        <div class="paket-price">
+                            <span class="price-label">Mulai dari</span>
+                            <div class="price-main">
+                                <span class="price-currency">Rp</span>
+                                <span class="price-amount editable" data-key="paket1-price">149K</span>
+                            </div>
+                        </div>
+                        <ul class="paket-categories">
+                            <li class="category-item"><span class="cat-name">Logo & Brand Identity</span></li>
+                            <li class="category-item"><span class="cat-name">Banner & Spanduk</span></li>
+                            <li class="category-item"><span class="cat-name">Konten Media Sosial</span></li>
+                            <li class="category-item"><span class="cat-name">Presentasi (PPT)</span></li>
+                        </ul>
+                        <a href="#kontak" class="paket-cta">
+                            <span>Mulai Project</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- ASYNC System -->
+                    <div class="paket-card paket-pillar animate-on-scroll" data-pillar="systems">
+                        <div class="paket-icon-wrapper">
+                            <div class="paket-icon pulse-glow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                                    <path d="M8 21h8" />
+                                    <path d="M12 17v4" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="paket-header">
+                            <span class="paket-name editable" data-key="paket2-name">ASYNC System</span>
+                            <p class="paket-for editable" data-key="paket2-for">SYSTEM</p>
+                        </div>
+                        <div class="paket-price">
+                            <span class="price-label">Mulai dari</span>
+                            <div class="price-main">
+                                <span class="price-currency">Rp</span>
+                                <span class="price-amount editable" data-key="paket2-price">999K</span>
+                            </div>
+                        </div>
+                        <ul class="paket-categories">
+                            <li class="category-item"><span class="cat-name">Landing Page</span></li>
+                            <li class="category-item"><span class="cat-name">Company Profile</span></li>
+                            <li class="category-item"><span class="cat-name">Web App + Dashboard</span></li>
+                            <li class="category-item"><span class="cat-name">E-Commerce Sederhana</span></li>
+                        </ul>
+                        <p class="paket-note">⚠️ Hosting & domain terpisah</p>
+                        <a href="#kontak" class="paket-cta">
+                            <span>Mulai Project</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <div class="paket-grid">
-                <!-- ASYNC Design - DESIGN -->
-                <div class="paket-card paket-pillar animate-on-scroll" data-pillar="creative">
-                    <div class="paket-icon-wrapper">
-                        <div class="paket-icon pulse-glow">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                            </svg>
-                        </div>
+            <!-- TAB 2: Digitalisasi Desa -->
+            <div id="paket-content-desa" class="paket-tab-content">
+                <!-- Intro Banner -->
+                <div class="desa-intro-banner animate-on-scroll">
+                    <div class="desa-intro-content">
+                        <h3>🏘️ Ekosistem Digital Desa Cerdas</h3>
+                        <p>Platform digital terintegrasi untuk modernisasi layanan desa, transparansi informasi publik, dan pengembangan ekonomi lokal berbasis teknologi.</p>
                     </div>
-                    <div class="paket-header">
-                        <span class="paket-name editable" data-key="paket1-name">ASYNC Design</span>
-                        <p class="paket-for editable" data-key="paket1-for">DESIGN</p>
+                    <div class="desa-keunggulan">
+                        <div class="keunggulan-item"><span class="keunggulan-icon">🔒</span><span>Keamanan Berlapis</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">📱</span><span>Responsif Multi-Perangkat</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">⚡</span><span>Performa Kelas Enterprise</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">🎓</span><span>Pendampingan & Pelatihan</span></div>
                     </div>
-                    <div class="paket-price">
-                        <span class="price-label">Mulai dari</span>
-                        <div class="price-main">
-                            <span class="price-currency">Rp</span>
-                            <span class="price-amount editable" data-key="paket1-price">149K</span>
-                        </div>
-                    </div>
-                    <ul class="paket-categories">
-                        <li class="category-item"><span class="cat-name">Logo & Brand Identity</span></li>
-                        <li class="category-item"><span class="cat-name">Banner & Spanduk</span></li>
-                        <li class="category-item"><span class="cat-name">Konten Media Sosial</span></li>
-                        <li class="category-item"><span class="cat-name">Presentasi (PPT)</span></li>
-                    </ul>
-                    <p class="paket-note" style="visibility: hidden;">Spacer</p>
-                    <a href="#kontak" class="paket-cta">
-                        <span>Mulai Project</span>
-                        <span class="cta-arrow">→</span>
-                    </a>
                 </div>
 
-                <!-- ASYNC System - SYSTEM -->
-                <div class="paket-card paket-pillar animate-on-scroll" data-pillar="systems">
-                    <div class="paket-icon-wrapper">
-                        <div class="paket-icon pulse-glow">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="2" y="3" width="20" height="14" rx="2" />
-                                <path d="M8 21h8" />
-                                <path d="M12 17v4" />
-                            </svg>
+                <!-- Village Pricing Grid -->
+                <div class="desa-paket-grid animate-on-scroll">
+                    <!-- Basic -->
+                    <div class="desa-paket-card">
+                        <div class="desa-paket-header">
+                            <span class="desa-paket-tier">BASIC</span>
+                            <h4>Paket Dasar</h4>
+                            <p class="desa-paket-desc">Fondasi digital desa untuk memulai transformasi layanan publik</p>
+                        </div>
+                        <div class="desa-paket-pricing">
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pembangunan</span>
+                                <span class="desa-price-value">Rp 5 Juta</span>
+                            </div>
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pemeliharaan/thn</span>
+                                <span class="desa-price-value sub">Rp 2 Juta</span>
+                            </div>
+                        </div>
+                        <ul class="desa-paket-fitur">
+                            <li>✦ 2 Modul Utama</li>
+                            <li>✦ Desain Standar Responsif</li>
+                            <li>✦ Hosting & Domain 1 Tahun</li>
+                            <li>✦ Pelatihan Dasar (1 Sesi)</li>
+                        </ul>
+                        <a href="#kontak" class="paket-cta">
+                            <span>Ajukan Penawaran</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- Professional -->
+                    <div class="desa-paket-card recommended">
+                        <div class="desa-recommended-badge">Rekomendasi Utama</div>
+                        <div class="desa-paket-header">
+                            <span class="desa-paket-tier">PROFESSIONAL</span>
+                            <h4>Paket Profesional</h4>
+                            <p class="desa-paket-desc">Solusi lengkap dengan seluruh modul dan fitur premium terintegrasi</p>
+                        </div>
+                        <div class="desa-paket-pricing">
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pembangunan</span>
+                                <span class="desa-price-value">Rp 10 Juta</span>
+                            </div>
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pemeliharaan/thn</span>
+                                <span class="desa-price-value sub">Rp 3,5 Juta</span>
+                            </div>
+                        </div>
+                        <ul class="desa-paket-fitur">
+                            <li>✦ 4 Modul Lengkap</li>
+                            <li>✦ Desain UI/UX Premium</li>
+                            <li>✦ Integrasi WhatsApp</li>
+                            <li>✦ Dashboard Analitik</li>
+                            <li>✦ Pelatihan Intensif (3 Sesi)</li>
+                            <li>✦ Garansi 12 Bulan</li>
+                        </ul>
+                        <a href="#kontak" class="paket-cta primary">
+                            <span>Ajukan Penawaran</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- Enterprise -->
+                    <div class="desa-paket-card">
+                        <div class="desa-paket-header">
+                            <span class="desa-paket-tier">ENTERPRISE</span>
+                            <h4>Paket Enterprise</h4>
+                            <p class="desa-paket-desc">Skala besar dengan fitur eksklusif dan kapasitas tinggi</p>
+                        </div>
+                        <div class="desa-paket-pricing">
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pembangunan</span>
+                                <span class="desa-price-value">Rp 15 Juta</span>
+                            </div>
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Pemeliharaan/thn</span>
+                                <span class="desa-price-value sub">Rp 5 Juta</span>
+                            </div>
+                        </div>
+                        <ul class="desa-paket-fitur">
+                            <li>✦ Semua Fitur Professional</li>
+                            <li>✦ Multi-Bahasa Daerah</li>
+                            <li>✦ Dedicated Server</li>
+                            <li>✦ Custom API Integration</li>
+                            <li>✦ Priority Support 24/7</li>
+                        </ul>
+                        <a href="#kontak" class="paket-cta">
+                            <span>Ajukan Penawaran</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- Custom -->
+                    <div class="desa-paket-card desa-custom">
+                        <div class="desa-paket-header">
+                            <span class="desa-paket-tier">CUSTOM</span>
+                            <h4>Paket Kustom</h4>
+                            <p class="desa-paket-desc">Solusi yang disesuaikan sepenuhnya dengan kebutuhan unik desa Anda</p>
+                        </div>
+                        <div class="desa-paket-pricing">
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Investasi</span>
+                                <span class="desa-price-value custom">Negosiabel</span>
+                            </div>
+                        </div>
+                        <ul class="desa-paket-fitur">
+                            <li>✦ Modul BUMDes Kustom</li>
+                            <li>✦ Integrasi Sistem Nasional</li>
+                            <li>✦ Dedicated Infrastructure</li>
+                            <li>✦ Full Managed Service</li>
+                            <li>✦ SLA Custom</li>
+                        </ul>
+                        <a href="#kontak" class="paket-cta">
+                            <span>Hubungi Kami</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Village Details Grid: Ketentuan, Timeline, SLA -->
+                <div class="desa-details-grid animate-on-scroll">
+                    <!-- Ketentuan Kemitraan -->
+                    <div class="desa-detail-card">
+                        <div class="desa-detail-icon">🤝</div>
+                        <h4>Ketentuan Kemitraan</h4>
+                        <ul class="desa-detail-list">
+                            <li><strong>Skema Termin APBDes</strong> — Pembayaran bertahap sesuai anggaran desa</li>
+                            <li><strong>Garansi 12 Bulan</strong> — Jaminan perbaikan bug dan maintenance</li>
+                            <li><strong>Bimtek Gratis</strong> — Pelatihan teknis untuk perangkat desa</li>
+                            <li><strong>Hak Milik Penuh</strong> — Source code menjadi milik desa</li>
+                        </ul>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="desa-detail-card">
+                        <div class="desa-detail-icon">📅</div>
+                        <h4>Timeline 3 Minggu</h4>
+                        <div class="desa-timeline-steps">
+                            <div class="desa-timeline-step">
+                                <span class="desa-step-num">1</span>
+                                <div>
+                                    <strong>Minggu 1</strong>
+                                    <p>Setup Infrastruktur & Desain UI/UX</p>
+                                </div>
+                            </div>
+                            <div class="desa-timeline-step">
+                                <span class="desa-step-num">2</span>
+                                <div>
+                                    <strong>Minggu 2</strong>
+                                    <p>Integrasi Modul & Pengembangan Fitur</p>
+                                </div>
+                            </div>
+                            <div class="desa-timeline-step">
+                                <span class="desa-step-num">3</span>
+                                <div>
+                                    <strong>Minggu 3</strong>
+                                    <p>Launching, Testing & Bimtek</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="paket-header">
-                        <span class="paket-name editable" data-key="paket2-name">ASYNC System</span>
-                        <p class="paket-for editable" data-key="paket2-for">SYSTEM</p>
+
+                    <!-- SLA -->
+                    <div class="desa-detail-card">
+                        <div class="desa-detail-icon">🛡️</div>
+                        <h4>Komitmen SLA</h4>
+                        <ul class="desa-detail-list">
+                            <li><strong>Monitoring 24/7</strong> — Server dipantau secara real-time</li>
+                            <li><strong>Backup Berkala</strong> — Data aman dengan backup harian</li>
+                            <li><strong>Response ≤ 2 Jam</strong> — Dukungan darurat prioritas</li>
+                            <li><strong>Uptime 99.9%</strong> — Jaminan ketersediaan layanan</li>
+                        </ul>
                     </div>
-                    <div class="paket-price">
-                        <span class="price-label">Mulai dari</span>
-                        <div class="price-main">
-                            <span class="price-currency">Rp</span>
-                            <span class="price-amount editable" data-key="paket2-price">999K</span>
-                        </div>
-                    </div>
-                    <ul class="paket-categories">
-                        <li class="category-item"><span class="cat-name">Landing Page</span></li>
-                        <li class="category-item"><span class="cat-name">Company Profile</span></li>
-                        <li class="category-item"><span class="cat-name">Web App + Dashboard</span></li>
-                        <li class="category-item"><span class="cat-name">E-Commerce Sederhana</span></li>
-                    </ul>
-                    <p class="paket-note">⚠️ Hosting & domain terpisah</p>
-                    <a href="#kontak" class="paket-cta">
-                        <span>Mulai Project</span>
-                        <span class="cta-arrow">→</span>
-                    </a>
                 </div>
             </div>
         </div>
