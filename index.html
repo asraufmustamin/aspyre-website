@@ -161,16 +161,16 @@
             <div class="hero-content animate-on-scroll">
                 <div class="hero-eyebrow">
                     <span class="dot"></span>
-                    <span class="editable" data-key="hero-eyebrow">Design & System Development</span>
+                    <span class="editable" data-key="hero-eyebrow">Mitra Transformasi Digital Anda</span>
                 </div>
 
                 <h1 class="hero-title">
-                    <span>Desain yang Menjual.</span><br>
+                    <span>Otomatisasi Bisnis.</span><br>
                     <span class="highlight">Sistem yang Bekerja.</span>
                 </h1>
 
                 <p class="hero-desc">
-                    <span>Kami bantu wujudkan identitas brand yang kuat dan sistem digital yang siap pakai — dari logo hingga platform bisnis lengkap.</span>
+                    <span>Kami merancang dan membangun perangkat lunak cerdas untuk menskalakan operasional bisnis Anda — dari sistem internal hingga aplikasi komersial berskala besar.</span>
                 </p>
 
                 <div class="hero-cta">
@@ -187,28 +187,27 @@
         </div>
     </section>
 
-    <!-- Layanan Section - Creative Design Showcase -->
-    <section id="layanan" class="section-portfolio">
+    <!-- Premium Showcase - Digitalisasi Desa -->
+    <section id="unggulan-desa" class="section-premium-showcase">
         <div class="container">
-            <div class="section-intro centered animate-on-scroll">
-                <span class="section-label">Creative Design</span>
-                <h2 class="section-title">Desain Visual Premium</h2>
-                <p class="section-subtitle">Pameran karya dan layanan desain identitas visual profesional untuk bisnis Anda.</p>
-            </div>
-
-            <!-- Design Portfolio Navigation Tabs -->
-            <div class="portfolio-tabs animate-on-scroll">
-                <button class="design-tab portfolio-tab active" data-filter="all">All</button>
-                <button class="design-tab portfolio-tab" data-filter="branding">Branding</button>
-                <button class="design-tab portfolio-tab" data-filter="marketing">Marketing</button>
-                <button class="design-tab portfolio-tab" data-filter="social">Social Media</button>
-                <button class="design-tab portfolio-tab" data-filter="corporate">Corporate</button>
-                <button class="design-tab portfolio-tab" data-filter="custom">Custom</button>
-            </div>
-
-            <!-- Design Portfolio Grid (Populated by JS) -->
-            <div class="portfolio-grid animate-on-scroll" id="designGrid">
-                <!-- Cards injected via script.js -->
+            <div class="showcase-wrapper animate-on-scroll">
+                <div class="showcase-content">
+                    <div class="showcase-badge">PRODUK UNGGULAN</div>
+                    <h2 class="showcase-title">Sistem Informasi Desa & GovTech</h2>
+                    <p class="showcase-desc">Platform pelayanan warga terpadu untuk mendigitalisasi birokrasi, memastikan transparansi informasi dana desa, dan memberdayakan ekonomi melalui etalase UMKM digital.</p>
+                    <ul class="showcase-features">
+                        <li><span class="check-icon">✓</span> Pengajuan administrasi mandiri online</li>
+                        <li><span class="check-icon">✓</span> Dashboard transparansi dana real-time</li>
+                        <li><span class="check-icon">✓</span> Integrasi etalase produk UMKM lokal</li>
+                    </ul>
+                    <div class="showcase-action">
+                        <span class="showcase-price">Starts from <strong>Rp 4.500.000</strong></span>
+                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20Sistem%20Informasi%20Desa.%20Boleh%20saya%20minta%20demo?" target="_blank" class="btn-primary">Pesan Sekarang →</a>
+                    </div>
+                </div>
+                <div class="showcase-visual">
+                    <img src="images/portfolio/sistem_desa_mockup_1779448019305.png" alt="Sistem Informasi Desa" loading="lazy">
+                </div>
             </div>
         </div>
     </section>
@@ -244,44 +243,30 @@
         <div class="modal-backdrop"></div>
         <div class="modal-content-wrapper">
             <button class="modal-close-btn" id="closePortfolioModal">✕</button>
-            <div class="modal-grid">
-                <!-- Left: Full Image -->
-                <div class="modal-left">
-                    <div class="modal-image-container">
-                        <img src="" alt="System Interface" id="modalImage">
-                    </div>
+            <div class="modal-simple-content">
+                <div class="modal-header-simple">
+                    <h3 id="modalTitle" class="modal-title" style="margin-bottom: 5px;">System Name</h3>
+                    <div class="modal-badge" id="modalCategory" style="margin-bottom: 20px;">Category</div>
                 </div>
-                <!-- Right: Content -->
-                <div class="modal-right">
-                    <h3 id="modalTitle" class="modal-title">System Name</h3>
-                    <div class="modal-badge" id="modalCategory">Category</div>
-                    
-                    <div class="modal-section">
-                        <h4>Ringkasan Solusi</h4>
-                        <p id="modalDesc" class="modal-desc">Problem solver description goes here.</p>
-                    </div>
+                
+                <div class="modal-section">
+                    <h4>Ringkasan Solusi</h4>
+                    <p id="modalDesc" class="modal-desc">Problem solver description goes here.</p>
+                </div>
 
-                    <div class="modal-section">
-                        <h4>Fitur Utama</h4>
-                        <ul id="modalFeatures" class="modal-list">
-                            <!-- Injected by JS -->
-                        </ul>
-                    </div>
+                <div class="modal-section">
+                    <h4>Fitur Utama</h4>
+                    <ul id="modalFeatures" class="modal-list">
+                        <!-- Injected by JS -->
+                    </ul>
+                </div>
 
-                    <div class="modal-section">
-                        <h4>Masalah yang Diselesaikan</h4>
-                        <ul id="modalProblems" class="modal-list">
-                            <!-- Injected by JS -->
-                        </ul>
-                    </div>
-
-                    <div class="modal-actions">
-                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20sistem%20ini." target="_blank" class="btn-primary magnetic-btn live-demo-btn" id="modalDemoBtn">
-                            Live Demo / Tanya Detail
-                            <span class="btn-arrow">→</span>
-                        </a>
-                        <button class="btn-ghost" id="modalBackBtn">Back to Portfolio</button>
-                    </div>
+                <div class="modal-actions" style="margin-top: 30px;">
+                    <a href="#" target="_blank" class="btn-primary magnetic-btn live-demo-btn" id="modalDemoBtn">
+                        Pesan Sistem Ini
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <span id="modalPrice" style="color: #fff; font-weight: bold; margin-left: auto;">Rp 0</span>
                 </div>
             </div>
         </div>
@@ -707,8 +692,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=9.4">
-    <link rel="stylesheet" href="css/timeline-new.css?v=9.4">
+    <link rel="stylesheet" href="css/styles.css?v=9.5">
+    <link rel="stylesheet" href="css/timeline-new.css?v=9.5">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1387,7 +1372,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=9.4"></script>
+    <script type="module" src="js/script.js?v=9.5"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

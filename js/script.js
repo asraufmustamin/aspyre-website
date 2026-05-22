@@ -2543,79 +2543,6 @@ function initTrackingSystem() {
    INTERACTIVE PORTFOLIO LOGIC (DESIGN & SYSTEMS)
    ========================================================================== */
 
-const designData = [
-    {
-        id: "des-1",
-        title: "Logo & Brand Identity",
-        category: "branding",
-        categoryLabel: "Branding",
-        icon: "✨",
-        price: "Rp 1.500.000",
-        desc: "Logo unik, brand kit lengkap, dan identitas visual yang profesional untuk bisnis Anda.",
-        features: [
-            "Desain Logo Premium & Filosofi",
-            "Palet Warna & Tipografi Brand",
-            "Guideline Penggunaan Logo"
-        ]
-    },
-    {
-        id: "des-2",
-        title: "Banner & Spanduk",
-        category: "marketing",
-        categoryLabel: "Marketing",
-        icon: "📢",
-        price: "Rp 350.000",
-        desc: "Desain promosi yang menarik perhatian untuk kebutuhan cetak (poster, flyer, backdrop) maupun digital.",
-        features: [
-            "Desain resolusi tinggi siap cetak",
-            "Komposisi visual & copywriting dasar",
-            "Adaptasi berbagai ukuran"
-        ]
-    },
-    {
-        id: "des-3",
-        title: "Konten Media Sosial",
-        category: "social",
-        categoryLabel: "Social Media",
-        icon: "📱",
-        price: "Rp 800.000",
-        desc: "Desain visual untuk feed Instagram, story, carousel, dan platform lainnya yang meningkatkan interaksi (engagement).",
-        features: [
-            "Template feed statis & carousel",
-            "Desain story interaktif",
-            "Keselarasan tema warna profil"
-        ]
-    },
-    {
-        id: "des-4",
-        title: "Presentasi (Pitch Deck / PPT)",
-        category: "corporate",
-        categoryLabel: "Corporate",
-        icon: "📊",
-        price: "Rp 1.200.000",
-        desc: "Slide deck profesional, bersih, dan elegan untuk kebutuhan bisnis, presentasi investor (pitch), atau akademik.",
-        features: [
-            "Desain tata letak slide yang persuasif",
-            "Infografis & visualisasi data",
-            "Animasi transisi slide yang mulus"
-        ]
-    },
-    {
-        id: "des-5",
-        title: "Custom Design",
-        category: "custom",
-        categoryLabel: "Custom",
-        icon: "🎨",
-        price: "Hubungi Kami",
-        desc: "Layanan desain visual khusus untuk kebutuhan spesifik seperti kemasan produk (packaging), UI/UX aplikasi, hingga ilustrasi kustom.",
-        features: [
-            "Konsultasi arah visual mendalam",
-            "Revisi desain iteratif",
-            "Penyediaan asset mentah (source file)"
-        ]
-    }
-];
-
 const systemData = [
     {
         id: "sys-1",
@@ -2629,20 +2556,6 @@ const systemData = [
             "Desain UI/UX modern & presisi",
             "Integrasi formulir kontak & WhatsApp",
             "Optimasi performa & SEO dasar"
-        ]
-    },
-    {
-        id: "sys-2",
-        title: "Sistem Informasi Desa",
-        category: "govtech",
-        categoryLabel: "GovTech / EdTech",
-        icon: "🏛️",
-        price: "Rp 4.500.000",
-        desc: "Platform pelayanan warga terpadu untuk digitalisasi birokrasi, transparansi informasi, dan pemberdayaan ekonomi desa.",
-        features: [
-            "Pengajuan surat administrasi mandiri",
-            "Papan informasi & transparansi dana",
-            "Etalase produk UMKM Desa"
         ]
     },
     {
@@ -2731,16 +2644,16 @@ const systemData = [
     }
 ];
 
-const allPortfolioData = [...designData, ...systemData];
+const allPortfolioData = [...systemData];
 
-// Generic function to initialize an interactive grid (Accordion List)
+// Generic function to initialize an interactive grid (Compact Square Cards)
 function initInteractiveGrid(gridId, tabsClass, dataArray) {
     const grid = document.getElementById(gridId);
     if (!grid) return;
     const tabs = document.querySelectorAll(`.${tabsClass}`);
     
-    // Change class to list container for styling
-    grid.className = 'portfolio-list-container animate-on-scroll visible';
+    // Change class to grid container for styling
+    grid.className = 'compact-grid animate-on-scroll visible';
 
     function renderCards(filter) {
         grid.innerHTML = '';
@@ -2749,39 +2662,20 @@ function initInteractiveGrid(gridId, tabsClass, dataArray) {
             : dataArray.filter(item => item.category === filter);
 
         filteredData.forEach(item => {
-            const listItem = document.createElement('div');
-            listItem.className = 'portfolio-list-item';
+            const card = document.createElement('div');
+            card.className = 'compact-card';
             
-            const waLink = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(item.title)}.%20Boleh%20saya%20minta%20informasi%20lebih%20lanjut?`;
+            // On click, it opens the simplified modal
+            card.onclick = () => openPortfolioModal(item.id);
 
-            listItem.innerHTML = `
-                <div class="list-header" onclick="this.parentElement.classList.toggle('expanded')">
-                    <div class="list-header-left">
-                        <span class="list-icon">${item.icon}</span>
-                        <div class="list-title-group">
-                            <h3 class="list-title">${item.title}</h3>
-                            <span class="list-category">${item.categoryLabel}</span>
-                        </div>
-                    </div>
-                    <div class="list-header-right">
-                        <span class="list-price">Starts from <strong>${item.price}</strong></span>
-                        <span class="list-chevron">▼</span>
-                    </div>
+            card.innerHTML = `
+                <div class="compact-icon-wrapper">
+                    <span class="compact-icon">${item.icon}</span>
                 </div>
-                <div class="list-body">
-                    <div class="list-body-content">
-                        <p class="list-desc">${item.desc}</p>
-                        <div class="list-features-wrapper">
-                            <h4>Key Features:</h4>
-                            <ul class="list-features">
-                                ${item.features.map(f => `<li><span style="color:var(--primary); margin-right:5px;">✓</span> ${f}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <a href="${waLink}" target="_blank" class="btn-primary list-cta">Pesan Sekarang</a>
-                    </div>
-                </div>
+                <h3 class="compact-title">${item.title}</h3>
+                <span class="compact-price">Mulai <strong>${item.price}</strong></span>
             `;
-            grid.appendChild(listItem);
+            grid.appendChild(card);
         });
     }
 
@@ -2829,18 +2723,18 @@ function openPortfolioModal(id) {
     if (!data) return;
 
     // Populate Modal
-    document.getElementById('modalImage').src = data.imgUrl;
     document.getElementById('modalTitle').textContent = data.title;
     document.getElementById('modalCategory').textContent = data.categoryLabel;
     document.getElementById('modalDesc').textContent = data.desc;
     
+    const priceEl = document.getElementById('modalPrice');
+    if (priceEl) {
+        priceEl.textContent = data.price;
+    }
+    
     // Features List
     const featUl = document.getElementById('modalFeatures');
     featUl.innerHTML = data.features.map(f => `<li>${f}</li>`).join('');
-    
-    // Problems List
-    const probUl = document.getElementById('modalProblems');
-    probUl.innerHTML = data.problems.map(p => `<li>${p}</li>`).join('');
 
     // Update demo link based on title
     const demoBtn = document.getElementById('modalDemoBtn');
