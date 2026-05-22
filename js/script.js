@@ -2540,7 +2540,272 @@ function initTrackingSystem() {
     };
 
     trackActionBtn.addEventListener('click', handleTrack);
+    trackActionBtn.addEventListener('click', handleTrack);
     trackInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleTrack();
     });
 }
+
+/* ==========================================================================
+   WEB & SYSTEMS INTERACTIVE PORTFOLIO LOGIC
+   ========================================================================== */
+
+const portfolioData = [
+    {
+        id: "sys-1",
+        title: "Landing Page & Company Profile",
+        category: "front-facing",
+        categoryLabel: "Front-Facing",
+        imgUrl: "images/portfolio/landing_page_mockup_1779448172560.png",
+        desc: "Situs web representatif yang berfungsi sebagai brosur digital premium dan alat penangkap prospek (lead generation) untuk bisnis Anda.",
+        features: [
+            "Desain UI/UX modern & presisi",
+            "Integrasi formulir kontak & WhatsApp",
+            "Optimasi performa & SEO dasar"
+        ],
+        problems: [
+            "Meningkatkan kredibilitas bisnis di mata klien",
+            "Mempermudah pelanggan menemukan informasi resmi",
+            "Menangkap prospek pelanggan (leads) 24/7"
+        ]
+    },
+    {
+        id: "sys-2",
+        title: "Sistem Informasi Desa",
+        category: "govtech",
+        categoryLabel: "GovTech / EdTech",
+        imgUrl: "images/portfolio/sistem_desa_mockup_1779448019305.png",
+        desc: "Platform pelayanan warga terpadu untuk digitalisasi birokrasi, transparansi informasi, dan pemberdayaan ekonomi desa.",
+        features: [
+            "Pengajuan surat administrasi mandiri",
+            "Papan informasi & transparansi dana",
+            "Etalase produk UMKM Desa"
+        ],
+        problems: [
+            "Mengurangi antrean fisik di kantor desa",
+            "Mencegah tumpang tindih data warga",
+            "Meningkatkan jangkauan pasar UMKM lokal"
+        ]
+    },
+    {
+        id: "sys-3",
+        title: "E-Commerce & Toko Online",
+        category: "commerce",
+        categoryLabel: "Commerce",
+        imgUrl: "images/portfolio/ecommerce_mockup_1779448038804.png",
+        desc: "Platform penjualan digital independen dengan kontrol penuh atas katalog, transaksi, dan data pelanggan tanpa potongan marketplace.",
+        features: [
+            "Manajemen katalog & keranjang belanja cerdas",
+            "Integrasi payment gateway & ongkos kirim otomatis",
+            "Dashboard analitik penjualan"
+        ],
+        problems: [
+            "Ketergantungan pada kebijakan marketplace",
+            "Proses rekap pesanan manual yang rentan salah",
+            "Kesulitan membangun basis pelanggan loyal"
+        ]
+    },
+    {
+        id: "sys-4",
+        title: "POS Kasir & Inventori",
+        category: "commerce",
+        categoryLabel: "Commerce",
+        imgUrl: "images/portfolio/pos_mockup_1779448058504.png",
+        desc: "Solusi O2O untuk operasional ritel, memadukan kecepatan transaksi kasir dengan pelacakan stok otomatis.",
+        features: [
+            "Penjualan kasir cepat (Point of Sale)",
+            "Pelacakan stok real-time & multi-cabang",
+            "Laporan harian & shift otomatis"
+        ],
+        problems: [
+            "Mengurangi kesalahan hitung stok manual (selisih barang)",
+            "Mempercepat transaksi & mengurangi antrean kasir",
+            "Memberikan wawasan profitabilitas harian yang akurat"
+        ]
+    },
+    {
+        id: "sys-5",
+        title: "Booking & Reservasi Online",
+        category: "commerce",
+        categoryLabel: "Commerce",
+        imgUrl: "images/portfolio/booking_mockup_1779448074164.png",
+        desc: "Sistem penjadwalan cerdas untuk klinik, salon, hotel, atau penyewaan yang mengotomatiskan alur reservasi.",
+        features: [
+            "Kalender ketersediaan real-time",
+            "Notifikasi pengingat via WhatsApp/Email",
+            "Manajemen jadwal staf & kapasitas"
+        ],
+        problems: [
+            "Menghilangkan bentrok jadwal (double-booking)",
+            "Mengurangi ketidakhadiran klien (no-shows)",
+            "Mengotomatiskan komunikasi manual"
+        ]
+    },
+    {
+        id: "sys-6",
+        title: "Web App & Dashboard Admin",
+        category: "internal-systems",
+        categoryLabel: "Internal Systems",
+        imgUrl: "images/portfolio/dashboard_admin_mockup_1779448095958.png",
+        desc: "Pusat kendali digital berbasis web untuk memantau metrik, mengelola pengguna, dan mengontrol parameter bisnis secara terpusat.",
+        features: [
+            "Visualisasi data (Grafik & Chart interaktif)",
+            "Manajemen peran & akses pengguna (RBAC)",
+            "Sistem audit log & pemantauan kesehatan"
+        ],
+        problems: [
+            "Keterbatasan akses data lintas departemen",
+            "Kesulitan memonitor metrik pertumbuhan utama",
+            "Risiko keamanan dari akses data tidak terstruktur"
+        ]
+    },
+    {
+        id: "sys-7",
+        title: "Sistem Manajemen (ERP Lite)",
+        category: "internal-systems",
+        categoryLabel: "Internal Systems",
+        imgUrl: "images/portfolio/erp_lite_mockup_1779448112800.png",
+        desc: "Memusatkan operasi internal untuk efisiensi kerja tim, pelacakan proyek, dan pemantauan kesehatan metrik bisnis.",
+        features: [
+            "Manajemen karyawan & presensi digital",
+            "Penugasan & pelacakan proyek (Kanban)",
+            "Pelaporan keuangan & arus kas dasar"
+        ],
+        problems: [
+            "Menghilangkan kekacauan dokumen fisik & Spreadsheet",
+            "Meningkatkan kolaborasi tim dengan penugasan terpusat",
+            "Memberikan gambaran kesehatan keuangan bisnis secara real-time"
+        ]
+    },
+    {
+        id: "sys-8",
+        title: "Custom System",
+        category: "custom",
+        categoryLabel: "Custom",
+        imgUrl: "images/portfolio/custom_system_mockup_1779448132966.png",
+        desc: "Solusi perangkat lunak pesanan khusus yang dirancang eksklusif untuk mengatasi alur kerja dan aturan bisnis yang sangat spesifik.",
+        features: [
+            "Arsitektur database kustom yang skalabel",
+            "Integrasi API pihak ketiga tanpa batas",
+            "Modul fungsionalitas khusus (Bespoke)"
+        ],
+        problems: [
+            "Software off-the-shelf tidak cocok dengan bisnis proses Anda",
+            "Kebutuhan skala besar dan kustomisasi antarmuka ekstrem",
+            "Membangun kekayaan intelektual (IP) digital perusahaan"
+        ]
+    }
+];
+
+function initInteractivePortfolio() {
+    const grid = document.getElementById('portfolioGrid');
+    const tabs = document.querySelectorAll('.portfolio-tab');
+    if (!grid) return;
+
+    // 1. Render Cards
+    function renderCards(filter) {
+        grid.innerHTML = '';
+        const filteredData = filter === 'all' 
+            ? portfolioData 
+            : portfolioData.filter(item => item.category === filter);
+
+        filteredData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'portfolio-card animate-on-scroll is-visible';
+            card.innerHTML = `
+                <div class="portfolio-card-img-wrapper">
+                    <img src="${item.imgUrl}" alt="${item.title}" loading="lazy">
+                    <div class="portfolio-card-overlay">
+                        <ul class="overlay-features">
+                            ${item.features.slice(0, 2).map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                        <button class="overlay-btn" onclick="openPortfolioModal('${item.id}')">View Details</button>
+                    </div>
+                </div>
+                <div class="portfolio-card-info">
+                    <h3 class="portfolio-card-title">${item.title}</h3>
+                    <span class="portfolio-card-category">${item.categoryLabel}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Initial Render
+    renderCards('all');
+
+    // 2. Tab Click Logic
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            // Remove active class
+            tabs.forEach(t => t.classList.remove('active'));
+            // Add active class
+            e.target.classList.add('active');
+            // Re-render
+            const filter = e.target.getAttribute('data-filter');
+            renderCards(filter);
+        });
+    });
+
+    // 3. Modal Logic Setup
+    const modal = document.getElementById('portfolioModal');
+    const closeBtn = document.getElementById('closePortfolioModal');
+    const backBtn = document.getElementById('modalBackBtn');
+    
+    if (closeBtn) closeBtn.addEventListener('click', closePortfolioModal);
+    if (backBtn) backBtn.addEventListener('click', closePortfolioModal);
+    
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
+                closePortfolioModal();
+            }
+        });
+    }
+}
+
+function openPortfolioModal(id) {
+    const modal = document.getElementById('portfolioModal');
+    if (!modal) return;
+    
+    const data = portfolioData.find(item => item.id === id);
+    if (!data) return;
+
+    // Populate Modal
+    document.getElementById('modalImage').src = data.imgUrl;
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalCategory').textContent = data.categoryLabel;
+    document.getElementById('modalDesc').textContent = data.desc;
+    
+    // Features List
+    const featUl = document.getElementById('modalFeatures');
+    featUl.innerHTML = data.features.map(f => `<li>${f}</li>`).join('');
+    
+    // Problems List
+    const probUl = document.getElementById('modalProblems');
+    probUl.innerHTML = data.problems.map(p => `<li>${p}</li>`).join('');
+
+    // Update demo link based on title
+    const demoBtn = document.getElementById('modalDemoBtn');
+    if (demoBtn) {
+        demoBtn.href = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(data.title)}.%20Boleh%20saya%20minta%20akses%20live%20demo%20atau%20informasi%20lebih%20lanjut?`;
+    }
+
+    // Open Modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closePortfolioModal() {
+    const modal = document.getElementById('portfolioModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+// Call initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    safeInit(initInteractivePortfolio, 'Interactive Portfolio');
+});
+

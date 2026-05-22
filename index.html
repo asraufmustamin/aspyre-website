@@ -240,79 +240,79 @@
                     </div>
                 </div>
 
-                <!-- Pillar 2: SYSTEM -->
-                <div class="pillar-card featured animate-on-scroll" data-pillar="systems">
-                    <div class="featured-ribbon editable" data-key="pillar2-badge">Andalan</div>
-                    <div class="pillar-header">
-                        <div class="pillar-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="2" y="3" width="20" height="14" rx="2" />
-                                <path d="M8 21h8" />
-                                <path d="M12 17v4" />
-                            </svg>
-                        </div>
-                        <h3 class="editable" data-key="pillar2-title">SYSTEM</h3>
-                        <p class="pillar-tagline editable" data-key="pillar2-tagline">Platform digital lengkap untuk bisnis, pemerintahan, dan UMKM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Web & Systems Interactive Portfolio -->
+    <section id="systems-portfolio" class="section-portfolio">
+        <div class="container">
+            <div class="section-intro centered animate-on-scroll">
+                <span class="section-label">Web & Systems</span>
+                <h2 class="section-title">Solusi Digital Kami</h2>
+                <p class="section-subtitle">Pameran sistem cerdas untuk skalabilitas bisnis Anda.</p>
+            </div>
+
+            <!-- Portfolio Navigation Tabs -->
+            <div class="portfolio-tabs animate-on-scroll">
+                <button class="portfolio-tab active" data-filter="all">All</button>
+                <button class="portfolio-tab" data-filter="front-facing">Front-Facing</button>
+                <button class="portfolio-tab" data-filter="commerce">Commerce</button>
+                <button class="portfolio-tab" data-filter="internal-systems">Internal Systems</button>
+                <button class="portfolio-tab" data-filter="govtech">GovTech/EdTech</button>
+                <button class="portfolio-tab" data-filter="custom">Custom</button>
+            </div>
+
+            <!-- Portfolio Grid (Populated by JS) -->
+            <div class="portfolio-grid animate-on-scroll" id="portfolioGrid">
+                <!-- Cards injected via script.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Detail Modal -->
+    <div id="portfolioModal" class="portfolio-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content-wrapper">
+            <button class="modal-close-btn" id="closePortfolioModal">✕</button>
+            <div class="modal-grid">
+                <!-- Left: Full Image -->
+                <div class="modal-left">
+                    <div class="modal-image-container">
+                        <img src="" alt="System Interface" id="modalImage">
                     </div>
-                    <div class="pillar-services">
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Landing Page & Company Profile</h4>
-                                <p>Website promosi atau profil bisnis profesional</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Web App & Dashboard Admin</h4>
-                                <p>Sistem kustom dengan database, panel kontrol, dan analitik</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>E-Commerce & Toko Online</h4>
-                                <p>Katalog produk, keranjang belanja, dan integrasi pembayaran</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>POS Kasir & Inventori</h4>
-                                <p>Sistem point-of-sale, manajemen stok, dan laporan penjualan</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Sistem Manajemen (ERP Lite)</h4>
-                                <p>Manajemen karyawan, proyek, keuangan, dan operasional bisnis</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Booking & Reservasi Online</h4>
-                                <p>Sistem jadwal dan pemesanan untuk klinik, salon, hotel, dll</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Sistem Informasi Desa</h4>
-                                <p>Platform pelayanan warga, informasi publik, dan ekonomi lokal</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4>Custom System</h4>
-                                <p>Solusi khusus sesuai kebutuhan unik bisnis Anda</p>
-                            </div>
-                        </div>
+                </div>
+                <!-- Right: Content -->
+                <div class="modal-right">
+                    <h3 id="modalTitle" class="modal-title">System Name</h3>
+                    <div class="modal-badge" id="modalCategory">Category</div>
+                    
+                    <div class="modal-section">
+                        <h4>Ringkasan Solusi</h4>
+                        <p id="modalDesc" class="modal-desc">Problem solver description goes here.</p>
                     </div>
-                    <p class="pillar-note">⚠️ Hosting & domain tidak termasuk, dikenakan biaya terpisah</p>
+
+                    <div class="modal-section">
+                        <h4>Fitur Utama</h4>
+                        <ul id="modalFeatures" class="modal-list">
+                            <!-- Injected by JS -->
+                        </ul>
+                    </div>
+
+                    <div class="modal-section">
+                        <h4>Masalah yang Diselesaikan</h4>
+                        <ul id="modalProblems" class="modal-list">
+                            <!-- Injected by JS -->
+                        </ul>
+                    </div>
+
+                    <div class="modal-actions">
+                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20sistem%20ini." target="_blank" class="btn-primary magnetic-btn live-demo-btn" id="modalDemoBtn">
+                            Live Demo / Tanya Detail
+                            <span class="btn-arrow">→</span>
+                        </a>
+                        <button class="btn-ghost" id="modalBackBtn">Back to Portfolio</button>
+                    </div>
                 </div>
             </div>
         </div>
