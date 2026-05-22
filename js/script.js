@@ -2710,7 +2710,10 @@ function initInteractiveGrid(gridId, tabsClass, dataArray) {
                     <span class="compact-icon">${item.icon}</span>
                 </div>
                 <h3 class="compact-title">${item.title}</h3>
-                <span class="compact-price">Mulai <strong>${item.price}</strong></span>
+                <div style="flex-grow: 1;"></div>
+                <button class="compact-detail-btn">
+                    <span>Klik Detail</span>
+                </button>
             `;
             grid.appendChild(card);
         });
