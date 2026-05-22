@@ -2783,7 +2783,8 @@ function openPortfolioModal(id) {
     // Update demo link based on title
     const demoBtn = document.getElementById('modalDemoBtn');
     if (demoBtn) {
-        demoBtn.href = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(data.title)}.%20Boleh%20saya%20minta%20informasi%20lebih%20lanjut?`;
+        const waText = `Halo ASYNC SOLUTIONS, saya tertarik dengan ${data.title}. Boleh saya minta informasi lebih lanjut?`;
+        demoBtn.href = `https://wa.me/6285729715555?text=${encodeURIComponent(waText)}`;
     }
 
     // Open Modal
