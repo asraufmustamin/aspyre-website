@@ -187,58 +187,28 @@
         </div>
     </section>
 
-    <!-- Layanan Section - Creative Design -->
-    <section id="layanan" class="section-layanan">
+    <!-- Layanan Section - Creative Design Showcase -->
+    <section id="layanan" class="section-portfolio">
         <div class="container">
             <div class="section-intro centered animate-on-scroll">
-                <span class="section-label">Layanan Kami</span>
-                <h2 class="section-title">Desain Kreatif Profesional</h2>
-                <p class="section-subtitle">Solusi terintegrasi untuk memperkuat aspek visual dan identitas brand bisnis Anda.</p>
+                <span class="section-label">Creative Design</span>
+                <h2 class="section-title">Desain Visual Premium</h2>
+                <p class="section-subtitle">Pameran karya dan layanan desain identitas visual profesional untuk bisnis Anda.</p>
             </div>
 
-            <div style="display: flex; justify-content: center; width: 100%;">
-                <!-- Pillar 1: DESIGN -->
-                <div class="pillar-card animate-on-scroll" data-pillar="creative" style="max-width: 500px; width: 100%;">
-                    <div class="pillar-header">
-                        <div class="pillar-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                            </svg>
-                        </div>
-                        <h3 class="editable" data-key="pillar1-title">DESIGN</h3>
-                        <p class="pillar-tagline editable" data-key="pillar1-tagline">Desain identitas visual yang profesional</p>
-                    </div>
-                    <div class="pillar-services">
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4 class="editable" data-key="p1-s1-title">Logo & Brand Identity</h4>
-                                <p class="editable" data-key="p1-s1-desc">Logo unik, brand kit lengkap, dan identitas visual bisnis Anda</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4 class="editable" data-key="p1-s2-title">Banner & Spanduk</h4>
-                                <p class="editable" data-key="p1-s2-desc">Desain promosi untuk cetak & digital (poster, flyer, backdrop)</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4 class="editable" data-key="p1-s3-title">Konten Media Sosial</h4>
-                                <p class="editable" data-key="p1-s3-desc">Feed Instagram, story, carousel, dan konten visual sosmed</p>
-                            </div>
-                        </div>
-                        <div class="service-item">
-                            <span class="service-icon">✦</span>
-                            <div class="service-info">
-                                <h4 class="editable" data-key="p1-s4-title">Presentasi (PPT)</h4>
-                                <p class="editable" data-key="p1-s4-desc">Slide deck profesional untuk bisnis, pitch, atau akademik</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Design Portfolio Navigation Tabs -->
+            <div class="portfolio-tabs animate-on-scroll">
+                <button class="design-tab portfolio-tab active" data-filter="all">All</button>
+                <button class="design-tab portfolio-tab" data-filter="branding">Branding</button>
+                <button class="design-tab portfolio-tab" data-filter="marketing">Marketing</button>
+                <button class="design-tab portfolio-tab" data-filter="social">Social Media</button>
+                <button class="design-tab portfolio-tab" data-filter="corporate">Corporate</button>
+                <button class="design-tab portfolio-tab" data-filter="custom">Custom</button>
+            </div>
+
+            <!-- Design Portfolio Grid (Populated by JS) -->
+            <div class="portfolio-grid animate-on-scroll" id="designGrid">
+                <!-- Cards injected via script.js -->
             </div>
         </div>
     </section>
@@ -736,8 +706,9 @@
     </div>
 
     <!-- Scripts -->
-    <!-- Timeline CSS -->
-    <link rel="stylesheet" href="css/timeline-new.css">
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="css/styles.css?v=9.1">
+    <link rel="stylesheet" href="css/timeline-new.css?v=9.1">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1427,7 +1398,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=8.3"></script>
+    <script type="module" src="js/script.js?v=9.0"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

@@ -132,6 +132,7 @@ const initApp = () => {
     safeInit(initCmsMode, 'CMS Mode');
     safeInit(initVisibilityToggles, 'Visibility Toggles');
     safeInit(initPaketTabs, 'Paket Tabs');
+    safeInit(initInteractivePortfolio, 'Interactive Portfolio');
 
     // Listeners installed at top.
 };
@@ -2540,17 +2541,109 @@ function initTrackingSystem() {
     };
 
     trackActionBtn.addEventListener('click', handleTrack);
-    trackActionBtn.addEventListener('click', handleTrack);
     trackInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleTrack();
     });
 }
 
 /* ==========================================================================
-   WEB & SYSTEMS INTERACTIVE PORTFOLIO LOGIC
+   INTERACTIVE PORTFOLIO LOGIC (DESIGN & SYSTEMS)
    ========================================================================== */
 
-const portfolioData = [
+const designData = [
+    {
+        id: "des-1",
+        title: "Logo & Brand Identity",
+        category: "branding",
+        categoryLabel: "Branding",
+        imgUrl: "images/portfolio/logo_branding_mockup_1779450958273.png",
+        desc: "Logo unik, brand kit lengkap, dan identitas visual yang profesional untuk bisnis Anda.",
+        features: [
+            "Desain Logo Premium & Filosofi",
+            "Palet Warna & Tipografi Brand",
+            "Guideline Penggunaan Logo"
+        ],
+        problems: [
+            "Identitas bisnis yang mudah dilupakan",
+            "Inkonsistensi visual di berbagai platform",
+            "Kesulitan membangun kepercayaan pelanggan awal"
+        ]
+    },
+    {
+        id: "des-2",
+        title: "Banner & Spanduk",
+        category: "marketing",
+        categoryLabel: "Marketing",
+        imgUrl: "images/portfolio/banner_print_mockup_1779450976716.png",
+        desc: "Desain promosi yang menarik perhatian untuk kebutuhan cetak (poster, flyer, backdrop) maupun digital.",
+        features: [
+            "Desain resolusi tinggi siap cetak",
+            "Komposisi visual & copywriting dasar",
+            "Adaptasi berbagai ukuran"
+        ],
+        problems: [
+            "Materi promosi yang diabaikan target audiens",
+            "Penyampaian pesan promosi yang membingungkan",
+            "Kualitas cetak pecah akibat desain amatir"
+        ]
+    },
+    {
+        id: "des-3",
+        title: "Konten Media Sosial",
+        category: "social",
+        categoryLabel: "Social Media",
+        imgUrl: "images/portfolio/social_media_mockup_1779450992684.png",
+        desc: "Desain visual untuk feed Instagram, story, carousel, dan platform lainnya yang meningkatkan interaksi (engagement).",
+        features: [
+            "Template feed statis & carousel",
+            "Desain story interaktif",
+            "Keselarasan tema warna profil"
+        ],
+        problems: [
+            "Feed media sosial yang tidak rapi dan acak-acakan",
+            "Tingkat interaksi (engagement) yang rendah",
+            "Kekurangan ide visual untuk posting harian"
+        ]
+    },
+    {
+        id: "des-4",
+        title: "Presentasi (Pitch Deck / PPT)",
+        category: "corporate",
+        categoryLabel: "Corporate",
+        imgUrl: "images/portfolio/presentation_mockup_1779451010090.png",
+        desc: "Slide deck profesional, bersih, dan elegan untuk kebutuhan bisnis, presentasi investor (pitch), atau akademik.",
+        features: [
+            "Desain tata letak slide yang persuasif",
+            "Infografis & visualisasi data",
+            "Animasi transisi slide yang mulus"
+        ],
+        problems: [
+            "Audiens bosan dengan slide penuh teks",
+            "Gagal meyakinkan investor atau klien saat presentasi",
+            "Tampilan slide yang terlihat kuno dan tidak profesional"
+        ]
+    },
+    {
+        id: "des-5",
+        title: "Custom Design",
+        category: "custom",
+        categoryLabel: "Custom",
+        imgUrl: "images/portfolio/custom_design_mockup_1779451025714.png",
+        desc: "Layanan desain visual khusus untuk kebutuhan spesifik seperti kemasan produk (packaging), UI/UX aplikasi, hingga ilustrasi kustom.",
+        features: [
+            "Konsultasi arah visual mendalam",
+            "Revisi desain iteratif",
+            "Penyediaan asset mentah (source file)"
+        ],
+        problems: [
+            "Kebutuhan visual yang tidak masuk dalam paket standar",
+            "Membutuhkan ilustrasi eksklusif yang tidak ada di stok foto",
+            "Desain kemasan produk yang kurang menonjol di rak"
+        ]
+    }
+];
+
+const systemData = [
     {
         id: "sys-1",
         title: "Landing Page & Company Profile",
@@ -2697,17 +2790,19 @@ const portfolioData = [
     }
 ];
 
-function initInteractivePortfolio() {
-    const grid = document.getElementById('portfolioGrid');
-    const tabs = document.querySelectorAll('.portfolio-tab');
-    if (!grid) return;
+const allPortfolioData = [...designData, ...systemData];
 
-    // 1. Render Cards
+// Generic function to initialize an interactive grid
+function initInteractiveGrid(gridId, tabsClass, dataArray) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+    const tabs = document.querySelectorAll(`.${tabsClass}`);
+
     function renderCards(filter) {
         grid.innerHTML = '';
         const filteredData = filter === 'all' 
-            ? portfolioData 
-            : portfolioData.filter(item => item.category === filter);
+            ? dataArray 
+            : dataArray.filter(item => item.category === filter);
 
         filteredData.forEach(item => {
             const card = document.createElement('div');
@@ -2734,20 +2829,23 @@ function initInteractivePortfolio() {
     // Initial Render
     renderCards('all');
 
-    // 2. Tab Click Logic
+    // Tab Click Logic
     tabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
-            // Remove active class
             tabs.forEach(t => t.classList.remove('active'));
-            // Add active class
             e.target.classList.add('active');
-            // Re-render
             const filter = e.target.getAttribute('data-filter');
             renderCards(filter);
         });
     });
+}
 
-    // 3. Modal Logic Setup
+function initInteractivePortfolio() {
+    // Initialize both grids
+    initInteractiveGrid('designGrid', 'design-tab', designData);
+    initInteractiveGrid('portfolioGrid', 'portfolio-tab', systemData);
+
+    // Setup Shared Modal Listeners
     const modal = document.getElementById('portfolioModal');
     const closeBtn = document.getElementById('closePortfolioModal');
     const backBtn = document.getElementById('modalBackBtn');
@@ -2768,7 +2866,7 @@ function openPortfolioModal(id) {
     const modal = document.getElementById('portfolioModal');
     if (!modal) return;
     
-    const data = portfolioData.find(item => item.id === id);
+    const data = allPortfolioData.find(item => item.id === id);
     if (!data) return;
 
     // Populate Modal
@@ -2788,12 +2886,12 @@ function openPortfolioModal(id) {
     // Update demo link based on title
     const demoBtn = document.getElementById('modalDemoBtn');
     if (demoBtn) {
-        demoBtn.href = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(data.title)}.%20Boleh%20saya%20minta%20akses%20live%20demo%20atau%20informasi%20lebih%20lanjut?`;
+        demoBtn.href = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(data.title)}.%20Boleh%20saya%20minta%20informasi%20lebih%20lanjut?`;
     }
 
     // Open Modal
     modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
 }
 
 function closePortfolioModal() {
@@ -2803,9 +2901,3 @@ function closePortfolioModal() {
         document.body.style.overflow = ''; // Restore scrolling
     }
 }
-
-// Call initialization when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    safeInit(initInteractivePortfolio, 'Interactive Portfolio');
-});
-
