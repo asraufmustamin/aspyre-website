@@ -2806,7 +2806,7 @@ function initInteractiveGrid(gridId, tabsClass, dataArray) {
 
         filteredData.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'portfolio-card animate-on-scroll is-visible';
+            card.className = 'portfolio-card animate-on-scroll visible';
             card.innerHTML = `
                 <div class="portfolio-card-img-wrapper">
                     <img src="${item.imgUrl}" alt="${item.title}" loading="lazy">
