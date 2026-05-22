@@ -220,34 +220,41 @@
             <button class="modal-close-btn" id="closePortfolioModal">✕</button>
             <div class="modal-simple-content">
                 <div class="modal-header-simple">
-                    <h3 id="modalTitle" class="modal-title" style="margin-bottom: 5px;">System Name</h3>
-                    <div class="modal-badge" id="modalCategory" style="margin-bottom: 20px;">Category</div>
+                    <h3 id="modalTitle" class="modal-title" style="margin-bottom: 5px; font-size: 1.8rem;">System Name</h3>
+                    <div class="modal-badge" id="modalCategory">Category</div>
                 </div>
                 
-                <div class="modal-section">
-                    <h4>Ringkasan Solusi</h4>
-                    <p id="modalDesc" class="modal-desc">Problem solver description goes here.</p>
-                </div>
+                <div class="modal-split-layout">
+                    <div class="modal-split-left">
+                        <div class="modal-section">
+                            <h4>Ringkasan Solusi</h4>
+                            <p id="modalDesc" class="modal-desc">Problem solver description goes here.</p>
+                        </div>
 
-                <div class="modal-section">
-                    <h4>Fitur Utama</h4>
-                    <ul id="modalFeatures" class="modal-list">
-                        <!-- Injected by JS -->
-                    </ul>
-                </div>
+                        <div class="modal-section">
+                            <h4>Fitur Utama</h4>
+                            <ul id="modalFeatures" class="modal-list">
+                                <!-- Injected by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-split-right">
+                        <div class="modal-section estimation-box">
+                            <h4>Estimasi Pengerjaan</h4>
+                            <p id="modalEstimation" class="est-value">1 Bulan</p>
+                            <p class="est-note">*Estimasi normal minimal 1 bulan. Request jalur cepat (Priority) dikenakan biaya tambahan.</p>
+                        </div>
 
-                <div class="modal-section" style="margin-top: 20px; padding: 15px; background: rgba(255, 87, 34, 0.05); border-left: 3px solid var(--primary); border-radius: 4px;">
-                    <h4 style="margin-bottom: 5px; color: var(--primary);">Estimasi Pengerjaan</h4>
-                    <p id="modalEstimation" class="modal-desc" style="font-weight: bold; margin-bottom: 5px;">1 Bulan</p>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0;">*Estimasi normal minimal 1 bulan. Request jalur cepat (Priority) dikenakan biaya tambahan.</p>
-                </div>
-
-                <div class="modal-actions" style="margin-top: 30px;">
-                    <a href="#" target="_blank" class="btn-primary magnetic-btn live-demo-btn" id="modalDemoBtn">
-                        Pesan Sistem Ini
-                        <span class="btn-arrow">→</span>
-                    </a>
-                    <span id="modalPrice" style="color: #fff; font-weight: bold; margin-left: auto;">Rp 0</span>
+                        <div class="modal-actions-vertical">
+                            <span class="price-label">Estimasi Investasi Mulai</span>
+                            <span id="modalPrice" class="price-value">Rp 0</span>
+                            <a href="#" target="_blank" class="btn-primary magnetic-btn live-demo-btn full-width" id="modalDemoBtn">
+                                Pesan Sistem Ini via WhatsApp
+                                <span class="btn-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -584,8 +591,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=10.0">
-    <link rel="stylesheet" href="css/timeline-new.css?v=10.0">
+    <link rel="stylesheet" href="css/styles.css?v=10.1">
+    <link rel="stylesheet" href="css/timeline-new.css?v=10.1">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1264,7 +1271,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=10.0"></script>
+    <script type="module" src="js/script.js?v=10.1"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>
