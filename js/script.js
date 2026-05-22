@@ -2549,17 +2549,13 @@ const designData = [
         title: "Logo & Brand Identity",
         category: "branding",
         categoryLabel: "Branding",
-        imgUrl: "images/portfolio/logo_branding_mockup_1779450958273.png",
+        icon: "✨",
+        price: "Rp 1.500.000",
         desc: "Logo unik, brand kit lengkap, dan identitas visual yang profesional untuk bisnis Anda.",
         features: [
             "Desain Logo Premium & Filosofi",
             "Palet Warna & Tipografi Brand",
             "Guideline Penggunaan Logo"
-        ],
-        problems: [
-            "Identitas bisnis yang mudah dilupakan",
-            "Inkonsistensi visual di berbagai platform",
-            "Kesulitan membangun kepercayaan pelanggan awal"
         ]
     },
     {
@@ -2567,17 +2563,13 @@ const designData = [
         title: "Banner & Spanduk",
         category: "marketing",
         categoryLabel: "Marketing",
-        imgUrl: "images/portfolio/banner_print_mockup_1779450976716.png",
+        icon: "📢",
+        price: "Rp 350.000",
         desc: "Desain promosi yang menarik perhatian untuk kebutuhan cetak (poster, flyer, backdrop) maupun digital.",
         features: [
             "Desain resolusi tinggi siap cetak",
             "Komposisi visual & copywriting dasar",
             "Adaptasi berbagai ukuran"
-        ],
-        problems: [
-            "Materi promosi yang diabaikan target audiens",
-            "Penyampaian pesan promosi yang membingungkan",
-            "Kualitas cetak pecah akibat desain amatir"
         ]
     },
     {
@@ -2585,17 +2577,13 @@ const designData = [
         title: "Konten Media Sosial",
         category: "social",
         categoryLabel: "Social Media",
-        imgUrl: "images/portfolio/social_media_mockup_1779450992684.png",
+        icon: "📱",
+        price: "Rp 800.000",
         desc: "Desain visual untuk feed Instagram, story, carousel, dan platform lainnya yang meningkatkan interaksi (engagement).",
         features: [
             "Template feed statis & carousel",
             "Desain story interaktif",
             "Keselarasan tema warna profil"
-        ],
-        problems: [
-            "Feed media sosial yang tidak rapi dan acak-acakan",
-            "Tingkat interaksi (engagement) yang rendah",
-            "Kekurangan ide visual untuk posting harian"
         ]
     },
     {
@@ -2603,17 +2591,13 @@ const designData = [
         title: "Presentasi (Pitch Deck / PPT)",
         category: "corporate",
         categoryLabel: "Corporate",
-        imgUrl: "images/portfolio/presentation_mockup_1779451010090.png",
+        icon: "📊",
+        price: "Rp 1.200.000",
         desc: "Slide deck profesional, bersih, dan elegan untuk kebutuhan bisnis, presentasi investor (pitch), atau akademik.",
         features: [
             "Desain tata letak slide yang persuasif",
             "Infografis & visualisasi data",
             "Animasi transisi slide yang mulus"
-        ],
-        problems: [
-            "Audiens bosan dengan slide penuh teks",
-            "Gagal meyakinkan investor atau klien saat presentasi",
-            "Tampilan slide yang terlihat kuno dan tidak profesional"
         ]
     },
     {
@@ -2621,17 +2605,13 @@ const designData = [
         title: "Custom Design",
         category: "custom",
         categoryLabel: "Custom",
-        imgUrl: "images/portfolio/custom_design_mockup_1779451025714.png",
+        icon: "🎨",
+        price: "Hubungi Kami",
         desc: "Layanan desain visual khusus untuk kebutuhan spesifik seperti kemasan produk (packaging), UI/UX aplikasi, hingga ilustrasi kustom.",
         features: [
             "Konsultasi arah visual mendalam",
             "Revisi desain iteratif",
             "Penyediaan asset mentah (source file)"
-        ],
-        problems: [
-            "Kebutuhan visual yang tidak masuk dalam paket standar",
-            "Membutuhkan ilustrasi eksklusif yang tidak ada di stok foto",
-            "Desain kemasan produk yang kurang menonjol di rak"
         ]
     }
 ];
@@ -2642,17 +2622,13 @@ const systemData = [
         title: "Landing Page & Company Profile",
         category: "front-facing",
         categoryLabel: "Front-Facing",
-        imgUrl: "images/portfolio/landing_page_mockup_1779448172560.png",
+        icon: "🌐",
+        price: "Rp 2.500.000",
         desc: "Situs web representatif yang berfungsi sebagai brosur digital premium dan alat penangkap prospek (lead generation) untuk bisnis Anda.",
         features: [
             "Desain UI/UX modern & presisi",
             "Integrasi formulir kontak & WhatsApp",
             "Optimasi performa & SEO dasar"
-        ],
-        problems: [
-            "Meningkatkan kredibilitas bisnis di mata klien",
-            "Mempermudah pelanggan menemukan informasi resmi",
-            "Menangkap prospek pelanggan (leads) 24/7"
         ]
     },
     {
@@ -2660,17 +2636,13 @@ const systemData = [
         title: "Sistem Informasi Desa",
         category: "govtech",
         categoryLabel: "GovTech / EdTech",
-        imgUrl: "images/portfolio/sistem_desa_mockup_1779448019305.png",
+        icon: "🏛️",
+        price: "Rp 4.500.000",
         desc: "Platform pelayanan warga terpadu untuk digitalisasi birokrasi, transparansi informasi, dan pemberdayaan ekonomi desa.",
         features: [
             "Pengajuan surat administrasi mandiri",
             "Papan informasi & transparansi dana",
             "Etalase produk UMKM Desa"
-        ],
-        problems: [
-            "Mengurangi antrean fisik di kantor desa",
-            "Mencegah tumpang tindih data warga",
-            "Meningkatkan jangkauan pasar UMKM lokal"
         ]
     },
     {
@@ -2678,17 +2650,13 @@ const systemData = [
         title: "E-Commerce & Toko Online",
         category: "commerce",
         categoryLabel: "Commerce",
-        imgUrl: "images/portfolio/ecommerce_mockup_1779448038804.png",
+        icon: "🛒",
+        price: "Rp 5.500.000",
         desc: "Platform penjualan digital independen dengan kontrol penuh atas katalog, transaksi, dan data pelanggan tanpa potongan marketplace.",
         features: [
             "Manajemen katalog & keranjang belanja cerdas",
             "Integrasi payment gateway & ongkos kirim otomatis",
             "Dashboard analitik penjualan"
-        ],
-        problems: [
-            "Ketergantungan pada kebijakan marketplace",
-            "Proses rekap pesanan manual yang rentan salah",
-            "Kesulitan membangun basis pelanggan loyal"
         ]
     },
     {
@@ -2696,17 +2664,13 @@ const systemData = [
         title: "POS Kasir & Inventori",
         category: "commerce",
         categoryLabel: "Commerce",
-        imgUrl: "images/portfolio/pos_mockup_1779448058504.png",
+        icon: "🧾",
+        price: "Rp 3.500.000",
         desc: "Solusi O2O untuk operasional ritel, memadukan kecepatan transaksi kasir dengan pelacakan stok otomatis.",
         features: [
             "Penjualan kasir cepat (Point of Sale)",
             "Pelacakan stok real-time & multi-cabang",
             "Laporan harian & shift otomatis"
-        ],
-        problems: [
-            "Mengurangi kesalahan hitung stok manual (selisih barang)",
-            "Mempercepat transaksi & mengurangi antrean kasir",
-            "Memberikan wawasan profitabilitas harian yang akurat"
         ]
     },
     {
@@ -2714,17 +2678,13 @@ const systemData = [
         title: "Booking & Reservasi Online",
         category: "commerce",
         categoryLabel: "Commerce",
-        imgUrl: "images/portfolio/booking_mockup_1779448074164.png",
+        icon: "📅",
+        price: "Rp 3.000.000",
         desc: "Sistem penjadwalan cerdas untuk klinik, salon, hotel, atau penyewaan yang mengotomatiskan alur reservasi.",
         features: [
             "Kalender ketersediaan real-time",
             "Notifikasi pengingat via WhatsApp/Email",
             "Manajemen jadwal staf & kapasitas"
-        ],
-        problems: [
-            "Menghilangkan bentrok jadwal (double-booking)",
-            "Mengurangi ketidakhadiran klien (no-shows)",
-            "Mengotomatiskan komunikasi manual"
         ]
     },
     {
@@ -2732,17 +2692,13 @@ const systemData = [
         title: "Web App & Dashboard Admin",
         category: "internal-systems",
         categoryLabel: "Internal Systems",
-        imgUrl: "images/portfolio/dashboard_admin_mockup_1779448095958.png",
+        icon: "📈",
+        price: "Rp 6.000.000",
         desc: "Pusat kendali digital berbasis web untuk memantau metrik, mengelola pengguna, dan mengontrol parameter bisnis secara terpusat.",
         features: [
             "Visualisasi data (Grafik & Chart interaktif)",
             "Manajemen peran & akses pengguna (RBAC)",
             "Sistem audit log & pemantauan kesehatan"
-        ],
-        problems: [
-            "Keterbatasan akses data lintas departemen",
-            "Kesulitan memonitor metrik pertumbuhan utama",
-            "Risiko keamanan dari akses data tidak terstruktur"
         ]
     },
     {
@@ -2750,17 +2706,13 @@ const systemData = [
         title: "Sistem Manajemen (ERP Lite)",
         category: "internal-systems",
         categoryLabel: "Internal Systems",
-        imgUrl: "images/portfolio/erp_lite_mockup_1779448112800.png",
+        icon: "⚙️",
+        price: "Rp 8.500.000",
         desc: "Memusatkan operasi internal untuk efisiensi kerja tim, pelacakan proyek, dan pemantauan kesehatan metrik bisnis.",
         features: [
             "Manajemen karyawan & presensi digital",
             "Penugasan & pelacakan proyek (Kanban)",
             "Pelaporan keuangan & arus kas dasar"
-        ],
-        problems: [
-            "Menghilangkan kekacauan dokumen fisik & Spreadsheet",
-            "Meningkatkan kolaborasi tim dengan penugasan terpusat",
-            "Memberikan gambaran kesehatan keuangan bisnis secara real-time"
         ]
     },
     {
@@ -2768,28 +2720,27 @@ const systemData = [
         title: "Custom System",
         category: "custom",
         categoryLabel: "Custom",
-        imgUrl: "images/portfolio/custom_system_mockup_1779448132966.png",
+        icon: "💻",
+        price: "Hubungi Kami",
         desc: "Solusi perangkat lunak pesanan khusus yang dirancang eksklusif untuk mengatasi alur kerja dan aturan bisnis yang sangat spesifik.",
         features: [
             "Arsitektur database kustom yang skalabel",
             "Integrasi API pihak ketiga tanpa batas",
             "Modul fungsionalitas khusus (Bespoke)"
-        ],
-        problems: [
-            "Software off-the-shelf tidak cocok dengan bisnis proses Anda",
-            "Kebutuhan skala besar dan kustomisasi antarmuka ekstrem",
-            "Membangun kekayaan intelektual (IP) digital perusahaan"
         ]
     }
 ];
 
 const allPortfolioData = [...designData, ...systemData];
 
-// Generic function to initialize an interactive grid
+// Generic function to initialize an interactive grid (Accordion List)
 function initInteractiveGrid(gridId, tabsClass, dataArray) {
     const grid = document.getElementById(gridId);
     if (!grid) return;
     const tabs = document.querySelectorAll(`.${tabsClass}`);
+    
+    // Change class to list container for styling
+    grid.className = 'portfolio-list-container animate-on-scroll visible';
 
     function renderCards(filter) {
         grid.innerHTML = '';
@@ -2798,24 +2749,39 @@ function initInteractiveGrid(gridId, tabsClass, dataArray) {
             : dataArray.filter(item => item.category === filter);
 
         filteredData.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'portfolio-card animate-on-scroll visible';
-            card.innerHTML = `
-                <div class="portfolio-card-img-wrapper">
-                    <img src="${item.imgUrl}" alt="${item.title}" loading="lazy">
-                    <div class="portfolio-card-overlay">
-                        <ul class="overlay-features">
-                            ${item.features.slice(0, 2).map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                        <button class="overlay-btn" onclick="openPortfolioModal('${item.id}')">View Details</button>
+            const listItem = document.createElement('div');
+            listItem.className = 'portfolio-list-item';
+            
+            const waLink = `https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20${encodeURIComponent(item.title)}.%20Boleh%20saya%20minta%20informasi%20lebih%20lanjut?`;
+
+            listItem.innerHTML = `
+                <div class="list-header" onclick="this.parentElement.classList.toggle('expanded')">
+                    <div class="list-header-left">
+                        <span class="list-icon">${item.icon}</span>
+                        <div class="list-title-group">
+                            <h3 class="list-title">${item.title}</h3>
+                            <span class="list-category">${item.categoryLabel}</span>
+                        </div>
+                    </div>
+                    <div class="list-header-right">
+                        <span class="list-price">Starts from <strong>${item.price}</strong></span>
+                        <span class="list-chevron">▼</span>
                     </div>
                 </div>
-                <div class="portfolio-card-info">
-                    <h3 class="portfolio-card-title">${item.title}</h3>
-                    <span class="portfolio-card-category">${item.categoryLabel}</span>
+                <div class="list-body">
+                    <div class="list-body-content">
+                        <p class="list-desc">${item.desc}</p>
+                        <div class="list-features-wrapper">
+                            <h4>Key Features:</h4>
+                            <ul class="list-features">
+                                ${item.features.map(f => `<li><span style="color:var(--primary); margin-right:5px;">✓</span> ${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <a href="${waLink}" target="_blank" class="btn-primary list-cta">Pesan Sekarang</a>
+                    </div>
                 </div>
             `;
-            grid.appendChild(card);
+            grid.appendChild(listItem);
         });
     }
 

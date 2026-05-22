@@ -8864,4 +8864,189 @@ section.highlight-section {
     .portfolio-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
+}
+
+/* ==========================================================================
+   PORTFOLIO SLEEK ACCORDION LIST
+   ========================================================================== */
+.portfolio-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portfolio-list-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.portfolio-list-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.list-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.list-icon {
+    font-size: 24px;
+    background: rgba(255, 87, 34, 0.1);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.list-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.list-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.list-category {
+    font-size: 0.75rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.list-header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.list-price {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.list-price strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.list-chevron {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-list-item.expanded .list-chevron {
+    transform: rotate(180deg);
+}
+
+.portfolio-list-item.expanded {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 87, 34, 0.3);
+}
+
+.list-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+}
+
+.portfolio-list-item.expanded .list-body {
+    max-height: 500px;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.list-body-content {
+    padding: 0 24px 24px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 10px;
+    padding-top: 20px;
+}
+
+.list-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+.list-features-wrapper h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.list-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.list-features li {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: flex-start;
+}
+
+.list-cta {
+    display: inline-flex;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        position: relative;
+    }
+    
+    .list-header-right {
+        margin-top: 12px;
+        width: 100%;
+        justify-content: space-between;
+        padding-left: 64px; /* Align with text */
+    }
+    
+    .list-chevron {
+        position: absolute;
+        top: 24px;
+        right: 16px;
+    }
+    
+    .list-features {
+        grid-template-columns: 1fr;
+    }
 }
