@@ -137,13 +137,6 @@ const initApp = () => {
     // Listeners installed at top.
 };
 
-// Execute Initialization
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-} else {
-    initApp(); // DOM already ready
-}
-
 /* ============================================
    Visibility Toggles Setup (v8.3)
    ============================================ */
@@ -2900,4 +2893,11 @@ function closePortfolioModal() {
         modal.classList.remove('active');
         document.body.style.overflow = ''; // Restore scrolling
     }
+}
+
+// Execute Initialization after all declarations
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp(); // DOM already ready
 }
