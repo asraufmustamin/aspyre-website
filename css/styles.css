@@ -544,7 +544,7 @@ ul {
 
 @media (max-width: 768px) {
     .hero {
-        padding: 100px 0 60px;
+        padding: 160px 0 60px;
         text-align: center;
     }
     .hero-content {
@@ -1172,6 +1172,9 @@ ul {
 .form-group textarea,
 .form-group select {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 14px 16px;
     font-size: 15px;
     color: var(--white);

@@ -568,8 +568,10 @@ function initOrderForm() {
         setTimeout(() => {
             submitBtn.innerHTML = originalContent;
             submitBtn.disabled = false;
-            window.open(waUrl, '_blank');
         }, 1000);
+        
+        // Use location.href instead of window.open to avoid popup blockers on mobile
+        window.location.href = waUrl;
     });
 }
 
