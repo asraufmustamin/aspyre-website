@@ -7339,6 +7339,9 @@ section.highlight-section {
         text-align: center !important;
         align-items: center !important;
     }
+    .hero-title, .hero-desc {
+        text-align: center !important;
+    }
 
     .hero-cta {
         justify-content: center !important;
