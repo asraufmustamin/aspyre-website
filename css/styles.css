@@ -1221,10 +1221,17 @@ ul {
 @media (max-width: 900px) {
     .kontak-wrapper {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .kontak-form {
+        padding: 16px;
     }
 }
 
