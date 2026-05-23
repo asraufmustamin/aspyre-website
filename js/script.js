@@ -341,8 +341,8 @@ const TRANSLATIONS = {
     'id': {
         // Hero
         'hero-eyebrow': 'Partner Desain & Teknologi Bisnis Anda',
-        'hero-title': 'Solusi Desain & Sistem Digital Profesional',
-        'hero-desc': 'Kami membantu bisnis berkembang dengan identitas desain yang kuat dan infrastruktur sistem website yang handal.',
+        'hero-title': '<span>Otomatisasi Bisnis.</span><br><span class="highlight">Sistem yang Bekerja.</span>',
+        'hero-desc': 'Kami merancang dan membangun perangkat lunak cerdas untuk menskalakan operasional bisnis Anda — dari sistem internal hingga aplikasi komersial berskala besar.',
         'hero-cta-1': 'Mulai Project',
         'hero-cta-2': 'Konsultasi Gratis',
         // Navigation
@@ -380,8 +380,8 @@ const TRANSLATIONS = {
     'en': {
         // Hero
         'hero-eyebrow': 'Your Professional Digital Partner',
-        'hero-title': 'Professional Design & System Solutions',
-        'hero-desc': 'We help businesses grow with strong design identity and reliable website infrastructure.',
+        'hero-title': '<span>Business Automation.</span><br><span class="highlight">Systems that Work.</span>',
+        'hero-desc': 'We design and build intelligent software to scale your business operations — from internal systems to large-scale commercial applications.',
         'hero-cta-1': 'Start Project',
         'hero-cta-2': 'Free Consultation',
         // Navigation
