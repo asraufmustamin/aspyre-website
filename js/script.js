@@ -289,19 +289,26 @@ function initMobileMenu() {
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            
+            // If href was dynamically changed to a full URL, or is just '#', ignore
+            if (!targetId || !targetId.startsWith('#') || targetId === '#') return;
 
-            const target = document.querySelector(targetId);
-            if (target) {
-                const offset = document.body.classList.contains('cms-mode') ? 128 : 80;
-                const position = target.offsetTop - offset;
-                window.scrollTo({ top: position, behavior: 'smooth' });
+            e.preventDefault();
+            try {
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const offset = document.body.classList.contains('cms-mode') ? 128 : 80;
+                    const position = target.offsetTop - offset;
+                    window.scrollTo({ top: position, behavior: 'smooth' });
 
-                // Highlight section briefly
-                target.classList.add('highlight-section');
-                setTimeout(() => target.classList.remove('highlight-section'), 1000);
+                    // Highlight section briefly
+                    target.classList.add('highlight-section');
+                    setTimeout(() => target.classList.remove('highlight-section'), 1000);
+                }
+            } catch(err) {
+                // Ignore invalid selectors silently instead of crashing
+                console.warn('Smooth scroll skipped for invalid selector:', targetId);
             }
         });
     });
