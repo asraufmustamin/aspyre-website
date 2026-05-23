@@ -552,12 +552,13 @@ function initOrderForm() {
         const waUrl = `https://wa.me/6285729715555?text=${text}`;
 
         try {
-            // 3. Push to Firebase (Try)
+            // 3. Push to Firebase (Try - Non-blocking)
             const fbData = { ...orderData, timestamp: serverTimestamp() };
-            await addDoc(collection(db, "orders"), fbData);
+            addDoc(collection(db, "orders"), fbData).catch(error => {
+                console.warn("Database sync error (likely permissions), but order is saved locally.", error.message);
+            });
         } catch (error) {
-            console.warn("Database sync error (likely permissions), but order is saved locally.", error.message);
-            // We DO NOT return here, we proceed to redirect the user!
+            console.error(error);
         }
 
         // 4. Success Feedback & Redirect
