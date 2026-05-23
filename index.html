@@ -40,7 +40,7 @@
         href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/styles.css?v=12.0">
+    <link rel="stylesheet" href="css/styles.css?v=13.0">
     <!-- Failsafe Error Logger -->
     <script>
         window.onerror = function (msg, url, line) {
@@ -99,14 +99,16 @@
         <div class="nav-container">
             <!-- Animated Brand Logo -->
             <a href="#" class="brand-logo">
-                <div class="logo-symbol">
-                    <div class="symbol-inner">
-                        <span class="symbol-line line-1"></span>
-                        <span class="symbol-line line-2"></span>
-                        <span class="symbol-line line-3"></span>
-                    </div>
-                    <span class="symbol-dot"></span>
-                </div>
+                <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logo-grad-header" x1="0" y1="1" x2="1" y2="0">
+                            <stop offset="0%" stop-color="var(--coral)" />
+                            <stop offset="100%" stop-color="var(--peach)" />
+                        </linearGradient>
+                    </defs>
+                    <path class="loop-path" d="M16 16 C 11.5 21.5, 9.5 25, 9.5 27 C 9.5 29.8, 12.2 32, 16 32 C 19.8 32, 22.5 29.8, 22.5 27 C 22.5 25, 20.5 21.5, 16 16 C 11.5 10.5, 9.5 7, 9.5 5 C 9.5 2.2, 12.2 0, 16 0 C 19.8 0, 22.5 2.2, 22.5 5 C 22.5 7, 20.5 10.5, 16 16 Z" fill="none" stroke="url(#logo-grad-header)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="9.5" y1="18.5" x2="22.5" y2="18.5" stroke="url(#logo-grad-header)" stroke-width="3" stroke-linecap="round" />
+                </svg>
                 <div class="logo-text">
                     <span class="logo-main">ASYNC</span>
                     <span class="logo-suffix"> SOLUTIONS</span>
@@ -594,8 +596,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=12.0">
-    <link rel="stylesheet" href="css/timeline-new.css?v=12.0">
+    <link rel="stylesheet" href="css/styles.css?v=13.0">
+    <link rel="stylesheet" href="css/timeline-new.css?v=13.0">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1017,14 +1019,16 @@
             <div class="footer-main">
                 <div class="footer-brand">
                     <a href="#" class="brand-logo small">
-                        <div class="logo-symbol">
-                            <div class="symbol-inner">
-                                <span class="symbol-line line-1"></span>
-                                <span class="symbol-line line-2"></span>
-                                <span class="symbol-line line-3"></span>
-                            </div>
-                            <span class="symbol-dot"></span>
-                        </div>
+                        <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logo-grad-footer" x1="0" y1="1" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="var(--coral)" />
+                                    <stop offset="100%" stop-color="var(--peach)" />
+                                </linearGradient>
+                            </defs>
+                            <path class="loop-path" d="M16 16 C 11.5 21.5, 9.5 25, 9.5 27 C 9.5 29.8, 12.2 32, 16 32 C 19.8 32, 22.5 29.8, 22.5 27 C 22.5 25, 20.5 21.5, 16 16 C 11.5 10.5, 9.5 7, 9.5 5 C 9.5 2.2, 12.2 0, 16 0 C 19.8 0, 22.5 2.2, 22.5 5 C 22.5 7, 20.5 10.5, 16 16 Z" fill="none" stroke="url(#logo-grad-footer)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="9.5" y1="18.5" x2="22.5" y2="18.5" stroke="url(#logo-grad-footer)" stroke-width="3" stroke-linecap="round" />
+                        </svg>
                         <div class="logo-text">
                             <span class="logo-main">ASYNC</span>
                             <span class="logo-suffix"> SOLUTIONS</span>
@@ -1083,14 +1087,16 @@
             <div id="adminLogin" class="admin-view active">
                 <div class="admin-login-header">
                     <div class="admin-logo">
-                        <div class="logo-symbol">
-                            <div class="symbol-inner">
-                                <span class="symbol-line line-1"></span>
-                                <span class="symbol-line line-2"></span>
-                                <span class="symbol-line line-3"></span>
-                            </div>
-                            <span class="symbol-dot"></span>
-                        </div>
+                        <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logo-grad-admin" x1="0" y1="1" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="var(--coral)" />
+                                    <stop offset="100%" stop-color="var(--peach)" />
+                                </linearGradient>
+                            </defs>
+                            <path class="loop-path" d="M16 16 C 11.5 21.5, 9.5 25, 9.5 27 C 9.5 29.8, 12.2 32, 16 32 C 19.8 32, 22.5 29.8, 22.5 27 C 22.5 25, 20.5 21.5, 16 16 C 11.5 10.5, 9.5 7, 9.5 5 C 9.5 2.2, 12.2 0, 16 0 C 19.8 0, 22.5 2.2, 22.5 5 C 22.5 7, 20.5 10.5, 16 16 Z" fill="none" stroke="url(#logo-grad-admin)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="9.5" y1="18.5" x2="22.5" y2="18.5" stroke="url(#logo-grad-admin)" stroke-width="3" stroke-linecap="round" />
+                        </svg>
                         <div class="logo-text">
                             <span class="logo-main">ASYNC</span>
                             <span class="logo-suffix"> SOLUTIONS</span>
@@ -1225,7 +1231,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=12.0"></script>
+    <script type="module" src="js/script.js?v=13.0"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

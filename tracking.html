@@ -58,40 +58,25 @@
             text-decoration: none;
         }
 
-        .logo-symbol {
-            position: relative;
+        .logo-svg {
             width: 32px;
             height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .symbol-inner {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            align-items: flex-start;
+        .loop-path {
+            stroke-dasharray: 120;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .symbol-line {
-            height: 3px;
-            background: var(--coral);
-            border-radius: 4px;
+        .brand-logo:hover .logo-svg {
+            transform: scale(1.08) rotate(3deg);
         }
 
-        .line-1 {
-            width: 24px;
-        }
-
-        .line-2 {
-            width: 16px;
-            opacity: 0.8;
-        }
-
-        .line-3 {
-            width: 8px;
-            opacity: 0.6;
+        .brand-logo:hover .loop-path {
+            stroke-dashoffset: -120;
         }
 
         .logo-text {
@@ -260,13 +245,16 @@
     <nav class="tracking-nav">
         <div class="nav-container">
             <a href="index.html" class="brand-logo">
-                <div class="logo-symbol">
-                    <div class="symbol-inner">
-                        <span class="symbol-line line-1"></span>
-                        <span class="symbol-line line-2"></span>
-                        <span class="symbol-line line-3"></span>
-                    </div>
-                </div>
+                <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logo-grad-track" x1="0" y1="1" x2="1" y2="0">
+                            <stop offset="0%" stop-color="var(--coral)" />
+                            <stop offset="100%" stop-color="var(--peach)" />
+                        </linearGradient>
+                    </defs>
+                    <path class="loop-path" d="M16 16 C 11.5 21.5, 9.5 25, 9.5 27 C 9.5 29.8, 12.2 32, 16 32 C 19.8 32, 22.5 29.8, 22.5 27 C 22.5 25, 20.5 21.5, 16 16 C 11.5 10.5, 9.5 7, 9.5 5 C 9.5 2.2, 12.2 0, 16 0 C 19.8 0, 22.5 2.2, 22.5 5 C 22.5 7, 20.5 10.5, 16 16 Z" fill="none" stroke="url(#logo-grad-track)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <line x1="9.5" y1="18.5" x2="22.5" y2="18.5" stroke="url(#logo-grad-track)" stroke-width="3" stroke-linecap="round" />
+                </svg>
                 <div class="logo-text">
                     <span class="logo-main">ASYNC</span>
                     <span class="logo-suffix"> SOLUTIONS</span>
