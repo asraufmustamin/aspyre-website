@@ -1099,8 +1099,8 @@ ul {
 .kontak-wrapper {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    gap: 60px;
-    align-items: start;
+    gap: 40px;
+    align-items: center;
 }
 
 .kontak-info .section-title {
@@ -1129,14 +1129,14 @@ ul {
 
 /* Form */
 .kontak-form {
-    padding: 36px;
+    padding: 24px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-xl);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .form-group label {

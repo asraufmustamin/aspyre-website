@@ -586,7 +586,8 @@ function initOrderForm() {
 
         const text = `Halo ASYNC SOLUTIONS, saya ingin order project baru:%0A%0A` +
             `📋 *PROJECT ORDER* (${orderId})%0A` +
-            `👤 Nama/Bisnis: ${data.namaBisnis}%0A` +
+            `👤 Nama Klien: ${data.namaKlien}%0A` +
+            `🏢 Bisnis/Project: ${data.namaBisnis}%0A` +
             `📱 WhatsApp: ${data.userPhone}%0A` +
             `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
             `📝 Deskripsi: ${data.tentangBisnis}%0A` +
@@ -611,7 +612,7 @@ function initOrderForm() {
         setTimeout(() => {
             submitBtn.innerHTML = originalContent;
             submitBtn.disabled = false;
-            window.location.href = waUrl;
+            window.open(waUrl, '_blank');
         }, 1000);
     });
 }
