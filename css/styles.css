@@ -206,6 +206,26 @@ ul {
     justify-content: space-between;
 }
 
+@media (min-width: 769px) {
+    .main-nav .brand-logo {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .main-nav .nav-links {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .main-nav .nav-actions {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
 .brand {
     display: flex;
     align-items: center;
