@@ -14,7 +14,10 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>ASYNC SOLUTIONS - Design & Technology Studio (v11.5)</title>
+    <title>ASYNC SOLUTIONS - Design & Technology Studio (v11.6)</title>
+
+    <!-- Prevent favicon 404 error -->
+    <link rel="icon" href="data:,">
 
     <!-- Failsafe: Ensure body is visible if JS errors out -->
     <style>
@@ -51,7 +54,16 @@
     </script>
 </head>
 
-<body data-debug="true">
+<body class="js-loading">
+    <!-- FOUC Preloader -->
+    <div id="async-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1f; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease;">
+        <div style="width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #e85a4f; border-radius: 50%; animation: preloaderSpin 1s linear infinite;"></div>
+    </div>
+    <style>
+        @keyframes preloaderSpin { 100% { transform: rotate(360deg); } }
+    </style>
+
+    <!-- App Wrapper -->
     <div id="cmsHoverZone" class="cms-hover-zone"></div>
 
     <!-- CMS Edit Mode Indicator -->
@@ -593,8 +605,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=11.5">
-    <link rel="stylesheet" href="css/timeline-new.css?v=11.5">
+    <link rel="stylesheet" href="css/styles.css?v=11.6">
+    <link rel="stylesheet" href="css/timeline-new.css?v=11.6">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1225,7 +1237,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=11.5"></script>
+    <script type="module" src="js/script.js?v=11.6"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

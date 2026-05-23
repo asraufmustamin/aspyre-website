@@ -814,7 +814,7 @@ function enableCmsModeFunc() {
 
         hoverZone.addEventListener('mouseenter', showIndicator);
         indicator.addEventListener('mouseenter', showIndicator);
-        indicator.addEventListener('mouseleave', hideIndicator);
+        indicator.mouseleave(hideIndicator);
 
         // Store listeners for cleanup
         indicator._showFn = showIndicator;
@@ -947,11 +947,16 @@ async function loadCmsContent() {
         console.error("CMS Load Error:", e);
         const saved = localStorage.getItem('asyncCmsContent');
         if (saved) applyCmsContent(JSON.parse(saved));
+    } finally {
+        hidePreloader();
     }
 }
 
 function applyCmsContent(data) {
-    if (!data) return;
+    if (!data) {
+        hidePreloader();
+        return;
+    }
 
     // 1. Process and Apply Section Visibility
     const defaultSections = ['hero', 'layanan', 'paket', 'proses', 'projects', 'faq', 'calculator', 'kenapa', 'kontak'];
@@ -1000,6 +1005,19 @@ function applyCmsContent(data) {
         if (el) el.innerHTML = val;
     });
 }
+
+function hidePreloader() {
+    const preloader = document.getElementById('async-preloader');
+    if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            if (preloader.parentNode) preloader.remove();
+        }, 500);
+    }
+}
+
+// Ensure preloader hides even if something catastrophic happens (Fallback)
+setTimeout(hidePreloader, 3000);
 
 // initCmsMode is already defined above - removed duplicate
 
