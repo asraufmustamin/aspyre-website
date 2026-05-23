@@ -2250,154 +2250,74 @@ function initTrackingSystem() {
 const systemData = [
     {
         id: "sys-1",
-        title: "Landing Page / Portofolio Web",
-        category: "front-facing",
-        categoryLabel: "Starter / Edu",
+        title: "Website & Company Profile",
+        category: "web-profile",
+        categoryLabel: "Website & Company Profile",
         icon: "🌐",
-        price: "Rp 500.000 - Rp 800.000",
-        estimation: "3 Hari - 1 Minggu",
-        desc: "Landing page modern dengan performa tinggi untuk pelajar, mahasiswa, atau portofolio pribadi. Menggunakan sistem template modern siap pakai.",
+        price: "Rp 500.000 - Rp 1.500.000 (Perkiraan)",
+        estimation: "3 Hari - 2 Minggu (Perkiraan)",
+        desc: "Layanan pembuatan antarmuka publik atau etalase digital berkualitas tinggi untuk personal branding, portofolio profesional, landing page promosi, hingga profil resmi perusahaan (Company Profile).",
         features: [
-            "Desain UI/UX bersih, presisi & elegan",
-            "Kustomisasi warna, logo, dan teks",
-            "Deploy via Vercel / Firebase (Free-Tier)",
-            "Hosting gratis selamanya (biaya tahunan Rp 0)"
+            "Landing Page promosi / pendaftaran yang konversif",
+            "Portofolio digital interaktif untuk personal branding",
+            "Company Profile resmi perusahaan / profil UMKM",
+            "Desain UI/UX modern, bersih, responsif & ramah SEO",
+            "Formulir kontak terintegrasi langsung ke WhatsApp",
+            "Setup domain & gratis deployment hosting selamanya"
         ]
     },
     {
         id: "sys-2",
-        title: "Web App Sederhana (Tugas Akhir / Prototipe)",
-        category: "internal-systems",
-        categoryLabel: "Starter / Edu",
-        icon: "🧪",
-        price: "Rp 1.000.000 - Rp 2.000.000",
-        estimation: "2 - 3 Minggu",
-        desc: "Prototipe aplikasi web atau sistem Tugas Akhir mahasiswa dengan integrasi database cloud free-tier. Solusi cepat dan fungsional.",
+        title: "E-Commerce & Retail System",
+        category: "commerce",
+        categoryLabel: "E-Commerce & Retail",
+        icon: "🛒",
+        price: "Rp 2.000.000 - Rp 3.500.000 (Perkiraan)",
+        estimation: "2 - 4 Minggu (Perkiraan)",
+        desc: "Solusi digital terpadu untuk penjualan dan transaksi barang, baik untuk toko online (E-Commerce) mandiri maupun pencatatan kasir offline (Point of Sale).",
         features: [
-            "Pengembangan cepat berbasis base-code siap pakai",
-            "Integrasi database Supabase / Firebase",
-            "Autentikasi login & operasi CRUD data dasar",
-            "Free-tier hosting & database (Rp 0/tahun)"
+            "Toko Online (E-Commerce Lite) dengan katalog produk",
+            "Sistem keranjang belanja (cart) & checkout WhatsApp",
+            "Sistem Kasir (POS) Dasar untuk mencatat transaksi offline",
+            "Manajemen inventaris stok barang masuk/keluar sederhana",
+            "Integrasi cetak struk penjualan via printer thermal",
+            "Panduan setup hosting & domain bisnis mandiri"
         ]
     },
     {
         id: "sys-3",
-        title: "Company Profile Bisnis",
-        category: "front-facing",
-        categoryLabel: "UMKM / Bisnis Dasar",
-        icon: "🏢",
-        price: "Rp 1.500.000",
-        estimation: "2 Minggu",
-        desc: "Situs web representatif premium untuk mengenalkan profil, produk, dan jasa bisnis UMKM Anda kepada calon pelanggan secara luas.",
+        title: "Sistem Manajemen Terpadu (ERP & Admin)",
+        category: "management",
+        categoryLabel: "Sistem Manajemen Terpadu",
+        icon: "⚙️",
+        price: "Rp 5.000.000 - Rp 15.000.000 (Perkiraan)",
+        estimation: "2 - 4 Bulan (Perkiraan)",
+        desc: "Sistem manajemen data operasional terpusat (ERP & Dashboard) untuk mendigitalisasi proses kerja instansi, perusahaan, sekolah, maupun klinik kesehatan.",
         features: [
-            "Desain UI modern, presisi, & responsif mobile",
-            "Formulir kontak terintegrasi langsung ke WhatsApp",
-            "Optimasi performa & SEO teknis tingkat dasar"
+            "Web App & Dashboard Admin dengan visualisasi data real-time",
+            "Sistem Manajemen Karyawan (HRIS), absensi, dan keuangan",
+            "Sistem Informasi Akademik (SIAKAD) untuk sekolah/pesantren",
+            "Sistem Manajemen Klinik dengan Rekam Medis Elektronik (RME)",
+            "Manajemen hak akses pengguna tingkat lanjut (RBAC)",
+            "Audit log aktivitas pengguna & ekspor laporan PDF/Excel"
         ]
     },
     {
         id: "sys-4",
-        title: "Toko Online (E-Commerce Lite)",
-        category: "commerce",
-        categoryLabel: "UMKM / Bisnis Dasar",
-        icon: "🛒",
-        price: "Rp 2.500.000 - Rp 3.500.000",
-        estimation: "3 - 4 Minggu",
-        desc: "Platform toko online mandiri yang mudah digunakan untuk memajang katalog produk dan menerima order langsung dari pelanggan tanpa potongan komisi.",
-        features: [
-            "Manajemen katalog produk & keranjang belanja",
-            "Checkout pesanan langsung terkirim ke WhatsApp",
-            "Panduan setup domain & hosting bisnis"
-        ]
-    },
-    {
-        id: "sys-5",
-        title: "Sistem Kasir (POS) Dasar",
-        category: "commerce",
-        categoryLabel: "UMKM / Bisnis Dasar",
-        icon: "🧾",
-        price: "Rp 2.000.000",
-        estimation: "2 - 3 Minggu",
-        desc: "Sistem Point of Sale (POS) kasir dasar untuk pencatatan barang masuk/keluar serta cetak struk penjualan sederhana tanpa modul analitik rumit.",
-        features: [
-            "Transaksi kasir cepat berbasis web/cloud",
-            "Pelacakan stok barang masuk/keluar sederhana",
-            "Cetak struk penjualan via printer thermal"
-        ]
-    },
-    {
-        id: "sys-6",
-        title: "Web App & Dashboard Admin",
-        category: "internal-systems",
-        categoryLabel: "Premium / Instansi",
-        icon: "📈",
-        price: "Rp 6.000.000 - Rp 8.000.000",
-        estimation: "2 - 3 Bulan",
-        desc: "Dashboard kendali operasional internal dengan visualisasi metrik bisnis kunci secara real-time, manajemen hak akses, dan ekspor laporan.",
-        features: [
-            "Visualisasi data komprehensif & grafik interaktif",
-            "Manajemen peran & hak akses user (RBAC)",
-            "Audit log aktivitas user & ekspor PDF/Excel"
-        ]
-    },
-    {
-        id: "sys-7",
-        title: "Sistem Manajemen (ERP Lite)",
-        category: "internal-systems",
-        categoryLabel: "Premium / Instansi",
-        icon: "⚙️",
-        price: "Rp 8.500.000 - Rp 12.000.000",
-        estimation: "3 - 4 Bulan",
-        desc: "Perangkat lunak terpusat untuk mendigitalisasi operasional internal perusahaan: manajemen karyawan (HRIS), absensi, arus kas, dan penugasan proyek.",
-        features: [
-            "Modul HRIS: Absensi digital & database karyawan",
-            "Project management dengan Kanban board interaktif",
-            "Monitoring metrik profitabilitas & keuangan bisnis"
-        ]
-    },
-    {
-        id: "sys-8",
-        title: "Sistem Informasi Akademik (SIAKAD)",
-        category: "govtech",
-        categoryLabel: "Premium / Instansi",
-        icon: "🎓",
-        price: "Rp 7.000.000 - Rp 15.000.000",
-        estimation: "3 - 4 Bulan",
-        desc: "Platform manajemen pendidikan terintegrasi untuk sekolah, kampus, atau pesantren untuk absensi, nilai raport, jadwal pelajaran, dan keuangan.",
-        features: [
-            "Portal terpisah untuk Siswa, Guru, dan Admin",
-            "Manajemen rapor online, e-learning, & database akademik",
-            "Sistem keuangan SPP & tagihan terintegrasi"
-        ]
-    },
-    {
-        id: "sys-9",
-        title: "Sistem Manajemen Klinik Dasar",
-        category: "internal-systems",
-        categoryLabel: "Premium / Instansi",
-        icon: "🏥",
-        price: "Rp 5.000.000 - Rp 10.000.000",
-        estimation: "2 - 3 Bulan",
-        desc: "Digitalisasi fasilitas kesehatan dengan pencatatan rekam medis pasien elektronik (RME), manajemen antrean poli, riwayat pemeriksaan, serta stok obat.",
-        features: [
-            "Rekam Medis Elektronik (RME) aman & terenkripsi",
-            "Sistem antrean loket pendaftaran & kasir farmasi",
-            "Manajemen inventaris obat dan resep dokter"
-        ]
-    },
-    {
-        id: "sys-10",
-        title: "Sistem Khusus (Custom Development)",
+        title: "Custom App & Prototipe Edukasi",
         category: "custom",
-        categoryLabel: "Custom",
-        icon: "💻",
-        price: "Hubungi Admin",
-        estimation: "Fleksibel (Min. 2 Bulan)",
-        desc: "Rancang arsitektur sistem kustom sepenuhnya sesuai proses bisnis unik Anda dari nol. Keamanan tingkat tinggi, audit log, enkripsi AES-256, & SLA prioritas.",
+        categoryLabel: "Custom App & Prototipe",
+        icon: "🧪",
+        price: "Hubungi Admin / Negosiasi",
+        estimation: "Fleksibel (Hubungi Admin)",
+        desc: "Pengembangan aplikasi web kustom dari nol untuk kebutuhan spesifik Anda, mulai dari prototipe Tugas Akhir/Tesis mahasiswa hingga fitur kustom kompleks skala industri.",
         features: [
-            "Konsultasi kebutuhan & analisis arsitektur mendalam",
-            "Arsitektur database kompleks yang disesuaikan penuh",
-            "Dukungan teknis prioritas jangka panjang (SLA 24/7)"
+            "Prototipe MVP (Minimum Viable Product) riset akademik",
+            "Aplikasi web khusus (Custom Development) dari nol",
+            "Integrasi database cloud free-tier (Supabase/Firebase)",
+            "Fitur keamanan tingkat tinggi & arsitektur database kompleks",
+            "Enkripsi data sensitif (AES-256) & audit log aktivitas",
+            "Konsultasi kebutuhan intensif & dukungan teknis jangka panjang"
         ]
     }
 ];
