@@ -591,8 +591,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=10.6">
-    <link rel="stylesheet" href="css/timeline-new.css?v=10.6">
+    <link rel="stylesheet" href="css/styles.css?v=10.7">
+    <link rel="stylesheet" href="css/timeline-new.css?v=10.7">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -935,21 +935,28 @@
                             placeholder="Ceritakan singkat kebutuhan Anda..." required></textarea>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="pilarLayanan">Pilar Layanan</label>
-                            <select id="pilarLayanan" name="pilarLayanan" required>
-                                <option value="">Pilih pilar...</option>
-                                <option value="creative">DESIGN</option>
-                                <option value="systems">SYSTEM</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="kategoriLayanan">Kategori</label>
-                            <select id="kategoriLayanan" name="kategoriLayanan" required>
-                                <option value="">Pilih pilar dulu...</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="layananUtama">Layanan yang Dibutuhkan</label>
+                        <select id="layananUtama" name="layananUtama" required>
+                            <option value="">Pilih layanan...</option>
+                            <optgroup label="Desain & Kreatif">
+                                <option value="Logo & Brand Identity">Logo & Brand Identity</option>
+                                <option value="Banner & Spanduk">Banner & Spanduk</option>
+                                <option value="Konten Media Sosial">Konten Media Sosial (Feed/Story)</option>
+                                <option value="Presentasi (PPT)">Presentasi (PPT/Slide Deck)</option>
+                            </optgroup>
+                            <optgroup label="Sistem Digital (Premium)">
+                                <option value="Company Profile & Landing Page">Company Profile & Landing Page</option>
+                                <option value="Sistem E-Commerce & Toko Online">Sistem E-Commerce & Toko Online</option>
+                                <option value="Point of Sale (POS) & Kasir">Point of Sale (POS) & Kasir</option>
+                                <option value="Sistem Reservasi & Booking">Sistem Reservasi & Booking</option>
+                                <option value="Web App & Dashboard Admin">Web App & Dashboard Admin</option>
+                                <option value="Sistem Manajemen (ERP Lite)">Sistem Manajemen (ERP Lite)</option>
+                                <option value="Sistem Informasi Akademik (SIAKAD)">Sistem Informasi Akademik (SIAKAD)</option>
+                                <option value="Sistem Manajemen Klinik Dasar">Sistem Manajemen Klinik Dasar</option>
+                                <option value="Sistem Khusus (Custom Development)">Sistem Khusus (Custom Development)</option>
+                            </optgroup>
+                        </select>
                     </div>
 
                     <div class="form-row">
@@ -1235,7 +1242,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=10.6"></script>
+    <script type="module" src="js/script.js?v=10.7"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

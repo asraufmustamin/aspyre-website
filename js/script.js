@@ -123,7 +123,6 @@ const initApp = () => {
     safeInit(initScrollAnimations, 'Scroll Animations');
     safeInit(initOrderForm, 'Order Form');
     safeInit(initLanguageToggle, 'Language Toggle');
-    safeInit(initDynamicCategories, 'Dynamic Categories');
     safeInit(initAdminModal, 'Admin Modal');
     safeInit(initMagneticButtons, 'Magnetic Buttons');
     safeInit(initPortfolioAlbums, 'Portfolio Albums');
@@ -503,45 +502,6 @@ window.switchLanguage = function (lang) {
 
 
 /* ============================================
-   Dynamic Categories
-   ============================================ */
-function initDynamicCategories() {
-    const pilarSelect = document.getElementById('pilarLayanan');
-    const kategoriSelect = document.getElementById('kategoriLayanan');
-
-    if (!pilarSelect || !kategoriSelect) return;
-
-    const categories = {
-        'creative': [
-            { value: 'logo', label: 'Logo & Brand Identity' },
-            { value: 'banner', label: 'Banner & Spanduk' },
-            { value: 'sosmed', label: 'Konten Media Sosial (Feed/Story)' },
-            { value: 'ppt', label: 'Presentasi (PPT/Slide Deck)' }
-        ],
-        'systems': [
-            { value: 'landing', label: 'Landing Page (1 halaman)' },
-            { value: 'company', label: 'Website Company Profile' },
-            { value: 'webapp', label: 'Web App + Dashboard + Database' },
-            { value: 'ecommerce', label: 'E-Commerce Sederhana' }
-        ]
-    };
-
-    pilarSelect.addEventListener('change', (e) => {
-        const pilar = e.target.value;
-        kategoriSelect.innerHTML = '<option value="">Pilih kategori...</option>';
-
-        if (categories[pilar]) {
-            categories[pilar].forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat.value;
-                option.textContent = cat.label;
-                kategoriSelect.appendChild(option);
-            });
-        }
-    });
-}
-
-/* ============================================
    Order Form Handler
    ============================================ */
 function initOrderForm() {
@@ -580,16 +540,12 @@ function initOrderForm() {
             saveOrder({ ...orderData, timestamp: Date.now() });
         } catch (e) { console.error("Local save error:", e); }
 
-        // 2. Format WhatsApp Message
-        const pilars = { 'creative': 'DESIGN', 'systems': 'SYSTEM' };
-        const pilarTxt = pilars[data.pilarLayanan] || data.pilarLayanan;
-
         const text = `Halo ASYNC SOLUTIONS, saya ingin order project baru:%0A%0A` +
             `📋 *PROJECT ORDER* (${orderId})%0A` +
             `👤 Nama Klien: ${data.namaKlien}%0A` +
             `🏢 Bisnis/Project: ${data.namaBisnis}%0A` +
             `📱 WhatsApp: ${data.userPhone}%0A` +
-            `🎯 Layanan: ${pilarTxt} - ${data.kategoriLayanan}%0A` +
+            `🎯 Layanan: ${data.layananUtama}%0A` +
             `📝 Deskripsi: ${data.tentangBisnis}%0A` +
             `📅 Deadline: ${data.deadline}%0A` +
             `💰 Budget: ${data.budget}`;
