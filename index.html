@@ -591,8 +591,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=10.3">
-    <link rel="stylesheet" href="css/timeline-new.css?v=10.3">
+    <link rel="stylesheet" href="css/styles.css?v=10.4">
+    <link rel="stylesheet" href="css/timeline-new.css?v=10.4">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1102,7 +1102,7 @@
                         </div>
                     </div>
                     <h2>Admin Panel</h2>
-                    <p>Masuk untuk mengelola orders & konten</p>
+                    <p>Masuk untuk mengedit konten website</p>
                 </div>
 
                 <form id="adminLoginForm">
@@ -1123,54 +1123,13 @@
 
             <!-- Dashboard View -->
             <div id="adminDashboard" class="admin-view" style="display: none;">
-                <div class="admin-tabs">
-                    <button class="admin-tab active" data-tab="orders">📋 Orders</button>
-                    <button class="admin-tab" data-tab="cms">✏️ Edit Website</button>
-                </div>
-
-                <!-- Orders Tab -->
-                <div id="ordersTab" class="admin-tab-content active">
-                    <div class="admin-panel-header">
-                        <h3>Orders Management</h3>
-                        <button id="adminLogout" class="admin-logout-btn">Logout</button>
-                    </div>
-
-                    <div class="admin-stats-row">
-                        <div class="mini-stat">
-                            <span class="stat-num" id="statTotal">0</span>
-                            <span class="stat-lbl">Total</span>
-                        </div>
-                        <div class="mini-stat urgent">
-                            <span class="stat-num" id="statUrgent">0</span>
-                            <span class="stat-lbl">Urgent</span>
-                        </div>
-                        <div class="mini-stat">
-                            <span class="stat-num" id="statToday">0</span>
-                            <span class="stat-lbl">Hari Ini</span>
-                        </div>
-                    </div>
-
-                    <div class="category-filters">
-                        <button class="cat-filter active" data-cat="all">Semua</button>
-                        <button class="cat-filter" data-cat="creative">Creative</button>
-                        <button class="cat-filter" data-cat="systems">Systems</button>
-                        <button class="cat-filter" data-cat="data">Data</button>
-                    </div>
-
-                    <div class="admin-orders-compact" id="adminOrdersList"></div>
-
-                    <div class="admin-actions-row">
-                        <button id="adminRefresh" class="admin-btn">🔄 Refresh</button>
-                        <button id="adminClear" class="admin-btn danger">🗑️ Clear All</button>
-                    </div>
-                </div>
-
-                <!-- CMS Tab -->
-                <div id="cmsTab" class="admin-tab-content">
+                <!-- CMS Only -->
+                <div id="cmsTab" class="admin-tab-content active">
                     <div class="admin-panel-header">
                         <h3>Edit Website Content</h3>
-                        <div class="cms-header-actions">
+                        <div class="cms-header-actions" style="display: flex; gap: 10px;">
                             <button id="enableCmsMode" class="admin-btn primary">🎯 Edit Langsung di Website</button>
+                            <button id="adminLogout" class="admin-logout-btn">Logout</button>
                         </div>
                     </div>
 
@@ -1271,7 +1230,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=10.3"></script>
+    <script type="module" src="js/script.js?v=10.4"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>
