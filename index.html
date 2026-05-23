@@ -40,7 +40,7 @@
         href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=11.8">
     <!-- Failsafe Error Logger -->
     <script>
         window.onerror = function (msg, url, line) {
@@ -197,6 +197,11 @@
                         <span class="editable" data-key="hero-cta-2">Konsultasi Gratis</span>
                     </a>
                 </div>
+
+                <div class="hero-promo-badge editable animate-on-scroll" data-key="hero-promo-badge">
+                    <span class="promo-tag">PROMO</span>
+                    <span>Solusi Website & Aplikasi mulai dari <strong>Rp 500.000</strong>! (Khusus Mahasiswa & UMKM)</span>
+                </div>
             </div>
         </div>
     </section>
@@ -274,145 +279,126 @@
         </div>
     </div>
 
-    <!-- Paket Section - Enterprise (Digitalisasi Desa) -->
+    <!-- Paket Section - 3-Tier Pricing -->
     <section id="paket" class="section-paket">
         <div class="container">
             <div class="section-intro centered animate-on-scroll">
-                <span class="section-label editable" data-key="paket-label-exclusive">Paket Eksklusif</span>
-                <h2 class="section-title editable" data-key="paket-title-exclusive">Transformasi Digital Desa</h2>
-                <p class="section-subtitle editable" data-key="paket-subtitle-exclusive">Solusi enterprise terintegrasi untuk mendigitalisasi layanan publik, transparansi birokrasi, dan pemberdayaan ekonomi desa Anda.</p>
+                <span class="section-label editable" data-key="paket-label-exclusive">Pilihan Investasi</span>
+                <h2 class="section-title editable" data-key="paket-title-exclusive">Struktur Paket & Pricing</h2>
+                <p class="section-subtitle editable" data-key="paket-subtitle-exclusive">Pilihan paket yang fleksibel dan transparan untuk mahasiswa, pelaku bisnis UMKM, hingga instansi premium.</p>
             </div>
 
-            <!-- Digitalisasi Desa Content (Visible by default) -->
+            <!-- Pricing Content Grid -->
             <div id="paket-content-desa">
                 <!-- Intro Banner -->
                 <div class="desa-intro-banner animate-on-scroll">
                     <div class="desa-intro-content">
-                        <h3>🏘️ Ekosistem Digital Desa Cerdas</h3>
-                        <p>Platform digital terintegrasi untuk modernisasi layanan desa, transparansi informasi publik, dan pengembangan ekonomi lokal berbasis teknologi.</p>
+                        <h3 data-key="pricing-banner-title">⚡ Solusi Digital Cepat, Aman & Transparan</h3>
+                        <p data-key="pricing-banner-desc">Kami menyediakan opsi pembuatan website & sistem dengan standar kualitas tinggi, disesuaikan untuk pelajar, pelaku bisnis UMKM, hingga skala B2B/B2G.</p>
                     </div>
                     <div class="desa-keunggulan">
-                        <div class="keunggulan-item"><span class="keunggulan-icon">🔒</span><span>Keamanan Berlapis</span></div>
-                        <div class="keunggulan-item"><span class="keunggulan-icon">📱</span><span>Responsif Multi-Perangkat</span></div>
-                        <div class="keunggulan-item"><span class="keunggulan-icon">⚡</span><span>Performa Kelas Enterprise</span></div>
-                        <div class="keunggulan-item"><span class="keunggulan-icon">🎓</span><span>Pendampingan & Pelatihan</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">⚡</span><span data-key="pricing-key-1">Template & Custom Build</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">🔒</span><span data-key="pricing-key-2">Keamanan Terjamin</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">☁️</span><span data-key="pricing-key-3">Infrastruktur Free-Tier / Cloud</span></div>
+                        <div class="keunggulan-item"><span class="keunggulan-icon">🤝</span><span data-key="pricing-key-4">SLA Pengerjaan Jelas</span></div>
                     </div>
                 </div>
 
-                <!-- Village Pricing Grid -->
+                <!-- 3-Tier Pricing Grid -->
                 <div class="desa-paket-grid animate-on-scroll">
-                    <!-- Basic -->
+                    <!-- Starter / Edu -->
                     <div class="desa-paket-card">
                         <div class="desa-paket-header">
-                            <span class="desa-paket-tier">BASIC</span>
-                            <h4>Paket Dasar</h4>
-                            <p class="desa-paket-desc">Fondasi digital desa untuk memulai transformasi layanan publik</p>
+                            <span class="desa-paket-tier" data-key="tier-starter-label">STARTER / EDU</span>
+                            <h4 data-key="tier-starter-title">Paket Edu & Portofolio</h4>
+                            <p class="desa-paket-desc" data-key="tier-starter-desc">Untuk mahasiswa, pelajar, atau portofolio pribadi. Fokus kecepatan & biaya termurah.</p>
                         </div>
                         <div class="desa-paket-pricing">
                             <div class="desa-price-row">
-                                <span class="desa-price-label">Pembangunan</span>
-                                <span class="desa-price-value">Rp 5 Juta</span>
+                                <span class="desa-price-label">Landing Page</span>
+                                <span class="desa-price-value">Rp 500rb - 800rb</span>
                             </div>
                             <div class="desa-price-row">
-                                <span class="desa-price-label">Pemeliharaan/thn</span>
+                                <span class="desa-price-label">Web App / TA</span>
+                                <span class="desa-price-value sub">Rp 1jt - 2jt</span>
+                            </div>
+                        </div>
+                        <ul class="desa-paket-fitur">
+                            <li data-key="tier-starter-f1">✦ Berbasis Template (Base-code Siap Pakai)</li>
+                            <li data-key="tier-starter-f2">✦ Custom Warna, Logo, & Konten</li>
+                            <li data-key="tier-starter-f3">✦ Deploy Vercel / Firebase (Free-tier)</li>
+                            <li data-key="tier-starter-f4">✦ Cloud DB Supabase / Firebase</li>
+                            <li data-key="tier-starter-f5">✦ Maintenance & Hosting Selamanya Rp 0</li>
+                            <li data-key="tier-starter-f6">✦ Estimasi: 3 Hari - 2 Minggu</li>
+                        </ul>
+                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20Paket%20Starter%20/%20Edu%20untuk%20mahasiswa/pelajar." class="paket-cta" target="_blank">
+                            <span>Hubungi Kami</span>
+                            <span class="cta-arrow">→</span>
+                        </a>
+                    </div>
+
+                    <!-- UMKM / Bisnis Dasar -->
+                    <div class="desa-paket-card recommended">
+                        <div class="desa-recommended-badge" data-key="tier-umkm-badge">Rekomendasi Bisnis</div>
+                        <div class="desa-paket-header">
+                            <span class="desa-paket-tier" data-key="tier-umkm-label">UMKM / BISNIS DASAR</span>
+                            <h4 data-key="tier-umkm-title">Paket Bisnis Dasar</h4>
+                            <p class="desa-paket-desc" data-key="tier-umkm-desc">Untuk digitalisasi bisnis UMKM Anda dengan fitur inti (MVP) yang presisi & responsif.</p>
+                        </div>
+                        <div class="desa-paket-pricing">
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Company Profile</span>
+                                <span class="desa-price-value">Rp 1,5 Juta</span>
+                            </div>
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Toko Online Lite</span>
+                                <span class="desa-price-value">Rp 2,5jt - 3,5jt</span>
+                            </div>
+                            <div class="desa-price-row">
+                                <span class="desa-price-label">Sistem Kasir (POS)</span>
                                 <span class="desa-price-value sub">Rp 2 Juta</span>
                             </div>
                         </div>
                         <ul class="desa-paket-fitur">
-                            <li>✦ 2 Modul Utama</li>
-                            <li>✦ Desain Standar Responsif</li>
-                            <li>✦ Hosting & Domain 1 Tahun</li>
-                            <li>✦ Pelatihan Dasar (1 Sesi)</li>
+                            <li data-key="tier-umkm-f1">✦ Fitur Inti Operasional Bisnis (MVP)</li>
+                            <li data-key="tier-umkm-f2">✦ Clean & Elegant visual template</li>
+                            <li data-key="tier-umkm-f3">✦ E-commerce: Catalog, Cart & WhatsApp Order</li>
+                            <li data-key="tier-umkm-f4">✦ POS: Stok In/Out & Print Struk Sederhana</li>
+                            <li data-key="tier-umkm-f5">✦ Integrasi Google Analytics Dasar</li>
+                            <li data-key="tier-umkm-f6">✦ Estimasi: 1 Minggu - 4 Minggu</li>
                         </ul>
-                        <a href="#kontak" class="paket-cta">
-                            <span>Ajukan Penawaran</span>
+                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20Paket%20UMKM%20/%20Bisnis%20Dasar%20untuk%20usaha%20saya." class="paket-cta primary" target="_blank">
+                            <span>Hubungi Kami</span>
                             <span class="cta-arrow">→</span>
                         </a>
                     </div>
 
-                    <!-- Professional -->
-                    <div class="desa-paket-card recommended">
-                        <div class="desa-recommended-badge">Rekomendasi Utama</div>
-                        <div class="desa-paket-header">
-                            <span class="desa-paket-tier">PROFESSIONAL</span>
-                            <h4>Paket Profesional</h4>
-                            <p class="desa-paket-desc">Solusi lengkap dengan seluruh modul dan fitur premium terintegrasi</p>
-                        </div>
-                        <div class="desa-paket-pricing">
-                            <div class="desa-price-row">
-                                <span class="desa-price-label">Pembangunan</span>
-                                <span class="desa-price-value">Rp 10 Juta</span>
-                            </div>
-                            <div class="desa-price-row">
-                                <span class="desa-price-label">Pemeliharaan/thn</span>
-                                <span class="desa-price-value sub">Rp 3,5 Juta</span>
-                            </div>
-                        </div>
-                        <ul class="desa-paket-fitur">
-                            <li>✦ 4 Modul Lengkap</li>
-                            <li>✦ Desain UI/UX Premium</li>
-                            <li>✦ Integrasi WhatsApp</li>
-                            <li>✦ Dashboard Analitik</li>
-                            <li>✦ Pelatihan Intensif (3 Sesi)</li>
-                            <li>✦ Garansi 12 Bulan</li>
-                        </ul>
-                        <a href="#kontak" class="paket-cta primary">
-                            <span>Ajukan Penawaran</span>
-                            <span class="cta-arrow">→</span>
-                        </a>
-                    </div>
-
-                    <!-- Enterprise -->
+                    <!-- Premium / Instansi -->
                     <div class="desa-paket-card">
                         <div class="desa-paket-header">
-                            <span class="desa-paket-tier">ENTERPRISE</span>
-                            <h4>Paket Enterprise</h4>
-                            <p class="desa-paket-desc">Skala besar dengan fitur eksklusif dan kapasitas tinggi</p>
+                            <span class="desa-paket-tier" data-key="tier-premium-label">PREMIUM / INSTANSI</span>
+                            <h4 data-key="tier-premium-title">Paket Premium & Instansi</h4>
+                            <p class="desa-paket-desc" data-key="tier-premium-desc">Sistem kustom penuh untuk enterprise, instansi pemerintah (B2B/B2G), & aplikasi kompleks.</p>
                         </div>
                         <div class="desa-paket-pricing">
                             <div class="desa-price-row">
                                 <span class="desa-price-label">Pembangunan</span>
-                                <span class="desa-price-value">Rp 15 Juta</span>
+                                <span class="desa-price-value">Rp 5jt - 15jt+</span>
                             </div>
                             <div class="desa-price-row">
-                                <span class="desa-price-label">Pemeliharaan/thn</span>
-                                <span class="desa-price-value sub">Rp 5 Juta</span>
+                                <span class="desa-price-label">Estimasi Pengerjaan</span>
+                                <span class="desa-price-value sub">1 - 4+ Bulan</span>
                             </div>
                         </div>
                         <ul class="desa-paket-fitur">
-                            <li>✦ Semua Fitur Professional</li>
-                            <li>✦ Multi-Bahasa Daerah</li>
-                            <li>✦ Dedicated Server</li>
-                            <li>✦ Custom API Integration</li>
-                            <li>✦ Priority Support 24/7</li>
+                            <li data-key="tier-premium-f1">✦ Pembuatan Kustom Penuh (Custom Build dari Nol)</li>
+                            <li data-key="tier-premium-f2">✦ Security: Hashing Data & Enkripsi AES-256</li>
+                            <li data-key="tier-premium-f3">✦ Modul Analitik Berlapis & Dashboard (RBAC)</li>
+                            <li data-key="tier-premium-f4">✦ Integrasi API Gateway & Payment Gateway</li>
+                            <li data-key="tier-premium-f5">✦ Sistem ERP, SIAKAD, Klinik, & Layanan Desa</li>
+                            <li data-key="tier-premium-f6">✦ Garansi Pemeliharaan & Support SLA 24/7</li>
                         </ul>
-                        <a href="#kontak" class="paket-cta">
-                            <span>Ajukan Penawaran</span>
-                            <span class="cta-arrow">→</span>
-                        </a>
-                    </div>
-
-                    <!-- Custom -->
-                    <div class="desa-paket-card desa-custom">
-                        <div class="desa-paket-header">
-                            <span class="desa-paket-tier">CUSTOM</span>
-                            <h4>Paket Kustom</h4>
-                            <p class="desa-paket-desc">Solusi yang disesuaikan sepenuhnya dengan kebutuhan unik desa Anda</p>
-                        </div>
-                        <div class="desa-paket-pricing">
-                            <div class="desa-price-row">
-                                <span class="desa-price-label">Investasi</span>
-                                <span class="desa-price-value custom">Negosiabel</span>
-                            </div>
-                        </div>
-                        <ul class="desa-paket-fitur">
-                            <li>✦ Modul BUMDes Kustom</li>
-                            <li>✦ Integrasi Sistem Nasional</li>
-                            <li>✦ Dedicated Infrastructure</li>
-                            <li>✦ Full Managed Service</li>
-                            <li>✦ SLA Custom</li>
-                        </ul>
-                        <a href="#kontak" class="paket-cta">
+                        <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20dengan%20Paket%20Premium%20/%20Instansi%20skala%20B2B/B2G." class="paket-cta" target="_blank">
                             <span>Hubungi Kami</span>
                             <span class="cta-arrow">→</span>
                         </a>
@@ -424,53 +410,53 @@
                     <!-- Ketentuan Kemitraan -->
                     <div class="desa-detail-card">
                         <div class="desa-detail-icon">🤝</div>
-                        <h4>Ketentuan Kemitraan</h4>
+                        <h4 data-key="pricing-terms-title">Ketentuan Kemitraan</h4>
                         <ul class="desa-detail-list">
-                            <li><strong>Skema Termin APBDes</strong> — Pembayaran bertahap sesuai anggaran desa</li>
-                            <li><strong>Garansi 12 Bulan</strong> — Jaminan perbaikan bug dan maintenance</li>
-                            <li><strong>Bimtek Gratis</strong> — Pelatihan teknis untuk perangkat desa</li>
-                            <li><strong>Hak Milik Penuh</strong> — Source code menjadi milik desa</li>
+                            <li data-key="pricing-terms-1"><strong>Pembayaran Bertahap</strong> — Skema pembayaran termin (DP + Pelunasan Handover) yang fleksibel.</li>
+                            <li data-key="pricing-terms-2"><strong>Garansi & Support</strong> — Jaminan perbaikan bug/error pasca serah terima sistem.</li>
+                            <li data-key="pricing-terms-3"><strong>Dokumentasi Lengkap</strong> — Manual guide atau video tutorial pengoperasian sistem.</li>
+                            <li data-key="pricing-terms-4"><strong>Hak Milik Penuh</strong> — Source code dan aset sepenuhnya menjadi milik klien.</li>
                         </ul>
                     </div>
 
-                    <!-- Timeline -->
+                    <!-- Timeline / SLA -->
                     <div class="desa-detail-card">
                         <div class="desa-detail-icon">📅</div>
-                        <h4>Timeline 3 Minggu</h4>
+                        <h4 data-key="pricing-sla-title">Estimasi Pengerjaan & SLA</h4>
                         <div class="desa-timeline-steps">
                             <div class="desa-timeline-step">
                                 <span class="desa-step-num">1</span>
                                 <div>
-                                    <strong>Minggu 1</strong>
-                                    <p>Setup Infrastruktur & Desain UI/UX</p>
+                                    <strong>Starter / Edu</strong>
+                                    <p>3 Hari s/d 2 Minggu (Berbasis Template)</p>
                                 </div>
                             </div>
                             <div class="desa-timeline-step">
                                 <span class="desa-step-num">2</span>
                                 <div>
-                                    <strong>Minggu 2</strong>
-                                    <p>Integrasi Modul & Pengembangan Fitur</p>
+                                    <strong>UMKM / Bisnis Dasar</strong>
+                                    <p>1 s/d 4 Minggu (Fitur Inti MVP Terarah)</p>
                                 </div>
                             </div>
                             <div class="desa-timeline-step">
                                 <span class="desa-step-num">3</span>
                                 <div>
-                                    <strong>Minggu 3</strong>
-                                    <p>Launching, Testing & Bimtek</p>
+                                    <strong>Premium / Instansi</strong>
+                                    <p>1 s/d 4+ Bulan (Custom Build Full-Scale)</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- SLA -->
+                    <!-- Kualitas & Infrastruktur -->
                     <div class="desa-detail-card">
                         <div class="desa-detail-icon">🛡️</div>
-                        <h4>Komitmen SLA</h4>
+                        <h4 data-key="pricing-infra-title">Standar Infrastruktur</h4>
                         <ul class="desa-detail-list">
-                            <li><strong>Monitoring 24/7</strong> — Server dipantau secara real-time</li>
-                            <li><strong>Backup Berkala</strong> — Data aman dengan backup harian</li>
-                            <li><strong>Response ≤ 2 Jam</strong> — Dukungan darurat prioritas</li>
-                            <li><strong>Uptime 99.9%</strong> — Jaminan ketersediaan layanan</li>
+                            <li data-key="pricing-infra-1"><strong>UI/UX Bersih & Presisi</strong> — Desain estetik dan modern nyaman di mobile & desktop.</li>
+                            <li data-key="pricing-infra-2"><strong>Hosting Efisien</strong> — Cloud hosting free-tier (hosting Rp 0) untuk menekan biaya maintenance.</li>
+                            <li data-key="pricing-infra-3"><strong>Teknologi Modern</strong> — Menggunakan React/Next.js, Supabase, Firebase, & Vercel.</li>
+                            <li data-key="pricing-infra-4"><strong>Keamanan Terkini</strong> — Enkripsi data sensitif (AES-256) untuk paket premium/instansi.</li>
                         </ul>
                     </div>
                 </div>
@@ -605,8 +591,8 @@
 
     <!-- Scripts -->
     <!-- Core CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=11.7">
-    <link rel="stylesheet" href="css/timeline-new.css?v=11.7">
+    <link rel="stylesheet" href="css/styles.css?v=11.8">
+    <link rel="stylesheet" href="css/timeline-new.css?v=11.8">
 
     <!-- Portfolio Albums Section - Karya Kami (HIDDEN: belum ready untuk publish) -->
     <section id="projects" class="section-portfolio">
@@ -1237,7 +1223,7 @@
         </div>
     </div>
 
-    <script type="module" src="js/script.js?v=11.7"></script>
+    <script type="module" src="js/script.js?v=11.8"></script>
     <!-- Floating Chat Feature -->
     <link rel="stylesheet" href="css/floating-chat.css">
     <script src="js/floating-chat.js" defer></script>

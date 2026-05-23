@@ -29,10 +29,10 @@
         },
         web: {
             types: {
-                landing: { label: 'Landing Page', base: 999000 },
-                company: { label: 'Company Profile', base: 1999000 },
-                ecommerce: { label: 'E-Commerce Simple', base: 3499000 },
-                webapp: { label: 'Web App Custom', base: 5999000 }
+                landing: { label: 'Landing Page / Portofolio (Starter/Edu)', base: 500000 },
+                company: { label: 'Company Profile (UMKM)', base: 1500000 },
+                ecommerce: { label: 'Toko Online E-Commerce Lite (UMKM)', base: 2500000 },
+                webapp: { label: 'Web App Custom / Premium', base: 5000000 }
             },
             extras: {
                 cms: { label: 'CMS / Blog', val: 250000 },
