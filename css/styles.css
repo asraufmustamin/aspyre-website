@@ -7846,6 +7846,18 @@ section.highlight-section {
     border-bottom: none;
 }
 
+.paket-note {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    text-align: center;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+}
+
 /* ============================================
    Desa Details Grid (Ketentuan, Timeline, SLA)
    ============================================ */
