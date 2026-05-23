@@ -547,8 +547,7 @@ function initOrderForm() {
             `📱 WhatsApp: ${data.userPhone}%0A` +
             `🎯 Layanan: ${data.layananUtama}%0A` +
             `📝 Deskripsi: ${data.tentangBisnis}%0A` +
-            `📅 Deadline: ${data.deadline}%0A` +
-            `💰 Budget: ${data.budget}`;
+            `📅 Deadline: ${data.deadline}`;
 
         const waUrl = `https://wa.me/6285729715555?text=${text}`;
 
