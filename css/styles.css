@@ -1393,10 +1393,7 @@ ul {
     gap: 10px;
 }
 
-.brand-logo.small .logo-symbol {
-    width: 32px;
-    height: 32px;
-}
+/* .logo-svg sizing for .small variant is handled in .brand-logo.small .logo-svg */
 
 .brand-logo.small .logo-main {
     font-size: 18px;
@@ -2977,7 +2974,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     margin-bottom: 16px;
 }
 
-.admin-logo .logo-symbol {
+.admin-logo .logo-svg {
     transform: scale(0.8);
 }
 
