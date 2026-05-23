@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 100" fill="none" width="100%" height="100%">
+  <defs>
+    <!-- Imports Sora font from Google Fonts -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;800&amp;display=swap');
+      
+      .logo-main {
+        font-family: 'Sora', sans-serif;
+        font-weight: 800;
+        font-size: 42px;
+        letter-spacing: 0.05em;
+        fill: url(#textGrad);
+      }
+      
+      .logo-suffix {
+        font-family: 'Sora', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        letter-spacing: 0.28em;
+        fill: url(#textGrad2);
+        opacity: 0.85;
+      }
+    </style>
+
+    <!-- Warm Gradient for the Ribbon Icon -->
+    <linearGradient id="warmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e85a4f" />
+      <stop offset="50%" stop-color="#f4a261" />
+      <stop offset="100%" stop-color="#e85a4f" />
+    </linearGradient>
+
+    <!-- Metallic Gradient for ASYNC text -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="10%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+
+    <!-- Metallic Gradient for SOLUTIONS text -->
+    <linearGradient id="textGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="20%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </linearGradient>
+    
+    <!-- Shadow Filter for 3D Overlap -->
+    <filter id="logoShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="-0.8" dy="1.8" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Dark container background for preview/contrast -->
+  <rect width="380" height="100" fill="#0e1118" rx="8" />
+
+  <!-- 1. The 3D Loop Icon -->
+  <g transform="translate(10, 0)">
+    <!-- Seamless base path -->
+    <path d="M 26 74 C 26 62, 34 38, 46 24 C 50 19, 55 18, 60 18 C 65 18, 70 19, 74 24 C 86 38, 94 62, 94 66 C 94 72, 100 72, 106 66 C 112 58, 112 38, 106 30 C 100 24, 94 24, 94 30 C 94 36, 82 42, 60 48 C 38 54, 26 60, 26 66 C 26 72, 20 72, 14 66 C 8 58, 8 38, 14 30 C 20 24, 26 24, 26 30 C 26 36, 38 42, 60 48 C 82 54, 94 62, 94 74" 
+          fill="none" 
+          stroke="url(#warmGrad)" 
+          stroke-width="9.5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Overlapping front segments (to cast shadows) -->
+    <path d="M 14 30 C 20 24, 26 24, 26 30 C 26 36, 38 42, 60 48" 
+          fill="none" 
+          stroke="url(#warmGrad)" 
+          stroke-width="9.5" 
+          stroke-linecap="round" 
+          filter="url(#logoShadow)" />
+
+    <path d="M 94 30 C 94 36, 82 42, 60 48" 
+          fill="none" 
+          stroke="url(#warmGrad)" 
+          stroke-width="9.5" 
+          stroke-linecap="round" 
+          filter="url(#logoShadow)" />
+
+    <path d="M 60 48 C 82 54, 94 62, 94 74" 
+          fill="none" 
+          stroke="url(#warmGrad)" 
+          stroke-width="9.5" 
+          stroke-linecap="round" 
+          filter="url(#logoShadow)" />
+  </g>
+
+  <!-- 2. Typography -->
+  <g transform="translate(136, 0)">
+    <text x="0" y="47" class="logo-main">ASYNC</text>
+    <text x="0" y="77" class="logo-suffix">SOLUTIONS</text>
+  </g>
+</svg>
