@@ -1402,86 +1402,22 @@ ul {
     font-size: 18px;
 }
 
-.logo-symbol {
-    position: relative;
+.logo-svg {
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.symbol-inner {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-}
-
-.symbol-line {
     display: block;
-    height: 3px;
-    background: var(--gradient-warm);
-    border-radius: 2px;
-    transform-origin: left center;
-    animation: lineWave 3s ease-in-out infinite;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.symbol-line.line-1 {
-    width: 100%;
-    animation-delay: 0s;
+.brand-logo.small .logo-svg {
+    width: 32px;
+    height: 32px;
 }
 
-.symbol-line.line-2 {
-    width: 75%;
-    animation-delay: 0.2s;
-}
-
-.symbol-line.line-3 {
-    width: 50%;
-    animation-delay: 0.4s;
-}
-
-@keyframes lineWave {
-
-    0%,
-    100% {
-        transform: scaleX(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scaleX(0.8);
-        opacity: 0.7;
-    }
-}
-
-.symbol-dot {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 8px;
-    height: 8px;
-    background: var(--coral);
-    border-radius: 50%;
-    animation: dotPulse 2s ease-in-out infinite;
-}
-
-@keyframes dotPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.3);
-        opacity: 0.6;
-    }
+.loop-path {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logo-text {
@@ -1507,12 +1443,12 @@ ul {
     background-clip: text;
 }
 
-.brand-logo:hover .symbol-line {
-    animation-duration: 1.5s;
+.brand-logo:hover .logo-svg {
+    transform: scale(1.08) rotate(3deg);
 }
 
-.brand-logo:hover .symbol-dot {
-    animation-duration: 1s;
+.brand-logo:hover .loop-path {
+    stroke-dashoffset: -120;
 }
 
 /* Nav Store Link */
