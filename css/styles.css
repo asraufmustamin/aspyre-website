@@ -1380,87 +1380,34 @@ ul {
 }
 
 /* ============================================
-   Animated Brand Logo
+   3D Brand Logo
    ============================================ */
 .brand-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
+    transition: opacity 0.3s ease;
 }
 
-.brand-logo.small {
-    gap: 9px;
+.brand-logo:hover {
+    opacity: 0.95;
 }
 
-.brand-logo.small .logo-main {
-    font-size: 17px;
-}
-
-.brand-logo.small .logo-suffix {
-    font-size: 9px;
-    letter-spacing: 0.24em;
-}
-
-.logo-svg {
-    width: 46px;
+.logo-3d-img {
     height: 38px;
+    width: auto;
     display: block;
-    flex-shrink: 0;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
-    filter: drop-shadow(0 0 8px rgba(232, 90, 79, 0.3));
+    transition: transform 0.4s var(--ease-smooth), filter 0.4s ease;
+    filter: drop-shadow(0 2px 8px rgba(232, 90, 79, 0.15));
 }
 
-.brand-logo.small .logo-svg {
-    width: 38px;
-    height: 32px;
+.brand-logo:hover .logo-3d-img {
+    transform: scale(1.05) translateY(-1px);
+    filter: drop-shadow(0 4px 16px rgba(232, 90, 79, 0.35));
 }
 
-.loop-path-base, .loop-path-overlay {
-    transition: stroke-dashoffset 0.8s ease, filter 0.5s ease;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    gap: 2px;
-}
-
-.logo-main {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    background: linear-gradient(180deg, #ffffff 10%, #cbd5e1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    line-height: 1.0;
-}
-
-.logo-suffix {
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    opacity: 0.85;
-    line-height: 1.1;
-}
-
-.brand-logo:hover .logo-svg {
-    transform: scale(1.06) translateY(-1px);
-    filter: drop-shadow(0 0 16px rgba(232, 90, 79, 0.5));
-}
-
-.brand-logo:hover .loop-path-overlay {
-    filter: drop-shadow(0 0 8px rgba(232, 90, 79, 0.6));
+.brand-logo.small .logo-3d-img {
+    height: 30px;
 }
 
 /* Nav Store Link */
@@ -2989,44 +2936,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     margin-bottom: 16px;
 }
 
-.admin-logo .logo-svg {
-    width: 38px;
-    height: 32px;
-}
-
-.admin-logo .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-    gap: 2px;
-    text-align: left;
-}
-
-.admin-logo .logo-main {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    background: linear-gradient(180deg, #ffffff 10%, #cbd5e1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    line-height: 1.0;
-}
-
-.admin-logo .logo-suffix {
-    font-family: var(--font-display);
-    font-size: 9px;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    opacity: 0.85;
-    line-height: 1.1;
+.admin-logo .logo-3d-img {
+    height: 34px;
 }
 
 .admin-login-header h2 {
