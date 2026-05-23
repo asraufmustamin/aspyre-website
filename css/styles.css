@@ -1385,75 +1385,82 @@ ul {
 .brand-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
 }
 
 .brand-logo.small {
-    gap: 8px;
+    gap: 9px;
 }
 
 .brand-logo.small .logo-main {
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .brand-logo.small .logo-suffix {
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 9px;
+    letter-spacing: 0.24em;
 }
 
 .logo-svg {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 38px;
     display: block;
     flex-shrink: 0;
     transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
-    filter: drop-shadow(0 0 6px rgba(232, 90, 79, 0.25));
+    filter: drop-shadow(0 0 8px rgba(232, 90, 79, 0.3));
 }
 
 .brand-logo.small .logo-svg {
-    width: 32px;
+    width: 38px;
     height: 32px;
 }
 
-.loop-path {
-    transition: opacity 0.4s ease;
+.loop-path-base, .loop-path-overlay {
+    transition: stroke-dashoffset 0.8s ease, filter 0.5s ease;
 }
 
 .logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1;
-    gap: 1px;
+    line-height: 1.1;
+    gap: 2px;
 }
 
 .logo-main {
     font-family: var(--font-display);
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
-    letter-spacing: 0.04em;
-    color: var(--white);
+    letter-spacing: 0.05em;
+    background: linear-gradient(180deg, #ffffff 10%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.0;
 }
 
 .logo-suffix {
     font-family: var(--font-display);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    color: var(--coral);
-    -webkit-text-fill-color: unset;
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.85;
+    line-height: 1.1;
 }
 
 .brand-logo:hover .logo-svg {
-    transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 12px rgba(232, 90, 79, 0.45));
+    transform: scale(1.06) translateY(-1px);
+    filter: drop-shadow(0 0 16px rgba(232, 90, 79, 0.5));
 }
 
-.brand-logo:hover .loop-path {
-    opacity: 0.85;
+.brand-logo:hover .loop-path-overlay {
+    filter: drop-shadow(0 0 8px rgba(232, 90, 79, 0.6));
 }
 
 /* Nav Store Link */
@@ -2983,26 +2990,43 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .admin-logo .logo-svg {
-    transform: scale(0.8);
+    width: 38px;
+    height: 32px;
 }
 
 .admin-logo .logo-text {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    line-height: 1.1;
+    gap: 2px;
+    text-align: left;
 }
 
 .admin-logo .logo-main {
     font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: linear-gradient(180deg, #ffffff 10%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.0;
 }
 
 .admin-logo .logo-suffix {
-    font-size: 20px;
-    font-weight: 700;
-    background: var(--gradient-warm);
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.85;
+    line-height: 1.1;
 }
 
 .admin-login-header h2 {
