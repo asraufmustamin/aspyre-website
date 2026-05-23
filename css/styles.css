@@ -1385,25 +1385,30 @@ ul {
 .brand-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
 }
 
 .brand-logo.small {
-    gap: 10px;
+    gap: 8px;
 }
 
-/* .logo-svg sizing for .small variant is handled in .brand-logo.small .logo-svg */
-
 .brand-logo.small .logo-main {
-    font-size: 18px;
+    font-size: 15px;
+}
+
+.brand-logo.small .logo-suffix {
+    font-size: 11px;
+    letter-spacing: 0.18em;
 }
 
 .logo-svg {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     display: block;
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    flex-shrink: 0;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+    filter: drop-shadow(0 0 6px rgba(232, 90, 79, 0.25));
 }
 
 .brand-logo.small .logo-svg {
@@ -1412,40 +1417,43 @@ ul {
 }
 
 .loop-path {
-    stroke-dasharray: 120;
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.4s ease;
 }
 
 .logo-text {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    line-height: 1;
+    gap: 1px;
 }
 
 .logo-main {
     font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
     color: var(--white);
 }
 
 .logo-suffix {
     font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 700;
-    background: var(--gradient-warm);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--coral);
+    -webkit-text-fill-color: unset;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
 }
 
 .brand-logo:hover .logo-svg {
-    transform: scale(1.08) rotate(3deg);
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 12px rgba(232, 90, 79, 0.45));
 }
 
 .brand-logo:hover .loop-path {
-    stroke-dashoffset: -120;
+    opacity: 0.85;
 }
 
 /* Nav Store Link */
