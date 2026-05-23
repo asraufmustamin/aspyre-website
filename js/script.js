@@ -371,6 +371,15 @@ const TRANSLATIONS = {
         'testimoni-title': 'Apa Kata Klien Kami',
         'kontak-label': 'Kontak',
         'kontak-title': 'Mulai Project Anda',
+        // Bento Section
+        'bento-main-title': 'Beda dari yang Lain.',
+        'bento-main-desc': 'Kami memadukan estetika desain dengan logika bisnis. Bukan sekadar visual bagus, tapi visual yang menjual.',
+        'bento-f1-title': 'Fleksibel',
+        'bento-f1-desc': 'Timeline & Budget menyesuaikan kebutuhan bisnis Anda.',
+        'bento-f2-title': 'Estetika Presisi',
+        'bento-f2-desc': 'Desain proporsional, bersih, dan eksklusif untuk bisnis Anda.',
+        'bento-f3-title': 'Revisi Terjamin',
+        'bento-f3-desc': 'Garansi kepuasan hingga penyerahan sistem.',
         // Paket Section Tiers & Content
         'pricing-banner-title': '⚡ Solusi Digital Cepat, Aman & Transparan',
         'pricing-banner-desc': 'Kami menyediakan opsi pembuatan website & sistem dengan standar kualitas tinggi, disesuaikan untuk pelajar, pelaku bisnis UMKM, hingga skala B2B/B2G.',
@@ -456,6 +465,15 @@ const TRANSLATIONS = {
         'testimoni-title': 'What Our Clients Say',
         'kontak-label': 'Contact',
         'kontak-title': 'Start Your Project',
+        // Bento Section
+        'bento-main-title': 'Stand Out from the Rest.',
+        'bento-main-desc': 'We blend design aesthetics with business logic. Not just pretty visuals, but visuals that sell.',
+        'bento-f1-title': 'Flexible',
+        'bento-f1-desc': 'Timeline & budget tailored to your business needs.',
+        'bento-f2-title': 'Precision Aesthetics',
+        'bento-f2-desc': 'Proportional, clean, and exclusive design for your business.',
+        'bento-f3-title': 'Guaranteed Revisions',
+        'bento-f3-desc': 'Satisfaction guarantee until final delivery.',
         // Paket Section Tiers & Content
         'pricing-banner-title': '⚡ Fast, Secure & Transparent Digital Solutions',
         'pricing-banner-desc': 'We provide website & system development options with high quality standards, tailored for students, MSMEs, to B2B/B2G scale.',
