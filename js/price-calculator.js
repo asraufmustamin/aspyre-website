@@ -53,6 +53,9 @@
     // Step 2 Container
     const step2Container = document.getElementById('step2Form');
 
+    // Guard Clause: Exit if calculator elements are not on the page
+    if (!progressBar || !nextBtn || !backBtn || !step2Container) return;
+
     // Init
     updateUI();
 

@@ -700,33 +700,34 @@ function initAdminModal() {
     });
 
     // Logout
-    const logoutBtn = document.getElementById('adminLogout');
-    logoutBtn.addEventListener('click', () => {
-        console.log("Admin: Logging out...");
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            console.log("Admin: Logging out...");
 
-        // 1. Clear session
-        sessionStorage.removeItem('async_admin');
+            // 1. Clear session
+            sessionStorage.removeItem('async_admin');
 
-        // 3. Reset views
-        if (dashboardView) dashboardView.classList.remove('active');
-        if (loginView) loginView.classList.add('active');
+            // 3. Reset views
+            if (dashboardView) dashboardView.classList.remove('active');
+            if (loginView) loginView.classList.add('active');
 
-        // 4. Reset form
-        loginForm.reset();
+            // 4. Reset form
+            loginForm.reset();
 
-        // 5. Remove dashboard mode class
-        const modalContent = document.querySelector('.admin-modal-content');
-        if (modalContent) modalContent.classList.remove('dashboard-mode');
+            // 5. Remove dashboard mode class
+            const modalContent = document.querySelector('.admin-modal-content');
+            if (modalContent) modalContent.classList.remove('dashboard-mode');
 
-        // 6. Disable CMS mode
-        disableCmsMode();
+            // 6. Disable CMS mode
+            disableCmsMode();
 
-        // 7. Close modal completely
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+            // 7. Close modal completely
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
 
-        console.log("Admin: Logged out successfully.");
-    });
+            console.log("Admin: Logged out successfully.");
+        });
+    }
 
     // Enable CMS Mode
     if (enableCmsBtn) {
