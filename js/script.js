@@ -419,22 +419,24 @@ const TRANSLATIONS = {
 };
 
 function initLanguageToggle() {
-    const toggle = document.querySelector('.lang-toggle');
-    if (!toggle) return;
+    const toggles = document.querySelectorAll('.lang-toggle');
+    if (toggles.length === 0) return;
 
     // Get current language from localStorage or default to 'id'
     let currentLang = localStorage.getItem('asyncLang') || 'id';
 
     // Apply current language on load
     applyLanguage(currentLang);
-    updateToggleUI(toggle, currentLang);
+    toggles.forEach(toggle => updateToggleUI(toggle, currentLang));
 
     // Toggle click handler
-    toggle.addEventListener('click', () => {
-        currentLang = currentLang === 'id' ? 'en' : 'id';
-        localStorage.setItem('asyncLang', currentLang);
-        applyLanguage(currentLang);
-        updateToggleUI(toggle, currentLang);
+    toggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            localStorage.setItem('asyncLang', currentLang);
+            applyLanguage(currentLang);
+            toggles.forEach(t => updateToggleUI(t, currentLang));
+        });
     });
 }
 
