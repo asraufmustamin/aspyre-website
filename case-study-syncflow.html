@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: SyncFlow SaaS - ASYNC SOLUTIONS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=13.0">
+    
+    <style>
+        .case-study-hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .cs-eyebrow {
+            color: #e85a4f;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .cs-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        .cs-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+        }
+        .cs-section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 10;
+        }
+        .cs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .cs-content-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .cs-heading {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-family: 'Sora', sans-serif;
+        }
+        .cs-text {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .cs-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(232, 90, 79, 0.1);
+            border: 1px solid rgba(232, 90, 79, 0.2);
+            border-radius: 12px;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e85a4f;
+            margin-bottom: 10px;
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #ffffff;
+        }
+        .code-snippet {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-family: monospace;
+            color: #a4c3b2;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        .cta-section {
+            text-align: center;
+            padding: 100px 0;
+        }
+        @media (max-width: 768px) {
+            .cs-grid { grid-template-columns: 1fr; }
+            .cs-title { font-size: 2.5rem; }
+            .cs-metrics { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="js-loading">
+    <!-- Meteor/Galaxy Background -->
+    <div class="galaxy-bg">
+        <div class="stars"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+        <div class="meteors">
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+            <div class="meteor"></div>
+        </div>
+    </div>
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="images/logo-3d.png" alt="ASYNC SOLUTIONS" class="logo-3d-img" />
+            </a>
+            <div class="nav-links">
+                <a href="index.html#layanan" class="nav-link">Layanan</a>
+                <a href="index.html#projects" class="nav-link">Portofolio</a>
+                <a href="index.html#kontak" class="nav-link">Kontak</a>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html#kontak" class="nav-cta">Mulai Project</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Case Study Hero -->
+    <section class="case-study-hero">
+        <div class="container">
+            <span class="cs-eyebrow">Conceptual Project</span>
+            <h1 class="cs-title">SyncFlow SaaS Framework</h1>
+            <p class="cs-subtitle">Eksplorasi antarmuka landing page berkonversi tinggi untuk produk perangkat lunak (SaaS). Menghadirkan keseimbangan sempurna antara estetika premium, tata letak asimetris (Bento grid), dan optimasi performa mesin pencari (SEO).</p>
+            <a href="landing-pages/saas/out/index.html" target="_blank" class="btn-primary magnetic-btn">
+                Lihat Live Demo
+                <span class="btn-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- The Challenge & Solution -->
+    <section class="cs-section">
+        <div class="container">
+            <div class="cs-grid">
+                <div class="cs-content-box">
+                    <h2 class="cs-heading">The Challenge</h2>
+                    <p class="cs-text">Banyak startup dan produk SaaS terjebak dengan desain landing page yang generik, kaku, dan membosankan. Selain itu, penggunaan framework yang berat seringkali mengorbankan kecepatan muat halaman (loading speed), yang secara langsung menurunkan tingkat konversi dan retensi pengunjung.</p>
+                </div>
+                <div class="cs-content-box">
+                    <h2 class="cs-heading">The Solution</h2>
+                    <p class="cs-text">Kami merancang arsitektur antarmuka yang bersih (clean UI) dengan dominasi ruang putih (negative space), aksen hijau mint dan oranye yang modern, serta pendekatan layout Bento Grid yang asimetris. Interaksi mikro ditambahkan pada hover state untuk memastikan website terasa responsif dan "hidup".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack & Metrics -->
+    <section class="cs-section">
+        <div class="container">
+            <div class="cs-content-box">
+                <h2 class="cs-heading text-center" style="text-align:center;">Tech Stack & Performance</h2>
+                <p class="cs-text" style="text-align:center; max-width:800px; margin:0 auto;">Dibangun menggunakan ekosistem modern untuk menjamin skalabilitas dan kecepatan. Next.js App Router memastikan performa SEO yang optimal, sementara Tailwind CSS v4 memberikan fleksibilitas sistem desain yang konsisten.</p>
+                
+                <div class="cs-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">98+</div>
+                        <div class="metric-label">Google Lighthouse Score</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Next.js</div>
+                        <div class="metric-label">React Framework</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Tailwind</div>
+                        <div class="metric-label">Utility-First CSS v4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Behind the Scenes -->
+    <section class="cs-section">
+        <div class="container">
+            <div class="cs-content-box">
+                <h2 class="cs-heading">Behind the Scenes: Modular Data Structure</h2>
+                <p class="cs-text">Untuk memastikan skalabilitas dan kemudahan modifikasi konten bagi klien di masa depan, kami memisahkan seluruh teks, harga, dan fitur ke dalam file JSON/TypeScript tunggal. Ini mencegah klien merusak struktur desain saat ingin mengubah harga atau teks promo.</p>
+                
+                <pre class="code-snippet">
+// data/dummyContent.ts
+export const pricingData = {
+  monthly: [
+    { tier: "Starter", price: "$19", highlight: false },
+    { tier: "Pro", price: "$49", highlight: true },
+  ],
+  annual: [
+    { tier: "Starter", price: "$15", highlight: false },
+    { tier: "Pro", price: "$39", highlight: true },
+  ]
+};
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cs-heading">Tertarik Membangun Sistem Serupa?</h2>
+            <p class="cs-text" style="max-width:600px; margin:0 auto 30px;">Dapatkan arsitektur landing page secepat dan semodern ini untuk bisnis Anda, atau lisensikan template ini untuk mempercepat rilis produk Anda.</p>
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                <a href="https://wa.me/6285729715555?text=Halo%20ASYNC%20SOLUTIONS,%20saya%20tertarik%20membuat%20Landing%20Page%20seperti%20SyncFlow." target="_blank" class="btn-primary magnetic-btn">
+                    Diskusikan Proyek Anda
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="index.html#projects" class="btn-ghost">
+                    Kembali ke Portofolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Simplified) -->
+    <footer style="padding: 40px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); position:relative; z-index:10;">
+        <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">&copy; 2026 ASYNC SOLUTIONS. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Remove loading class after a short delay
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.body.classList.remove('js-loading');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

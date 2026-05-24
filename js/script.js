@@ -1305,6 +1305,30 @@ function initPortfolioAlbums() {
     // Dummy Albums Data - Can be extended via CMS
     const albumsData = [
         {
+            id: 'syncflow-saas',
+            title: 'Conceptual Project: SyncFlow SaaS',
+            category: 'Web Platform',
+            description: 'Conceptual Project: SyncFlow adalah framework SaaS landing page berkonversi tinggi yang dibangun dengan Next.js dan Tailwind CSS v4. Menampilkan performa maksimal (Lighthouse 90+), desain asimetris bento grid yang modern, serta interaksi mikro yang dinamis untuk menarik minat calon pembeli.',
+            tech: ['Next.js 14', 'Tailwind CSS v4', 'React', 'Framer Motion (Conceptual)'],
+            link: 'case-study-syncflow.html',
+            stats: [
+                { value: '98', label: 'Lighthouse Score' },
+                { value: 'Next.js', label: 'App Router' },
+                { value: 'v4', label: 'Tailwind' }
+            ],
+            previews: [
+                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=SyncFlow+Hero',
+                'https://via.placeholder.com/400x300/232328/6b9080?text=Bento+Grid',
+                'https://via.placeholder.com/400x300/2d2d35/f4a261?text=Pricing'
+            ],
+            items: [
+                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Hero+Section', caption: 'Desain Hero Minimalis & Konversif' },
+                { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Bento+Grid', caption: 'Fitur Utama dengan Bento Grid Layout' },
+                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=Pricing+Toggle', caption: 'Interactive Pricing Toggle' },
+                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Testimonials', caption: 'Social Proof & Testimonials' }
+            ]
+        },
+        {
             id: 'desa-cenrana',
             title: 'Sistem Informasi Desa Cenrana',
             category: 'Digitalisasi Desa',
