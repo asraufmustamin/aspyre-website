@@ -345,7 +345,7 @@ const TRANSLATIONS = {
         'hero-desc': 'Kami merancang dan membangun perangkat lunak cerdas untuk menskalakan operasional bisnis Anda — dari sistem internal hingga aplikasi komersial berskala besar.',
         'hero-cta-1': 'Mulai Project',
         'hero-cta-2': 'Konsultasi Gratis',
-        'hero-promo-badge': '<span class="promo-tag">PROMO</span> <span>Solusi Website & Aplikasi mulai dari <strong>Rp 500.000</strong>! (Khusus Mahasiswa & UMKM)</span>',
+        'hero-promo-badge': '<span class="promo-tag">PROMO</span> <span>Solusi Website & Aplikasi mulai dari <strong>Rp 300.000</strong>! (Khusus Mahasiswa & UMKM)</span>',
         // Navigation
         'nav-layanan': 'Layanan',
         'nav-paket': 'Paket',
@@ -442,7 +442,7 @@ const TRANSLATIONS = {
         'hero-desc': 'We design and build intelligent software to scale your business operations — from internal systems to large-scale commercial applications.',
         'hero-cta-1': 'Start Project',
         'hero-cta-2': 'Free Consultation',
-        'hero-promo-badge': '<span class="promo-tag">PROMO</span> <span>Website & App solutions starting from <strong>Rp 500,000</strong>! (For Students & UMKM)</span>',
+        'hero-promo-badge': '<span class="promo-tag">PROMO</span> <span>Website & App solutions starting from <strong>Rp 300,000</strong>! (For Students & UMKM)</span>',
         // Navigation
         'nav-layanan': 'Services',
         'nav-paket': 'Packages',
@@ -547,7 +547,8 @@ function initLanguageToggle() {
 
     // Toggle click handler
     toggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent bubbling to body to avoid double toggle
             currentLang = currentLang === 'id' ? 'en' : 'id';
             localStorage.setItem('asyncLang', currentLang);
             applyLanguage(currentLang);
@@ -557,14 +558,14 @@ function initLanguageToggle() {
 }
 
 function updateToggleUI(toggle, lang) {
-    const spans = toggle.querySelectorAll('span');
-    if (spans.length >= 3) {
+    const spans = Array.from(toggle.querySelectorAll('span')).filter(s => !s.classList.contains('divider'));
+    if (spans.length >= 2) {
         if (lang === 'id') {
             spans[0].classList.add('active');
-            spans[2].classList.remove('active');
+            spans[1].classList.remove('active');
         } else {
             spans[0].classList.remove('active');
-            spans[2].classList.add('active');
+            spans[1].classList.add('active');
         }
     }
 }
@@ -614,8 +615,8 @@ function applyLanguage(lang) {
 window.switchLanguage = function (lang) {
     localStorage.setItem('asyncLang', lang);
     applyLanguage(lang);
-    const toggle = document.querySelector('.lang-toggle');
-    if (toggle) updateToggleUI(toggle, lang);
+    const toggles = document.querySelectorAll('.lang-toggle');
+    toggles.forEach(toggle => updateToggleUI(toggle, lang));
 };
 
 
@@ -2254,7 +2255,7 @@ const systemData = [
         category: "web-profile",
         categoryLabel: "Website & Company Profile",
         icon: "🌐",
-        price: "Rp 500.000 - Rp 1.500.000 (Perkiraan)",
+        price: "Rp 300.000 - Rp 1.000.000 (Perkiraan)",
         estimation: "3 Hari - 2 Minggu (Perkiraan)",
         desc: "Layanan pembuatan antarmuka publik atau etalase digital berkualitas tinggi untuk personal branding, portofolio profesional, landing page promosi, hingga profil resmi perusahaan (Company Profile).",
         features: [
@@ -2272,7 +2273,7 @@ const systemData = [
         category: "commerce",
         categoryLabel: "E-Commerce & Retail",
         icon: "🛒",
-        price: "Rp 2.000.000 - Rp 3.500.000 (Perkiraan)",
+        price: "Rp 1.300.000 - Rp 2.800.000 (Perkiraan)",
         estimation: "2 - 4 Minggu (Perkiraan)",
         desc: "Solusi digital terpadu untuk penjualan dan transaksi barang, baik untuk toko online (E-Commerce) mandiri maupun pencatatan kasir offline (Point of Sale).",
         features: [
@@ -2290,7 +2291,7 @@ const systemData = [
         category: "management",
         categoryLabel: "Sistem Manajemen Terpadu",
         icon: "⚙️",
-        price: "Rp 5.000.000 - Rp 15.000.000 (Perkiraan)",
+        price: "Rp 3.500.000 - Rp 10.000.000 (Perkiraan)",
         estimation: "2 - 4 Bulan (Perkiraan)",
         desc: "Sistem manajemen data operasional terpusat (ERP & Dashboard) untuk mendigitalisasi proses kerja instansi, perusahaan, sekolah, maupun klinik kesehatan.",
         features: [
@@ -2308,7 +2309,7 @@ const systemData = [
         category: "custom",
         categoryLabel: "Custom App & Prototipe",
         icon: "🧪",
-        price: "Hubungi Admin / Negosiasi",
+        price: "Hubungi Admin / Mulai Rp 700.000 (Perkiraan)",
         estimation: "Fleksibel (Hubungi Admin)",
         desc: "Pengembangan aplikasi web kustom dari nol untuk kebutuhan spesifik Anda, mulai dari prototipe Tugas Akhir/Tesis mahasiswa hingga fitur kustom kompleks skala industri.",
         features: [
