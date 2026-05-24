@@ -4358,17 +4358,18 @@ section.highlight-section {
     max-height: 60vh;
 }
 
-/* Modal Gallery */
+/* Modal Gallery - Pinterest Masonry Style */
 .modal-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
+    column-count: 2;
+    column-gap: 16px;
     margin-bottom: 24px;
 }
 
 .modal-gallery img {
     width: 100%;
-    aspect-ratio: 16/10;
+    height: auto;
+    margin-bottom: 16px;
+    break-inside: avoid;
     object-fit: cover;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -4377,6 +4378,12 @@ section.highlight-section {
 
 .modal-gallery img:hover {
     transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .modal-gallery {
+        column-count: 1;
+    }
 }
 
 /* Modal Details */
@@ -4542,8 +4549,9 @@ section.highlight-section {
 }
 
 .portfolio-albums {
-    column-count: 2;
-    column-gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
     max-width: 1200px;
     margin: 0 auto;
     transition: all 0.5s ease;
@@ -4551,7 +4559,7 @@ section.highlight-section {
 
 @media (max-width: 768px) {
     .portfolio-albums {
-        column-count: 1;
+        grid-template-columns: 1fr;
     }
 }
 
@@ -4718,16 +4726,17 @@ section.highlight-section {
     }
 }
 
-/* Pinterest Style Image Wrapper */
+/* Card Image Wrapper - Balanced and Precise Size */
 .pinterest-image-wrapper {
     position: relative;
     width: 100%;
+    aspect-ratio: 4/3;
     overflow: hidden;
 }
 
 .pinterest-image-wrapper img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
