@@ -1406,12 +1406,8 @@ function initPortfolioAlbums() {
     function renderAlbums() {
         albumsContainer.innerHTML = '';
 
-        // Check if scrollable (more than 6 albums for 3x2 grid)
-        if (albums.length > 6) {
-            albumsContainer.classList.add('scrollable');
-        } else {
-            albumsContainer.classList.remove('scrollable');
-        }
+        // Removed scrollable logic for Pinterest masonry layout
+        albumsContainer.classList.remove('scrollable');
 
         albums.forEach((album, index) => {
             const card = document.createElement('div');
@@ -1426,12 +1422,8 @@ function initPortfolioAlbums() {
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
                 </button>
-                <div class="album-preview-stack">
-                    ${(album.previews || []).slice(0, 3).map((src, i) => `
-                        <div class="preview-image">
-                            <img src="${src}" alt="${album.title || 'Preview'} ${i + 1}" loading="lazy">
-                        </div>
-                    `).join('')}
+                <div class="pinterest-image-wrapper">
+                    <img src="${(album.previews && album.previews.length > 0) ? album.previews[0] : 'https://via.placeholder.com/600x800'}" alt="${album.title}" loading="lazy">
                 </div>
                 <div class="album-info">
                     <span class="album-category">${album.category}</span>

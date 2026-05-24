@@ -4542,14 +4542,17 @@ section.highlight-section {
 }
 
 .portfolio-albums {
-    display: grid;
-    /* Default: 3 columns, auto rows */
-    grid-template-columns: repeat(3, minmax(280px, 1fr));
-    grid-template-rows: repeat(2, auto);
-    gap: 24px;
+    column-count: 2;
+    column-gap: 24px;
     max-width: 1200px;
     margin: 0 auto;
     transition: all 0.5s ease;
+}
+
+@media (max-width: 768px) {
+    .portfolio-albums {
+        column-count: 1;
+    }
 }
 
 /* Horizontal scroll with grid-auto-flow: column (2 rows fixed) */
@@ -4622,40 +4625,28 @@ section.highlight-section {
    =========================================== */
 .album-card {
     position: relative;
-    aspect-ratio: 1 / 1;
-    min-height: 220px;
-    max-height: 280px;
+    break-inside: avoid;
+    margin-bottom: 24px;
     /* Deep Glass Background */
     background: rgba(20, 20, 24, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
     cursor: pointer;
     /* Fix overflow on mobile */
-    max-width: calc(100vw - 40px);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transform-origin: bottom right;
-    transform-style: preserve-3d;
-    perspective: 1200px;
-    box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.2),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    max-width: 100%;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Levitating Hover Effect */
+/* Hover Effect */
 .album-card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px);
     background: rgba(26, 26, 32, 0.8);
-    border-color: rgba(232, 90, 79, 0.5);
-    /* Coral border glow */
-    box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        /* Deep shadow */
-        0 0 40px rgba(232, 90, 79, 0.15),
-        /* Coral ambient glow */
-        inset 0 0 20px rgba(232, 90, 79, 0.05);
+    border-color: rgba(232, 90, 79, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Interactive Gradient Overlay */
@@ -4727,90 +4718,35 @@ section.highlight-section {
     }
 }
 
-/* Album Preview Stack - Stacked images peek effect */
-.album-preview-stack {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    bottom: 70px;
-    pointer-events: none;
-}
-
-.preview-image {
-    position: absolute;
+/* Pinterest Style Image Wrapper */
+.pinterest-image-wrapper {
+    position: relative;
     width: 100%;
-    height: 100%;
-    border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    backface-visibility: hidden;
 }
 
-.preview-image img {
+.pinterest-image-wrapper img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Stacked effect - 3 images visible */
-.preview-image:nth-child(1) {
-    z-index: 3;
-    transform: translateY(0) rotate(-2deg) scale(0.95);
-}
-
-.preview-image:nth-child(2) {
-    z-index: 2;
-    transform: translateY(-15px) translateX(8px) rotate(2deg) scale(0.92);
-    opacity: 0.8;
-}
-
-.preview-image:nth-child(3) {
-    z-index: 1;
-    transform: translateY(-30px) translateX(-8px) rotate(-4deg) scale(0.88);
-    opacity: 0.5;
-}
-
-/* Hover - Spread the stack */
-.album-card:hover .preview-image:nth-child(1) {
-    transform: translateY(-5px) rotate(0deg) scale(1);
-}
-
-.album-card:hover .preview-image:nth-child(2) {
-    transform: translateY(-25px) translateX(15px) rotate(5deg) scale(0.95);
-    opacity: 0.9;
-}
-
-.album-card:hover .preview-image:nth-child(3) {
-    transform: translateY(-45px) translateX(-15px) rotate(-6deg) scale(0.9);
-    opacity: 0.7;
-}
-
-.album-card:hover .preview-image img {
+.album-card:hover .pinterest-image-wrapper img {
     transform: scale(1.05);
 }
 
-/* Album Info - Bottom section */
-/* Album Info - Bottom section with Glass Fade */
+/* Album Info - Bottom section placed outside the image */
 .album-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     padding: 24px;
-    z-index: 10;
-    background: linear-gradient(to top,
-            rgba(10, 10, 14, 0.95) 0%,
-            rgba(10, 10, 14, 0.8) 40%,
-            transparent 100%);
-    transform: translateY(4px);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    background: transparent;
+    transition: none;
 }
 
 .album-card:hover .album-info {
-    transform: translateY(0);
+    transform: none;
 }
 
 .album-category {
