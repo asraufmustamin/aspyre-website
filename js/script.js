@@ -1341,16 +1341,16 @@ function initPortfolioAlbums() {
                 { value: 'Sukses', label: 'Status Proyek Mandiri' }
             ],
             previews: [
-                'https://via.placeholder.com/400x300/1a1a2e/e85a4f?text=Cenrana+Home',
-                'https://via.placeholder.com/400x300/232328/6b9080?text=Aspirasi+Page',
-                'https://via.placeholder.com/400x300/2d2d35/f4a261?text=UMKM+Lapak'
+                'images/portfolio/desa-cenrana/cenrana-1.png',
+                'images/portfolio/desa-cenrana/cenrana-2.png',
+                'images/portfolio/desa-cenrana/cenrana-3.png'
             ],
             items: [
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/e85a4f?text=Homepage', caption: 'Halaman Utama Desa' },
-                { src: 'https://via.placeholder.com/600x400/232328/6b9080?text=Aspirasi', caption: 'Form Aspirasi Warga' },
-                { src: 'https://via.placeholder.com/600x400/2d2d35/f4a261?text=Lapak+Warga', caption: 'Lapak Warga (Ekonomi Digital)' },
-                { src: 'https://via.placeholder.com/600x400/1a1a2e/a4c3b2?text=Info+Desa', caption: 'Pusat Informasi Terpadu' },
-                { src: 'https://via.placeholder.com/600x400/232328/e85a4f?text=Dashboard', caption: 'Dashboard Admin & Analitik' }
+                { src: 'images/portfolio/desa-cenrana/cenrana-1.png', caption: 'Halaman Utama Desa' },
+                { src: 'images/portfolio/desa-cenrana/cenrana-2.png', caption: 'Pusat Kabar Desa' },
+                { src: 'images/portfolio/desa-cenrana/cenrana-3.png', caption: 'Potensi Unggulan Desa' },
+                { src: 'images/portfolio/desa-cenrana/cenrana-4.png', caption: 'Infrastruktur Fasilitas Desa' },
+                { src: 'images/portfolio/desa-cenrana/cenrana-5.png', caption: 'Peta Digital Desa' }
             ]
         }
     ];
